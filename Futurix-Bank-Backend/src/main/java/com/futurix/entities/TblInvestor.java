@@ -1,7 +1,7 @@
 package com.futurix.entities;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -18,8 +18,6 @@ public class TblInvestor {
 		@GeneratedValue(strategy = GenerationType.AUTO)
 		private int id;
 
-		private Integer investorId;
-
 	    private String investorName;
 
 	    private String investorAddress;
@@ -30,21 +28,17 @@ public class TblInvestor {
 
 	    private String investorEmail;
 
-	    private Date investorDob;
+	    private LocalDate investorDob;
 
 	    private String investorPassword;
-		
-	    private Integer adminId;
-	    
+			    
 	    @OneToMany(mappedBy = "investor", fetch = FetchType.LAZY)
 	    private List<TblInvestment> investmentList = new ArrayList<>();
 
-		public TblInvestor(Integer adminId, Integer investorId, String investorName, String investorAddress,
-				String investorGender, Long investorPhoneNumber, String investorEmail, Date investorDob,
+		public TblInvestor(String investorName, String investorAddress,
+				String investorGender, Long investorPhoneNumber, String investorEmail, LocalDate investorDob,
 				String investorPassword) {
 			super();
-			this.adminId = adminId;
-			this.investorId = investorId;
 			this.investorName = investorName;
 			this.investorAddress = investorAddress;
 			this.investorGender = investorGender;
@@ -59,21 +53,6 @@ public class TblInvestor {
 			// TODO Auto-generated constructor stub
 		}
 
-		public Integer getAdminId() {
-			return adminId;
-		}
-
-		public void setAdminId(Integer adminId) {
-			this.adminId = adminId;
-		}
-
-		public Integer getInvestorId() {
-			return investorId;
-		}
-
-		public void setInvestorId(Integer investorId) {
-			this.investorId = investorId;
-		}
 
 		public String getInvestorName() {
 			return investorName;
@@ -115,11 +94,11 @@ public class TblInvestor {
 			this.investorEmail = investorEmail;
 		}
 
-		public Date getInvestorDob() {
+		public LocalDate getInvestorDob() {
 			return investorDob;
 		}
 
-		public void setInvestorDob(Date investorDob) {
+		public void setInvestorDob(LocalDate investorDob) {
 			this.investorDob = investorDob;
 		}
 
@@ -146,7 +125,4 @@ public class TblInvestor {
 		public void setInvestmentList(List<TblInvestment> investmentList) {
 			this.investmentList = investmentList;
 		}
-
-
-
 }

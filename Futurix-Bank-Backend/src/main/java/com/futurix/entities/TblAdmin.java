@@ -2,6 +2,7 @@ package com.futurix.entities;
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,26 +14,30 @@ public class TblAdmin {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	private Integer adminId;
-
+	@Column(nullable = false)
 	private String adminName;
 
+	@Column(nullable = false)
 	private String adminAddress;
 
+	@Column(nullable = false)
 	private String adminGender;
 
+	@Column(nullable = false)
 	private Long adminPhoneNumber;
 
+	@Column(nullable = false)
 	private String adminEmail;
 
+	@Column(nullable = false)
 	private Date adminDob;
 
+	@Column(nullable = false)
 	private String adminPassword;
 
-	public TblAdmin(Integer adminId, String adminName, String adminAddress, String adminGender, Long adminPhoneNumber,
+	public TblAdmin(String adminName, String adminAddress, String adminGender, Long adminPhoneNumber,
 			String adminEmail, Date adminDob, String adminPassword) {
 		super();
-		this.adminId = adminId;
 		this.adminName = adminName;
 		this.adminAddress = adminAddress;
 		this.adminGender = adminGender;
@@ -53,14 +58,6 @@ public class TblAdmin {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Integer getAdminId() {
-		return adminId;
-	}
-
-	public void setAdminId(Integer adminId) {
-		this.adminId = adminId;
 	}
 
 	public String getAdminName() {
@@ -120,4 +117,3 @@ public class TblAdmin {
 	}
 
 }
- 

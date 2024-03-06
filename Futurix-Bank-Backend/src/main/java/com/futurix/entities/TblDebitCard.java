@@ -13,7 +13,8 @@ public class TblDebitCard {
 		@GeneratedValue(strategy = GenerationType.AUTO)
 		private int id;
 
-		private String CardType;
+	    
+	    private String CardType;
 		private double Charges;
 		private double WithdrawLimit;
 		

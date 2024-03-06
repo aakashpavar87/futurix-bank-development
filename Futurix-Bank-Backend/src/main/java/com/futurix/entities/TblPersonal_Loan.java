@@ -2,26 +2,37 @@ package com.futurix.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class TblPersonal_Loan {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	private int Loan_id;
+    
     @Column(nullable = false)
 	private int Loan_term;
+    
     @Column(nullable = false)
 	private String Loan_type;
+    
     @Column(nullable = false)
 	private double interese_rate;
+    
     @Column(nullable = false)
 	private double Monthly_payment;
+    
     @Column(nullable = false)
 	private int Credit_Score;
+    
     @Column(nullable = false)
 	private int Annual_income_borrower;
-	
-	
+	   
+	public TblPersonal_Loan() {
+	}
+
 	public TblPersonal_Loan(int loan_id, int loan_term, String loan_type, double interese_rate, double monthly_payment,
 			int credit_Score, int annual_income_borrower) {
 		super();

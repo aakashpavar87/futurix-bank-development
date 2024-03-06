@@ -1,96 +1,78 @@
 
-
 package com.futurix.entities;
-
-import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+
 @Entity
 public class TblFeedback {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	    private Integer feedbackId;
 
-	    private Integer feedbackType;
-	    private Double customerId;
+	private Integer feedbackType;
 
-	    private Date emailId;
+	private String emailId;
 
-	    private Long message;
-	    
-	    @ManyToOne
-	    private TblCustomer customer;
+	private Long message;
 
+	@ManyToOne
+	private TblCustomer customer;
 
-		public TblFeedback(int id, Integer feedbackId, Integer feedbackType, Double customerId, Date emailId,
-				Long message) {
-			super();
-			this.id = id;
-			this.feedbackId = feedbackId;
-			this.feedbackType = feedbackType;
-			this.customerId = customerId;
-			this.emailId = emailId;
-			this.message = message;
-		}
+	public TblFeedback(int id, Integer feedbackType, String emailId, Long message) {
+		super();
+		this.id = id;
+		this.feedbackType = feedbackType;
+		this.emailId = emailId;
+		this.message = message;
+	}
 
-		public TblFeedback() {
-			super();
-			// TODO Auto-generated constructor stub
-		}
+	public TblFeedback() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-		public int getId() {
-			return id;
-		}
+	public int getId() {
+		return id;
+	}
 
-		public void setId(int id) {
-			this.id = id;
-		}
+	public TblCustomer getCustomer() {
+		return customer;
+	}
 
-		public Integer getFeedbackId() {
-			return feedbackId;
-		}
+	public void setCustomer(TblCustomer customer) {
+		this.customer = customer;
+	}
 
-		public void setFeedbackId(Integer feedbackId) {
-			this.feedbackId = feedbackId;
-		}
+	public void setId(int id) {
+		this.id = id;
+	}
 
-		public Integer getFeedbackType() {
-			return feedbackType;
-		}
+	public Integer getFeedbackType() {
+		return feedbackType;
+	}
 
-		public void setFeedbackType(Integer feedbackType) {
-			this.feedbackType = feedbackType;
-		}
+	public void setFeedbackType(Integer feedbackType) {
+		this.feedbackType = feedbackType;
+	}
 
-		public Double getCustomerId() {
-			return customerId;
-		}
+	public String getEmailId() {
+		return emailId;
+	}
 
-		public void setCustomerId(Double customerId) {
-			this.customerId = customerId;
-		}
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
 
-		public Date getEmailId() {
-			return emailId;
-		}
+	public Long getMessage() {
+		return message;
+	}
 
-		public void setEmailId(Date emailId) {
-			this.emailId = emailId;
-		}
-
-		public Long getMessage() {
-			return message;
-		}
-
-		public void setMessage(Long message) {
-			this.message = message;
-		}
-
+	public void setMessage(Long message) {
+		this.message = message;
+	}
 
 }
-

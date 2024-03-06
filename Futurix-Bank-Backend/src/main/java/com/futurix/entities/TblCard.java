@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -26,7 +27,9 @@ public class TblCard {
 	@OneToOne
 	private TblDebitCard debitCard;
 	
-	
+	@ManyToOne
+	private TblCustomer customer;
+		
 	public TblCard(Long card_number, Long accountnumber, String card_status, Date date_of_issue,
 			Date date_of_exspiry, int pin) {
 		super();
@@ -87,6 +90,38 @@ public class TblCard {
 	
 	public void setPin(int pin) {
 		this.pin = pin;
+	}
+
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public TblCreditCard getCreditCard() {
+		return creditCard;
+	}
+
+	public void setCreditCard(TblCreditCard creditCard) {
+		this.creditCard = creditCard;
+	}
+
+	public TblDebitCard getDebitCard() {
+		return debitCard;
+	}
+
+	public void setDebitCard(TblDebitCard debitCard) {
+		this.debitCard = debitCard;
+	}
+
+	public TblCustomer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(TblCustomer customer) {
+		this.customer = customer;
 	}
 	
 }

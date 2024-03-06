@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -15,19 +14,23 @@ public class TblLoan {
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private int Loan_id;
+    
     @Column(nullable = false)
     private long Account_number;
+    
     @Column(nullable = false)
     private double loan_amount;
+    
     @Column(nullable = false)
     private String status;
+    
     @Column(nullable = false)
     private LocalDate Date_of_origanation;
+    
     @Column(nullable = false)
     private LocalDate Maturity_date;
     
     @ManyToOne
-    @JoinColumn(name = "customer_id")
     private TblCustomer customer;
     
 	public TblLoan(int loan_id, long account_number, double loan_amount, String status, LocalDate date_of_origanation,

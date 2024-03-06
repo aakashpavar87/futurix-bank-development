@@ -2,6 +2,7 @@ package com.futurix.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class TblSaving_account {
@@ -15,6 +16,10 @@ public class TblSaving_account {
 		this.interest_rate = interest_rate;
 		this.interest_calc_method = interest_calc_method;
 	}
+	
+	@OneToOne
+	private TblAccount account;
+	
 	public Long getAccount_number() {
 		return account_number;
 	}

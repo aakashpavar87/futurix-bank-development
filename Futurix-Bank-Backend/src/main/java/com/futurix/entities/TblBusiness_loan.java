@@ -5,25 +5,34 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class TblBusiness_loan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int Loan_id;
+	private int id;
+	
 	@Column(nullable = false)
 	private int Loan_term;
+	
 	@Column(nullable = false)
 	private String Loan_type;
+	
 	@Column(nullable = false)
 	private double Interest_rate;
+	
 	@Column(nullable = false)
 	private String Business_name;
+	
 	@Column(nullable = false)
 	private String Business_GST_no;
+	
 	@Column(nullable = false)
 	private String Email;
 	
+	@OneToOne
+	private TblLoan loan;
 	
 	
 	
@@ -31,7 +40,7 @@ public class TblBusiness_loan {
 			String business_GST_no, String email) {
 		super();
 		
-		Loan_id = loan_id;
+		id = loan_id;
 		Loan_term = loan_term;
 		Loan_type = loan_type;
 		Interest_rate = interest_rate;
@@ -40,10 +49,10 @@ public class TblBusiness_loan {
 		Email = email;
 	}
 	public int getLoan_id() {
-		return Loan_id;
+		return id;
 	}
 	public void setLoan_id(int loan_id) {
-		Loan_id = loan_id;
+		id = loan_id;
 	}
 	public int getLoan_term() {
 		return Loan_term;
@@ -80,6 +89,12 @@ public class TblBusiness_loan {
 	}
 	public void setEmail(String email) {
 		Email = email;
+	}
+	public TblLoan getLoan() {
+		return loan;
+	}
+	public void setLoan(TblLoan loan) {
+		this.loan = loan;
 	}
 	
 	

@@ -1,7 +1,10 @@
 
 package com.futurix.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -11,10 +14,18 @@ import jakarta.persistence.Table;
 public class TblCreditCard {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+	
+	@Column(nullable = false)
     private String cardType;
+	
+	@Column(nullable = false)
     private Double creditLimit;
+	
+	
     private String statementPeriod;
+    
     private Double charges;
     
     @OneToOne
@@ -72,6 +83,14 @@ public class TblCreditCard {
 
 	public void setCharges(Double charges) {
 		this.charges = charges;
+	}
+
+	public TblCard getCard() {
+		return card;
+	}
+
+	public void setCard(TblCard card) {
+		this.card = card;
 	}
 
 
