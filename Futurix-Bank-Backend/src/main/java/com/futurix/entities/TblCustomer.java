@@ -48,7 +48,7 @@ public class TblCustomer {
 	private String occupation;
 	
 	
-	// RelationShips between Entities
+	// Relation Ships between Entities
 
 	@OneToOne
 	private TblAddress address;
@@ -60,7 +60,7 @@ public class TblCustomer {
 	private List<TblFeedback> feedbackList = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-	private List<TblCard> card = new ArrayList<>();
+	private List<TblCard> cardList = new ArrayList<>();
 
 	@OneToOne
 	private TblDebitCard debitCard;
@@ -207,7 +207,4 @@ public class TblCustomer {
 	public void setCreditCard(TblCreditCard creditCard) {
 		this.creditCard = creditCard;
 	}
-
-//	private Address address;
-
 }

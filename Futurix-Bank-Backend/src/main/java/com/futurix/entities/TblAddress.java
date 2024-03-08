@@ -11,7 +11,9 @@ import jakarta.persistence.OneToOne;
 public class TblAddress {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String Address_id;
+	private int Address_id;
+	
+	
 	@Column(nullable = false)
 	private String Street;
 	@Column(nullable = false)
@@ -25,10 +27,9 @@ public class TblAddress {
 	
 	@OneToOne
 	private TblCustomer customer;
-	
-	public TblAddress(String address_id, String street, String city, String state, String country, String zipcode) {
+
+	public TblAddress(String street, String city, String state, String country, String zipcode) {
 		super();
-		Address_id = address_id;
 		Street = street;
 		City = city;
 		State = state;
@@ -36,11 +37,11 @@ public class TblAddress {
 		Zipcode = zipcode;
 	}
 	
-	public String getAddress_id() {
+	public int getAddress_id() {
 		return Address_id;
 	}
 	
-	public void setAddress_id(String address_id) {
+	public void setAddress_id(int address_id) {
 		Address_id = address_id;
 	}
 	
