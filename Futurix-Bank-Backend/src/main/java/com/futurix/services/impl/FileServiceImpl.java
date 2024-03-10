@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,8 +20,13 @@ public class FileServiceImpl implements FileService{
 			// File Name
 			String name = file.getOriginalFilename();
 			
+			// random name generate
+			
+			String randomId = UUID.randomUUID().toString();
+			String fileName1 = randomId.concat(name.substring(name.lastIndexOf(".")));
+			
 			//Full Path
-			String filePath = path + File.separator + file;
+			String filePath = path + File.separator + fileName1;
 			
 			//Create Folder if not exists
 			File f = new File(path);
