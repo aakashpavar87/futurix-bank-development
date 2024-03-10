@@ -61,12 +61,6 @@ public class TblCustomer {
 	
 	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
 	private List<TblCard> cardList = new ArrayList<>();
-
-	@OneToOne
-	private TblDebitCard debitCard;
-	
-	@OneToOne
-	private TblCreditCard creditCard;
 	
 	@OneToOne
 	private TblAccount account;
@@ -192,18 +186,6 @@ public class TblCustomer {
 		this.feedbackList = feedbackList;
 	}
 
-	public TblDebitCard getDebitCard() {
-		return debitCard;
-	}
-
-	public void setDebitCard(TblDebitCard debitCard) {
-		this.debitCard = debitCard;
-	}
-
-	public TblCreditCard getCreditCard() {
-		return creditCard;
-	}
-
 	public List<TblCard> getCardList() {
 		return cardList;
 	}
@@ -218,9 +200,5 @@ public class TblCustomer {
 
 	public void setAccount(TblAccount account) {
 		this.account = account;
-	}
-
-	public void setCreditCard(TblCreditCard creditCard) {
-		this.creditCard = creditCard;
 	}
 }

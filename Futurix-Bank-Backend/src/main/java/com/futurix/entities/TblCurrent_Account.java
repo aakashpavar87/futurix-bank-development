@@ -1,5 +1,7 @@
 package com.futurix.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +24,7 @@ public class TblCurrent_Account {
 	private Double charges;
 	
 	@OneToOne
+	@JsonIgnore
 	private TblAccount account;
 	
 	public TblCurrent_Account(Long account_number, Double overdraft_limit, String overdraft_status, Double charges) {

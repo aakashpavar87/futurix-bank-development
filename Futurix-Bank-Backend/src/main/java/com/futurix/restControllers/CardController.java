@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.futurix.entities.TblAccount;
 import com.futurix.entities.TblCard;
-import com.futurix.services.AccountService;
 import com.futurix.services.CardService;
 
 @RestController
@@ -24,12 +23,12 @@ public class CardController {
 	@Autowired
 	private CardService cardService;
 	
-	@GetMapping("/users/{id}/cards")
+	@GetMapping("/cards")
 	public List<TblCard> retreiveAllCards (){
 		return cardService.retreiveAllCard();
 	}
 	
-	@GetMapping("/users/{id}/card")
+	@GetMapping("/users/{id}/cards")
 	public TblCard retriveOneAccount(@PathVariable int id) {
 		return cardService.findCard(id);
 		
@@ -51,4 +50,11 @@ public class CardController {
 		
 	}
 	
+	@PutMapping("/users/{id}/cards")
+	public ResponseEntity<TblCard> updateCard(@PathVariable int id, @RequestBody TblCard card) {
+		cardService.updateCard(id, card);
+		URI locationUri =ServletUriComponentsBuilder.fromCurrentRequest()
+				.buildAndExpand(card.getCard_number()).toUri();
+		return ResponseEntity.created(locationUri).build();
+	}
 }

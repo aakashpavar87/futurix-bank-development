@@ -1,12 +1,17 @@
 package com.futurix.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
 @Entity
 public class TblSaving_account {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long account_number;
 	private Double interest_rate;
 	private String interest_calc_method;
@@ -18,8 +23,15 @@ public class TblSaving_account {
 	}
 	
 	@OneToOne
+	@JsonIgnore
 	private TblAccount account;
 	
+	public TblAccount getAccount() {
+		return account;
+	}
+	public void setAccount(TblAccount account) {
+		this.account = account;
+	}
 	public Long getAccount_number() {
 		return account_number;
 	}

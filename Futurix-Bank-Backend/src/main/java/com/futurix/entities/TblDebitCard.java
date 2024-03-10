@@ -1,6 +1,8 @@
 
 package com.futurix.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,7 +11,23 @@ import jakarta.persistence.OneToOne;
 
 @Entity
 public class TblDebitCard {
-	    @Id
+	    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public TblCard getCard() {
+		return card;
+	}
+
+	public void setCard(TblCard card) {
+		this.card = card;
+	}
+
+		@Id
 		@GeneratedValue(strategy = GenerationType.AUTO)
 		private int id;
 
@@ -20,9 +38,7 @@ public class TblDebitCard {
 		
 		
 		@OneToOne
-		private TblCustomer customer;
-		
-		@OneToOne
+		@JsonIgnore
 		private TblCard card;
 
 		public TblDebitCard(String cardType, double charges, double withdrawLimit) {

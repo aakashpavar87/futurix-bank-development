@@ -7,7 +7,6 @@ import java.util.function.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.futurix.entities.TblCard;
 import com.futurix.entities.TblCustomer;
 import com.futurix.entities.TblFeedback;
 import com.futurix.repositories.CustomerRepo;
@@ -27,10 +26,11 @@ public class FeedbackServices {
 		feedback.setCustomer(foundCustomer);
 		feedbackRepo.save(feedback);
 		
-		ArrayList<TblFeedback> listOfFeedbacks = new ArrayList(); 
+		List<TblFeedback> listOfFeedbacks = foundCustomer.getFeedbackList(); 
 		listOfFeedbacks.add(feedback);
 		
 		foundCustomer.setFeedbackList(listOfFeedbacks);
+		customerRepo.save(foundCustomer);
 	}
 	
 	//select all feedback

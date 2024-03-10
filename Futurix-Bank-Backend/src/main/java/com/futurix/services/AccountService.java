@@ -1,7 +1,6 @@
 package com.futurix.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +31,8 @@ public class AccountService {
 	public List<TblAccount> retreiveAllAccount(){
 		return accountRepo.findAll();	
 	}
+	
+	
 	//select one account
 	public TblAccount findAccount(int id) {
 		TblCustomer foundCustomer = customerRepo.findById(id).orElse(null);
@@ -40,7 +41,7 @@ public class AccountService {
 	}
 	
 	
-	//Delete Account-==
+	// Delete Account 
 	public void deleteAccount(int  id) {
    TblCustomer foundCustomer =  customerRepo.findById(id).orElse(null);
 	TblAccount foundAccount = foundCustomer.getAccount();

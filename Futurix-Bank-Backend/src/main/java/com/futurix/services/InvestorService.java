@@ -29,6 +29,12 @@ public class InvestorService {
 		return investorRepo.findAll();
 	}
 	
+	// Add Investor
+	public void addInvestor(TblInvestor investor) {
+		investorRepo.save(investor);
+	}
+	
+	
 	// Delete an Investor
 	public void deleteInvestor(int investorId) {
 		investorRepo.deleteById(investorId);
@@ -40,4 +46,6 @@ public class InvestorService {
 		foundInvestor = updatedInvestor;
 		investorRepo.save(foundInvestor);
 	}
+	
+	
 }

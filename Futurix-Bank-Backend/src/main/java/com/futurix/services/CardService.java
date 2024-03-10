@@ -1,13 +1,11 @@
 package com.futurix.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.futurix.entities.TblAccount;
 import com.futurix.entities.TblCard;
 import com.futurix.entities.TblCustomer;
 import com.futurix.repositories.CardRepo;
@@ -23,10 +21,8 @@ public class CardService {
 	// Create Card
 	public void createCard(TblCard card, int id) {
 		TblCustomer foundCustomer = customerRepo.findById(id).orElse(null);
-		ArrayList<TblCustomer> listCustomers = new ArrayList();
-		if (foundCustomer != null) {
-			listCustomers.add(foundCustomer);
-		}
+		foundCustomer.getCardList().add(card);
+		customerRepo.save(foundCustomer);
 		cardRepo.save(card);
 	}
 

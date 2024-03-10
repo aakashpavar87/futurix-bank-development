@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.service.annotation.DeleteExchange;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.futurix.entities.TblLoan;
 import com.futurix.services.LoanService;
-import com.futurix.services.UserService;
 
 @RestController
 @RequestMapping("/users/{userId}")

@@ -2,6 +2,8 @@ package com.futurix.entities;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,12 +30,13 @@ public class TblCard {
 	private TblDebitCard debitCard;
 	
 	@ManyToOne
+	@JsonIgnore
 	private TblCustomer customer;
 		
 	public TblCard(Long card_number, Long accountnumber, String card_status, Date date_of_issue,
 			Date date_of_exspiry, int pin) {
+	
 		super();
-
 		this.card_number = card_number;
 		this.accountnumber = accountnumber;
 		this.card_status = card_status;
