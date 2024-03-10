@@ -31,4 +31,8 @@ public class AdminService {
 		foundAdmin = admin;
 		adminRepo.save(foundAdmin);
 	}
+	
+	public void deleteAdmin(int id) {
+		adminRepo.deleteById(id);
+	}
 }
