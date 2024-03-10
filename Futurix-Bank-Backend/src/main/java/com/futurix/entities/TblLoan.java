@@ -2,6 +2,8 @@ package com.futurix.entities;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +33,7 @@ public class TblLoan {
     private LocalDate Maturity_date;
     
     @ManyToOne
+    @JsonIgnore
     private TblCustomer customer;
     
 	public TblLoan(int loan_id, long account_number, double loan_amount, String status, LocalDate date_of_origanation,

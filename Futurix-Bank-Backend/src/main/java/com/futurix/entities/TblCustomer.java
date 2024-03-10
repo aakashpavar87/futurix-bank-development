@@ -204,6 +204,22 @@ public class TblCustomer {
 		return creditCard;
 	}
 
+	public List<TblCard> getCardList() {
+		return cardList;
+	}
+
+	public void setCardList(List<TblCard> cardList) {
+		this.cardList = cardList;
+	}
+
+	public TblAccount getAccount() {
+		return account;
+	}
+
+	public void setAccount(TblAccount account) {
+		this.account = account;
+	}
+
 	public void setCreditCard(TblCreditCard creditCard) {
 		this.creditCard = creditCard;
 	}

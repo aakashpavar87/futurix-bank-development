@@ -1,0 +1,19 @@
+{
+  "name": "Bharat",
+  "email": "bharat@gmail.com",
+  "password":"bharat@133",
+  "phone":"9778525678",
+  "dob":"2004-11-22",
+  "dateOfOpening":"2021-11-20",
+  "accountNumber":7685494321,
+  "gender":"Male",
+  "occupation":"Student"
+}
+
+{
+  "street":"Sarangpur",
+  "city":"Ahmedabad",
+  "state":"Gujarat",
+  "country":"India",
+  "zipcode":"380001"
+}

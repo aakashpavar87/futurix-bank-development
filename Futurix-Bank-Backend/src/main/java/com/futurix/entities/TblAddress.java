@@ -1,5 +1,7 @@
 package com.futurix.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,8 +28,13 @@ public class TblAddress {
 	private String Zipcode;
 	
 	@OneToOne
+	@JsonIgnore
 	private TblCustomer customer;
 
+	public TblAddress() {
+		
+	}
+	
 	public TblAddress(String street, String city, String state, String country, String zipcode) {
 		super();
 		Street = street;

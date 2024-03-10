@@ -1,6 +1,7 @@
 package com.futurix.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,39 +13,78 @@ import com.futurix.repositories.CustomerRepo;
 
 @Component
 public class AddressService {
+
 	@Autowired
 	private AddressRepo addressRepo;
-	
+
 	@Autowired
 	private CustomerRepo customerRepo;
-	
+
+	// Adding Address in Database
 	public void createAddress(TblAddress address, int userId) {
-		
-		TblCustomer foundCustomer =  customerRepo.findById(userId).get();
+		TblCustomer foundCustomer = customerRepo.findById(userId).get();
+		foundCustomer.setAddress(address);
 		address.setCustomer(foundCustomer);
 		addressRepo.save(address);
-		
-		foundCustomer.setAddress(address);
 		customerRepo.save(foundCustomer);
 	}
-	
+
+	// Retrieving All Address
 	public List<TblAddress> retrieveAllAddress() {
 		return addressRepo.findAll();
 	}
-	
+
 	public TblAddress retrieveOneAddress(int userId) {
-		customerRepo.findById(userId);
-		return addressRepo.findById(userId).orElse(null);
+		return addressRepo.findById(customerRepo.findById(userId).get().getAddress().getAddress_id()).get();
 	}
-	
-	public void updateAddress(int id,TblAddress address) {
-		TblAddress foundAddress = addressRepo.findById(id).get();
+
+	// Update Address from Database
+	public void updateAddress(int userId, TblAddress address) {
+
+		TblCustomer foundCustomer = customerRepo.findById(userId).get();
+
+		TblAddress foundAddress = foundCustomer.getAddress();
+
 		foundAddress = address;
-		foundAddress.setAddress_id(id);
+		foundAddress.setAddress_id(foundAddress.getAddress_id());
 		addressRepo.save(foundAddress);
+
 	}
-	
-	public void deleteAddress(int id) {
-		addressRepo.deleteById(id);
+
+	public TblAddress updateFieldsAddress(int id, Map<String, Object> updatedFields) throws Exception {
+		TblAddress existingEntity = addressRepo.findById(id)
+				.orElseThrow(() -> new Exception("Entity with id " + id + " not found"));
+		updatedFields.forEach((fieldName, value) -> {
+			// Use reflection or specific methods to update fields
+			// Example: You can use setters to update fields dynamically
+			switch (fieldName) {
+			case "street":
+				existingEntity.setStreet((String) value);
+				break;
+			case "city":
+				existingEntity.setCity((String) value);
+				break;
+			case "country":
+				existingEntity.setCountry((String) value);
+				break;
+			case "state":
+				existingEntity.setState((String) value);
+				break;
+			case "zipcode":
+				existingEntity.setZipcode((String) value);
+				break;
+			
+			// Add more cases for other fields
+			}
+		});
+
+		// Save the updated entity
+		return addressRepo.save(existingEntity);
+	}
+
+	// Delete Address From Database
+	public void deleteAddress(int userId) {
+		TblCustomer foundCustomer = customerRepo.findById(userId).get();
+		addressRepo.deleteById(foundCustomer.getAddress().getAddress_id());
 	}
 }
