@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.futurix.services.filestorage.FileService;
+import com.futurix.services.filestorage.FileServiceImpl;
 import com.futurix.services.filestorage.response.FileResponse;
 
 @RestController
 @RequestMapping("/file")
 public class FileController {
 	@Autowired
-	private FileService fileService;
+	private FileServiceImpl fileServiceImpl;
 	
 	@Value("${project.image}")
 	private String path;
@@ -29,7 +29,7 @@ public class FileController {
 		String fileName = null;
 		try {
 			
-			fileName =	this.fileService.uploadImage(path, image);
+			fileName =	this.fileServiceImpl.uploadImage(path, image);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
