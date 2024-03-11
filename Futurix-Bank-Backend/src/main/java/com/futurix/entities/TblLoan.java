@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class TblLoan {
@@ -31,6 +32,12 @@ public class TblLoan {
     
     @Column(nullable = false)
     private LocalDate Maturity_date;
+    
+    @OneToOne
+    private TblBusiness_loan businessLoan;
+    
+    @OneToOne
+    private TblPersonal_Loan personal_Loan;
     
     @ManyToOne
     @JsonIgnore
@@ -115,6 +122,26 @@ public class TblLoan {
 
 	public void setCustomer(TblCustomer customer) {
 		this.customer = customer;
+	}
+
+
+	public TblBusiness_loan getbusinessLoan() {
+		return businessLoan;
+	}
+
+
+	public void setBusinessLoan(TblBusiness_loan businessLoan) {
+		this.businessLoan = businessLoan;
+	}
+
+
+	public TblPersonal_Loan getPersonal_Loan() {
+		return personal_Loan;
+	}
+
+
+	public void setPersonal_Loan(TblPersonal_Loan personal_Loan) {
+		this.personal_Loan = personal_Loan;
 	}
 	
 	

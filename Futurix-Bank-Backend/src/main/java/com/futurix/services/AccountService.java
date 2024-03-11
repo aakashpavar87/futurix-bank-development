@@ -17,7 +17,7 @@ public class AccountService {
 	@Autowired
 	private CustomerRepo customerRepo;
 	
-	//Create Account
+	//	Create Account
 	public void createAccount(TblAccount account , int id) {
 		accountRepo.save(account);
 		TblCustomer foundCustomer =  customerRepo.findById(id).orElse(null);
@@ -27,13 +27,13 @@ public class AccountService {
 		
 	}
 	
-	//Select all Account
+	//	Select all Account
 	public List<TblAccount> retreiveAllAccount(){
 		return accountRepo.findAll();	
 	}
 	
 	
-	//select one account
+	//	Select one account
 	public TblAccount findAccount(int id) {
 		TblCustomer foundCustomer = customerRepo.findById(id).orElse(null);
 		TblAccount foundAccount =  foundCustomer.getAccount();		
@@ -41,13 +41,14 @@ public class AccountService {
 	}
 	
 	
-	// Delete Account 
+	//	Delete Account 
 	public void deleteAccount(int  id) {
    TblCustomer foundCustomer =  customerRepo.findById(id).orElse(null);
 	TblAccount foundAccount = foundCustomer.getAccount();
 	accountRepo.delete(foundAccount);
 	}
 	
+	//	Update Account
 	public void updateAccount(int id ,  TblAccount account) {
 		TblCustomer foundCustomer = customerRepo.findById(id).get();
 		TblAccount foundAccount = foundCustomer.getAccount();

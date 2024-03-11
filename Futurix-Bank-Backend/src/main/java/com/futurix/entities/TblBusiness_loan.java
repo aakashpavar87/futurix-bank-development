@@ -1,5 +1,7 @@
 package com.futurix.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,7 @@ public class TblBusiness_loan {
 	private String Email;
 	
 	@OneToOne
+	@JsonIgnore
 	private TblLoan loan;
 	
 	
@@ -47,6 +50,12 @@ public class TblBusiness_loan {
 		Business_name = business_name;
 		Business_GST_no = business_GST_no;
 		Email = email;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public int getLoan_id() {
 		return id;
