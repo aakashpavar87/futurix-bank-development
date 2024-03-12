@@ -21,7 +21,7 @@ public class TblTransaction {
 	private Integer transactionId;
 	
 	@Column(nullable = false)
-	private Long accountNumber;
+	private int accountNumber;
 
 	@Column(nullable = false)
 	private String transactionType;
@@ -48,7 +48,7 @@ public class TblTransaction {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TblTransaction(int id, Integer transactionId, Long accountNumber, String transactionType, Double amount,
+	public TblTransaction(int id, Integer transactionId, int accountNumber, String transactionType, Double amount,
 			 Long receiverAccountNumber, String description, String status, Integer transactionLimit) {
 		super();
 		this.id = id;
@@ -78,11 +78,11 @@ public class TblTransaction {
 		this.transactionId = transactionId;
 	}
 
-	public Long getAccountNumber() {
+	public int getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(Long accountNumber) {
+	public void setAccountNumber(int accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 

@@ -22,13 +22,15 @@ public class InvestmentService {
 	// Add Investment
 	public void addInvestment(int investorId, TblInvestment investment) {
 		
+		TblInvestor tblInvestor = investorRepo.findById(investorId).get();
+		List<TblInvestment> foundInvestmentList = tblInvestor.getInvestmentList();
+		
+		foundInvestmentList.add(investment);
+		tblInvestor.setInvestmentList(foundInvestmentList);
+		
+		investorRepo.save(tblInvestor);
 		investmentRepo.save(investment);
 		
-		TblInvestor tblInvestor = investorRepo.findById(investorId).get();
-		tblInvestor.getInvestmentList().add(investment);
-		investorRepo.save(tblInvestor);
-		
-		investment.setInvestor(tblInvestor);
 	}
 	
 	// Delete Investment

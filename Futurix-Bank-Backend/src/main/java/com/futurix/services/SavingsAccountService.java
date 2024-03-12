@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.futurix.entities.TblAccount;
+import com.futurix.entities.TblCustomer;
 import com.futurix.entities.TblSaving_account;
 import com.futurix.repositories.AccountRepo;
+import com.futurix.repositories.CustomerRepo;
 import com.futurix.repositories.SavingAccountRepo;
 
 @Service
@@ -19,10 +21,16 @@ public class SavingsAccountService {
 	@Autowired
 	private AccountRepo accountRepo;
 	
+	@Autowired
+	private CustomerRepo customerRepo;
+	
 	// Get Account
-	public TblSaving_account retrieveSavingAccount(long accountId) {
+	public TblSaving_account retrieveSavingAccount(Integer accountId) {
+		
 		TblAccount tblAccount = accountRepo.findById(accountId).get();
+		
 		TblSaving_account saving_account = tblAccount.getSaving_account();
+		
 		return saving_account;
 	}
 	
@@ -32,18 +40,23 @@ public class SavingsAccountService {
 	}
 	
 	// Add Savings Account
-	public void addSavingAccount(long accountId, TblSaving_account saving_account) {
+	public void addSavingAccount(int accountId, TblSaving_account saving_account) {
 				
 		TblAccount tblAccount = accountRepo.findById(accountId).get();
+		TblCustomer foundCustomer = tblAccount.getCustomer();
+		
 		tblAccount.setSaving_account(saving_account);
-		accountRepo.save(tblAccount);
-		saving_account.setAccount(tblAccount);
-		savingAccountRepo.save(saving_account);
 
+		foundCustomer.setAccount(tblAccount);
+		
+		savingAccountRepo.save(saving_account);
+		accountRepo.save(tblAccount);
+		customerRepo.save(foundCustomer);
+		
 	}
 	
 	// Delete Savings Account
-	public void deleteSavingsAccount(Long accountId) {
+	public void deleteSavingsAccount(int accountId) {
 		
 		TblAccount tblAccount = accountRepo.findById(accountId).get();
 		TblSaving_account saving_account = tblAccount.getSaving_account();
@@ -55,7 +68,7 @@ public class SavingsAccountService {
 	}
 	
 	// Update Savings Account
-	public void updateSavingAccount(long accountId, TblSaving_account saving_account) {
+	public void updateSavingAccount(int accountId, TblSaving_account saving_account) {
 		
 		TblAccount tblAccount = accountRepo.findById(accountId).get();
 		TblSaving_account saving_account2 = tblAccount.getSaving_account();		

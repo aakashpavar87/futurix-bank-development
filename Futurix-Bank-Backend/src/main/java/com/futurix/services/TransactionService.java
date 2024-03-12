@@ -20,7 +20,7 @@ public class TransactionService {
 	@Autowired
 	private AccountRepo accountRepo;
 	
-	public void addTransaction(long accountNumber,TblTransaction transaction) {
+	public void addTransaction(int accountNumber,TblTransaction transaction) {
 		
 		TblAccount account = accountRepo.findById(accountNumber).get();
 		
@@ -34,7 +34,7 @@ public class TransactionService {
 	
 	}
 	
-	public TblTransaction getOneTransaction(long accountNumber, int id) {
+	public TblTransaction getOneTransaction(int accountNumber, int id) {
 		
 		TblAccount foundAccount = accountRepo.findById(accountNumber).get();
 		List<TblTransaction> foundTransactionList = foundAccount.getTransactionList();
@@ -43,7 +43,7 @@ public class TransactionService {
 		return foundTransactionList.stream().filter(predicate).findFirst().get();
 	}
 	
-	public List<TblTransaction> getAllTransactionsOfAccount(long accountNumber) {
+	public List<TblTransaction> getAllTransactionsOfAccount(int accountNumber) {
 		return accountRepo.findById(accountNumber).get().getTransactionList();
 	}
 	

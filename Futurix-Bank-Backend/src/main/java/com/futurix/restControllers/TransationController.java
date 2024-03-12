@@ -21,17 +21,18 @@ public class TransationController {
 	private TransactionService transactionService;
 	
 	@GetMapping("/account/{accountId}/transaction")
-	public List<TblTransaction> retrieveAllTransationOfAccount(@PathVariable long accountId) {
+	public List<TblTransaction> retrieveAllTransationOfAccount(@PathVariable int accountId) {
 		return transactionService.getAllTransactionsOfAccount(accountId);
 	}
 	
 	@GetMapping("/account/{accountId}/transaction/{transactionId}")
-	public TblTransaction retrieveOneTransactionOfAccount(@PathVariable long accountId, int transactionId) {
+	public TblTransaction retrieveOneTransactionOfAccount(@PathVariable int accountId, int transactionId) {
 		return transactionService.getOneTransaction(accountId, transactionId);
 	}
 	
 	@PostMapping("/account/{accountId}/transaction")
-	public ResponseEntity<TblTransaction> addTransaction(@PathVariable long accountId, @RequestBody TblTransaction transaction)	{
+	public ResponseEntity<TblTransaction> addTransaction(@PathVariable int accountId, @RequestBody TblTransaction transaction)	{
+		transactionService.addTransaction(accountId, transaction);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 					.path("/{id}")
 					.buildAndExpand(transaction.getId())

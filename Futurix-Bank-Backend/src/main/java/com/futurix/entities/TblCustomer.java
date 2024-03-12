@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -62,7 +63,7 @@ public class TblCustomer {
 	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
 	private List<TblCard> cardList = new ArrayList<>();
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	private TblAccount account;
 
 	public TblCustomer() {

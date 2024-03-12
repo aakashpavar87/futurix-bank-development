@@ -3,6 +3,8 @@ package com.futurix.entities;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,14 +19,15 @@ public class TblFeedback {
 
 	private String emailId;
 
-	private Long message;
+	private String message;
 	
 	private LocalDateTime timestamp;
 
 	@ManyToOne
+	@JsonIgnore
 	private TblCustomer customer;
 
-	public TblFeedback(Long message) {
+	public TblFeedback(String message) {
 		super();
 		this.message = message;
 	}
@@ -58,11 +61,11 @@ public class TblFeedback {
 		this.emailId = emailId;
 	}
 
-	public Long getMessage() {
+	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(Long message) {
+	public void setMessage(String message) {
 		this.message = message;
 	}
 	

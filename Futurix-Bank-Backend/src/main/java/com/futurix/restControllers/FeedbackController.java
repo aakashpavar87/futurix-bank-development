@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,7 +25,7 @@ public class FeedbackController {
 	private FeedbackServices feedbackServices;
 	
 	//create / add Feedback
-	@PostMapping("/Feedback")
+	@PostMapping("/users/{userId}/feedback")
 	public ResponseEntity<TblFeedback> addFeedback(@RequestBody TblFeedback feedback, @PathVariable int userId){
 		feedbackServices.saveFeedback(feedback, userId);
 		URI locationUri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -36,19 +37,20 @@ public class FeedbackController {
 	}
 	
 	//Get one's Feedback
-	@GetMapping("/Feedback")
+	@GetMapping("/users/{userId}/feedback")
 	public TblFeedback retreveFeedback(@PathVariable int userId) {
 		return feedbackServices.findFeedback(userId);
 	}
 	
 	//Delete Feedback
-	@DeleteMapping("/address/{id}")
+	@DeleteMapping("/users/{userId}/feedback/{id}")
 	public ResponseEntity<Void> deleteFeedback(@PathVariable int id , @PathVariable int userId){
 		feedbackServices.deleteFeedback(id , userId);
 		return ResponseEntity.noContent().build();
 	}
 	
 	//update Feedback
+	@PutMapping("/users/{userId}/feedback/{id}")
 	public ResponseEntity<TblFeedback> updateFeedback(@PathVariable int id, @RequestBody  TblFeedback feedback)
 			{
 				feedbackServices.updateFeedback(id , feedback);

@@ -24,12 +24,12 @@ public class SavingsAccountController {
 	private SavingsAccountService savingsAccountService;
 	
 	@GetMapping("/account/{accountId}/savings")
-	public TblSaving_account getSavingAccount(Long accountId) {
+	public TblSaving_account getSavingAccount(int accountId) {
 		return savingsAccountService.retrieveSavingAccount(accountId);
 	}
 	
 	@PostMapping("/account/{accountId}/savings")
-	public ResponseEntity<TblSaving_account> createSavingsAccount(@RequestBody TblSaving_account saving_account, @PathVariable long accountId) {
+	public ResponseEntity<TblSaving_account> createSavingsAccount(@RequestBody TblSaving_account saving_account, @PathVariable int accountId) {
 		savingsAccountService.addSavingAccount(accountId, saving_account);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 					.path("/{id}")
@@ -39,7 +39,7 @@ public class SavingsAccountController {
 	}
 	
 	@DeleteMapping("/account/{accountId}/savings")
-	public ResponseEntity<Void> removeSavingsAccount(@PathVariable long accountId) {
+	public ResponseEntity<Void> removeSavingsAccount(@PathVariable int accountId) {
 		savingsAccountService.deleteSavingsAccount(accountId);
 		return ResponseEntity.noContent().build();
 	}
@@ -50,7 +50,7 @@ public class SavingsAccountController {
 	}
 	
 	@PutMapping("/account/{accountId}/savings")
-	public ResponseEntity<TblSaving_account> updateSavingsAccount(@PathVariable long accountId, 
+	public ResponseEntity<TblSaving_account> updateSavingsAccount(@PathVariable int accountId, 
 			@RequestBody TblSaving_account saving_account)
 	{
 		savingsAccountService.updateSavingAccount(accountId, saving_account);

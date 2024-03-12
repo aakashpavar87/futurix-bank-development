@@ -5,10 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.futurix.emailSender.EmailSenderService;
 import com.futurix.entities.TblAccount;
 import com.futurix.entities.TblCustomer;
 import com.futurix.repositories.AccountRepo;
 import com.futurix.repositories.CustomerRepo;
+
+import jakarta.mail.MessagingException;
 
 @Service
 public class AccountService {
@@ -17,12 +20,19 @@ public class AccountService {
 	@Autowired
 	private CustomerRepo customerRepo;
 	
+	@Autowired
+	private EmailSenderService emailSender;
+	
 	//	Create Account
-	public void createAccount(TblAccount account , int id) {
+	public void createAccount(TblAccount account , int id) throws MessagingException {
 
 		accountRepo.save(account);
 		TblCustomer foundCustomer =  customerRepo.findById(id).orElse(null);
 		
+		// Sending Mail to Customer that they are registered successfully ...
+		emailSender.sendSimpleEmail(foundCustomer.getEmail(), "Account Opening in Bank", "Welcome to the future of Fintech");
+		
+//		emailSender.sendMailWithAttachment(foundCustomer.getEmail(), "Account open process is completed", "Welcome", "C:\\Users\\DELL\\Downloads\\op-min.png");
 		foundCustomer.setAccount(account);
 		customerRepo.save(foundCustomer);
 		

@@ -24,13 +24,13 @@ public class CurrentAccountController {
 	private CurrentAccountService currentAccountService;
 	
 	@GetMapping("/account/{accountId}/current")
-	public TblCurrent_Account getSavingAccount(Long accountId) {
+	public TblCurrent_Account getSavingAccount(int accountId) {
 		return currentAccountService.retrieveCurrentAccount(accountId);
 	}
 	
 	@PostMapping("/account/{accountId}/current")
 	public ResponseEntity<TblCurrent_Account> createSavingsAccount(@RequestBody TblCurrent_Account current_Account,
-			@PathVariable long accountId) {
+			@PathVariable int accountId) {
 		currentAccountService.addCurrentAccount(accountId, current_Account);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 					.path("/{id}")
@@ -40,7 +40,7 @@ public class CurrentAccountController {
 	}
 	
 	@DeleteMapping("/account/{accountId}/current")
-	public ResponseEntity<Void> removeCurrentAccount(@PathVariable long accountId) {
+	public ResponseEntity<Void> removeCurrentAccount(@PathVariable int accountId) {
 		currentAccountService.deleteCurrentAccount(accountId);
 		return ResponseEntity.noContent().build();
 	}
@@ -51,7 +51,7 @@ public class CurrentAccountController {
 	}
 	
 	@PutMapping("/account/{accountId}/current")
-	public ResponseEntity<TblCurrent_Account> updateCurrentAccount(@PathVariable long accountId, 
+	public ResponseEntity<TblCurrent_Account> updateCurrentAccount(@PathVariable int accountId, 
 			@RequestBody TblCurrent_Account current_Account)
 	{
 		currentAccountService.updateCurrentAccount(accountId, current_Account);

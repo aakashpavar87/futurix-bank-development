@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,7 +23,7 @@ public class TblAccount {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long accountnumber;
+	private int accountnumber;
 		
 	@Column(nullable = false)
 	private String account_type;
@@ -39,17 +40,17 @@ public class TblAccount {
 	@Column(nullable = false)
 	private LocalDate lastactivitydate;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private TblCustomer customer;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	private TblSaving_account saving_account;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	private TblCurrent_Account current_Account;
 	
-	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private List<TblTransaction> transactionList = new ArrayList<>();
 
 	public List<TblTransaction> getTransactionList() {
@@ -75,11 +76,11 @@ public class TblAccount {
 		this.lastactivitydate = lastactivitydate;
 	}
 
-	public Long getAccountnumber() {
+	public int getAccountnumber() {
 		return accountnumber;
 	}
 
-	public void setAccountnumber(Long accountnumber) {
+	public void setAccountnumber(int accountnumber) {
 		this.accountnumber = accountnumber;
 	}
 

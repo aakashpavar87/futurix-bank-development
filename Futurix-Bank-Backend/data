@@ -126,6 +126,7 @@ Transaction
 	"amount" : 5000,
 	"receiverAccountNumber": 15645646545,
 	"description": "Demo description",
-	"transactionLimit" : 25000
+	"transactionLimit" : 25000,
+	"status": "ongoing"
 	
 }
