@@ -20,9 +20,6 @@ public class TblCreditCard {
     private int id;
 	
 	@Column(nullable = false)
-    private String cardType;
-	
-	@Column(nullable = false)
     private Double creditLimit;
 	
 	
@@ -34,10 +31,8 @@ public class TblCreditCard {
     @JsonIgnore
     private TblCard card;
 
-	public TblCreditCard(int id, String cardType, Double creditLimit, String statementPeriod, Double charges) {
+	public TblCreditCard(Double creditLimit, String statementPeriod, Double charges) {
 		super();
-		this.id = id;
-		this.cardType = cardType;
 		this.creditLimit = creditLimit;
 		this.statementPeriod = statementPeriod;
 		this.charges = charges;
@@ -54,14 +49,6 @@ public class TblCreditCard {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getCardType() {
-		return cardType;
-	}
-
-	public void setCardType(String cardType) {
-		this.cardType = cardType;
 	}
 
 	public Double getCreditLimit() {

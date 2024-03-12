@@ -28,9 +28,9 @@ public class CardController {
 		return cardService.retreiveAllCard();
 	}
 	
-	@GetMapping("/users/{id}/cards")
-	public TblCard retriveOneAccount(@PathVariable int id) {
-		return cardService.findCard(id);
+	@GetMapping("/users/{id}/cards/{cardId}")
+	public TblCard retriveOneAccount(@PathVariable int id, @PathVariable int cardId) {
+		return cardService.findCard(id, cardId);
 		
 	}
 	
@@ -43,9 +43,9 @@ public class CardController {
 		
 	}
 	
-	@DeleteMapping("/users/{id}/cards")
-	public ResponseEntity<Void> deleteCard(@PathVariable int id , @PathVariable int CustomerId){
-		cardService.deleteCard(id, CustomerId);
+	@DeleteMapping("/users/{id}/cards/{cardId}")
+	public ResponseEntity<Void> deleteCard(@PathVariable int id, @PathVariable int cardId){
+		cardService.deleteCard(cardId, id);
 		return ResponseEntity.noContent().build();
 		
 	}

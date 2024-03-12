@@ -1,5 +1,6 @@
 package com.futurix.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -23,6 +24,8 @@ public class TransactionService {
 		
 		TblAccount account = accountRepo.findById(accountNumber).get();
 		
+		transaction.setAccountNumber(account.getAccountnumber());
+		transaction.setDate(LocalDate.now());
 		account.getTransactionList().add(transaction);
 		accountRepo.save(account);
 		

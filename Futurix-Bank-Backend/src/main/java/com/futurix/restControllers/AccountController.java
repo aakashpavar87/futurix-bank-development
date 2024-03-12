@@ -23,7 +23,7 @@ public class AccountController {
 	private AccountService accountService;
 	
 	
-	@GetMapping("/users/{id}/accounts")
+	@GetMapping("/accounts")
 	public List<TblAccount> retreiveAllAccount(){
 		return accountService.retreiveAllAccount();
 	}

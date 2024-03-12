@@ -22,10 +22,19 @@ public class BusinessLoanService {
 	public void addBusinessLoan(int loanId, TblBusiness_loan business_loan) {
 		
 		TblLoan foundLoan = loanRepo.findById(loanId).get();
+		
+		business_loan.setInterest_rate(12);
+		
+		String foundEmail = foundLoan.getCustomer().getEmail();
+		
+		business_loan.setEmail(foundEmail);
+		
 		foundLoan.setBusinessLoan(business_loan);
+		
 		loanRepo.save(foundLoan);
 		
 		business_loan.setLoan(foundLoan);
+		
 		businessLoanRepo.save(business_loan);
 	
 	}
@@ -37,7 +46,7 @@ public class BusinessLoanService {
 	public TblBusiness_loan getOneBusinessLoan(int loanId) {
 		
 		TblLoan foundLoan = loanRepo.findById(loanId).get();
-		TblBusiness_loan foundBusinessLoan = foundLoan.getbusinessLoan();
+		TblBusiness_loan foundBusinessLoan = foundLoan.getBusinessLoan();
 		return foundBusinessLoan;
 	
 	}
@@ -45,7 +54,7 @@ public class BusinessLoanService {
 	public void removeBusinessLoan(int loanId) {
 		
 		TblLoan foundLoan = loanRepo.findById(loanId).get();
-		TblBusiness_loan foundBusinessLoan = foundLoan.getbusinessLoan();
+		TblBusiness_loan foundBusinessLoan = foundLoan.getBusinessLoan();
 		businessLoanRepo.delete(foundBusinessLoan);
 		foundLoan.setBusinessLoan(null);
 		loanRepo.save(foundLoan);
@@ -54,7 +63,7 @@ public class BusinessLoanService {
 	
 	public void updateBusinessLoan(int loanId, TblBusiness_loan businessLoan) {
 		TblLoan foundLoan = loanRepo.findById(loanId).get();
-		TblBusiness_loan foundBusinessLoan = foundLoan.getbusinessLoan();
+		TblBusiness_loan foundBusinessLoan = foundLoan.getBusinessLoan();
 		foundBusinessLoan = businessLoan;
 		businessLoanRepo.save(foundBusinessLoan);
 		

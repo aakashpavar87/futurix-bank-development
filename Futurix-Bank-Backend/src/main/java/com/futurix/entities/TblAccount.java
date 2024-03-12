@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -38,6 +40,7 @@ public class TblAccount {
 	private LocalDate lastactivitydate;
 	
 	@OneToOne
+	@JsonIgnore
 	private TblCustomer customer;
 	
 	@OneToOne
@@ -57,10 +60,14 @@ public class TblAccount {
 		this.transactionList = transactionList;
 	}
 
-	public TblAccount(Long accountnumber, String account_type, Double balance, String status,
+	public TblAccount() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public TblAccount(String account_type, Double balance, String status,
 			LocalDate dateofopening, LocalDate lastactivitydate) {
 		super();
-		this.accountnumber = accountnumber;
 		this.account_type = account_type;
 		this.balance = balance;
 		this.status = status;

@@ -15,13 +15,21 @@ public class TblSaving_account {
 	private Long account_number;
 	private Double interest_rate;
 	private String interest_calc_method;
-	public TblSaving_account(Long account_number, Double interest_rate, String interest_calc_method) {
+	public TblSaving_account(Double interest_rate, String interest_calc_method) {
 		super();
-		this.account_number = account_number;
 		this.interest_rate = interest_rate;
 		this.interest_calc_method = interest_calc_method;
 	}
 	
+	
+	
+	public TblSaving_account() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	@OneToOne
 	@JsonIgnore
 	private TblAccount account;

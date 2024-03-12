@@ -22,6 +22,7 @@ public class TblCard {
 	private Date date_of_issue;
 	private Date expiryDate;
 	private int pin;
+	private String cardType;
 		
 	@OneToOne
 	private TblCreditCard creditCard;
@@ -33,20 +34,27 @@ public class TblCard {
 	@JsonIgnore
 	private TblCustomer customer;
 		
-	public TblCard(Long card_number, Long accountnumber, String card_status, Date date_of_issue,
+	public TblCard(String card_status, String cardType , Date date_of_issue,
 			Date date_of_exspiry, int pin) {
 	
 		super();
-		this.card_number = card_number;
-		this.accountnumber = accountnumber;
 		this.card_status = card_status;
-
+		this.cardType = cardType;
 		this.date_of_issue = date_of_issue;
 		this.expiryDate = date_of_exspiry;
 		this.pin = pin;
 		
 	}
 	
+	
+	
+	public TblCard() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	public Long getCard_number() {
 		return card_number;
 	}
@@ -125,6 +133,14 @@ public class TblCard {
 
 	public void setCustomer(TblCustomer customer) {
 		this.customer = customer;
+	}
+
+	public String getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
 	}
 	
 }

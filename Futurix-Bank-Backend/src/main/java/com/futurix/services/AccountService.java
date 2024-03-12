@@ -19,10 +19,14 @@ public class AccountService {
 	
 	//	Create Account
 	public void createAccount(TblAccount account , int id) {
+
 		accountRepo.save(account);
 		TblCustomer foundCustomer =  customerRepo.findById(id).orElse(null);
+		
 		foundCustomer.setAccount(account);
 		customerRepo.save(foundCustomer);
+		
+		account.setCustomer(foundCustomer);
 		accountRepo.save(account);
 		
 	}

@@ -33,13 +33,13 @@ public class SavingsAccountService {
 	
 	// Add Savings Account
 	public void addSavingAccount(long accountId, TblSaving_account saving_account) {
-		
+				
 		TblAccount tblAccount = accountRepo.findById(accountId).get();
 		tblAccount.setSaving_account(saving_account);
-		
 		accountRepo.save(tblAccount);
 		saving_account.setAccount(tblAccount);
 		savingAccountRepo.save(saving_account);
+
 	}
 	
 	// Delete Savings Account

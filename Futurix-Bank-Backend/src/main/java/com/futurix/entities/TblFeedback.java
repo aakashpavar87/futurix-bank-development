@@ -1,6 +1,8 @@
 
 package com.futurix.entities;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,20 +15,17 @@ public class TblFeedback {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	private Integer feedbackType;
-
 	private String emailId;
 
 	private Long message;
+	
+	private LocalDateTime timestamp;
 
 	@ManyToOne
 	private TblCustomer customer;
 
-	public TblFeedback(int id, Integer feedbackType, String emailId, Long message) {
+	public TblFeedback(Long message) {
 		super();
-		this.id = id;
-		this.feedbackType = feedbackType;
-		this.emailId = emailId;
 		this.message = message;
 	}
 
@@ -51,14 +50,6 @@ public class TblFeedback {
 		this.id = id;
 	}
 
-	public Integer getFeedbackType() {
-		return feedbackType;
-	}
-
-	public void setFeedbackType(Integer feedbackType) {
-		this.feedbackType = feedbackType;
-	}
-
 	public String getEmailId() {
 		return emailId;
 	}
@@ -74,5 +65,12 @@ public class TblFeedback {
 	public void setMessage(Long message) {
 		this.message = message;
 	}
+	
+	public LocalDateTime getTimestamp() {
+		return timestamp;
+	}
 
+	public void setTimestamp(LocalDateTime timestamp) {
+		this.timestamp = timestamp;
+	}
 }

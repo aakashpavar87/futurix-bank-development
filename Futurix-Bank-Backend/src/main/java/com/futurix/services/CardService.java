@@ -21,7 +21,16 @@ public class CardService {
 	// Create Card
 	public void createCard(TblCard card, int id) {
 		TblCustomer foundCustomer = customerRepo.findById(id).orElse(null);
-		foundCustomer.getCardList().add(card);
+		List<TblCard> foundCardList = foundCustomer.getCardList();
+		card.setAccountnumber(foundCustomer.getAccountNumber());
+		foundCardList.add(card);
+		
+		// loging
+		foundCardList.stream().forEach(newcard -> System.out.println(card.getCardType()));
+		
+		foundCustomer.setCardList(foundCardList);
+		card.setCustomer(foundCustomer);
+		
 		customerRepo.save(foundCustomer);
 		cardRepo.save(card);
 	}
@@ -32,9 +41,11 @@ public class CardService {
 	}
 
 	// select one Card
-	public TblCard findCard(int id) {
+	public TblCard findCard(int id, int cardId) {
 		TblCustomer foundCustomer = customerRepo.findById(id).orElse(null);
-		TblCard foundCard = (TblCard) foundCustomer.getCardList();
+		List<TblCard> foundCardList = foundCustomer.getCardList();
+		Predicate<? super TblCard> predicate = card -> card.getCard_number() == cardId;
+		TblCard foundCard = foundCardList.stream().filter(predicate ).findFirst().get();
 		return foundCard;
 	}
 

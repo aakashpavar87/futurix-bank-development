@@ -35,6 +35,7 @@ public class TblAdmin {
 	@Column(nullable = false)
 	private String adminPassword;
 
+	
 	public TblAdmin(String adminName, String adminAddress, String adminGender, Long adminPhoneNumber,
 			String adminEmail, Date adminDob, String adminPassword) {
 		super();

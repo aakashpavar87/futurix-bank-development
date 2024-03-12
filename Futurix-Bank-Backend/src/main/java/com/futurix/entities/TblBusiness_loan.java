@@ -18,9 +18,7 @@ public class TblBusiness_loan {
 	@Column(nullable = false)
 	private int Loan_term;
 	
-	@Column(nullable = false)
-	private String Loan_type;
-	
+
 	@Column(nullable = false)
 	private double Interest_rate;
 	
@@ -39,13 +37,16 @@ public class TblBusiness_loan {
 	
 	
 	
-	public TblBusiness_loan(int loan_id, int loan_term, String loan_type, double interest_rate, String business_name,
+	public TblBusiness_loan() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public TblBusiness_loan(int loan_id, int loan_term, double interest_rate, String business_name,
 			String business_GST_no, String email) {
 		super();
 		
 		id = loan_id;
 		Loan_term = loan_term;
-		Loan_type = loan_type;
 		Interest_rate = interest_rate;
 		Business_name = business_name;
 		Business_GST_no = business_GST_no;
@@ -69,12 +70,7 @@ public class TblBusiness_loan {
 	public void setLoan_term(int loan_term) {
 		Loan_term = loan_term;
 	}
-	public String getLoan_type() {
-		return Loan_type;
-	}
-	public void setLoan_type(String loan_type) {
-		Loan_type = loan_type;
-	}
+
 	public double getInterest_rate() {
 		return Interest_rate;
 	}

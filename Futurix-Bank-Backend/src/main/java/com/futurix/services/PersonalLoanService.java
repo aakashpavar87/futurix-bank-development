@@ -21,7 +21,9 @@ public class PersonalLoanService {
 	public void addPersonalLoan(int loanId, TblPersonal_Loan personalLoan) {
 		
 		TblLoan foundLoan = loanRepo.findById(loanId).get();
+		personalLoan.setInterese_rate(7.5);
 		foundLoan.setPersonal_Loan(personalLoan);
+		
 		loanRepo.save(foundLoan);
 		
 		personalLoan.setLoan(foundLoan);

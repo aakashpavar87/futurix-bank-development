@@ -17,10 +17,7 @@ public class TblPersonal_Loan {
     
     @Column(nullable = false)
 	private int Loan_term;
-    
-    @Column(nullable = false)
-	private String Loan_type;
-    
+        
     @Column(nullable = false)
 	private double interese_rate;
     
@@ -40,13 +37,10 @@ public class TblPersonal_Loan {
 	public TblPersonal_Loan() {
 	}
 
-	public TblPersonal_Loan(int loan_id, int loan_term, String loan_type, double interese_rate, double monthly_payment,
+	public TblPersonal_Loan(int loan_term, double monthly_payment,
 			int credit_Score, int annual_income_borrower) {
 		super();
-		Loan_id = loan_id;
 		Loan_term = loan_term;
-		Loan_type = loan_type;
-		this.interese_rate = interese_rate;
 		Monthly_payment = monthly_payment;
 		Credit_Score = credit_Score;
 		Annual_income_borrower = annual_income_borrower;
@@ -70,16 +64,6 @@ public class TblPersonal_Loan {
 
 	public void setLoan_term(int loan_term) {
 		Loan_term = loan_term;
-	}
-
-
-	public String getLoan_type() {
-		return Loan_type;
-	}
-
-
-	public void setLoan_type(String loan_type) {
-		Loan_type = loan_type;
 	}
 
 

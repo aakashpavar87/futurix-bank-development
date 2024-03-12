@@ -27,9 +27,15 @@ public class TblCurrent_Account {
 	@JsonIgnore
 	private TblAccount account;
 	
-	public TblCurrent_Account(Long account_number, Double overdraft_limit, String overdraft_status, Double charges) {
+	
+	
+	public TblCurrent_Account() {
 		super();
-		this.account_number = account_number;
+		// TODO Auto-generated constructor stub
+	}
+
+	public TblCurrent_Account(Double overdraft_limit, String overdraft_status, Double charges) {
+		super();
 		this.overdraft_limit = overdraft_limit;
 		this.overdraft_status = overdraft_status;
 		this.charges = charges;

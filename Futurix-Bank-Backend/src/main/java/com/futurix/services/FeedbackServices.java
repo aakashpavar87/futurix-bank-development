@@ -1,5 +1,6 @@
 package com.futurix.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -21,8 +22,11 @@ public class FeedbackServices {
 	
 	//get Feedback
 	public void saveFeedback(TblFeedback feedback , int id) {
+		
 		TblCustomer foundCustomer = customerRepo.findById(id).orElse(null);
 		feedback.setCustomer(foundCustomer);
+		feedback.setEmailId(foundCustomer.getEmail());
+		feedback.setTimestamp(LocalDateTime.now());
 		feedbackRepo.save(feedback);
 		
 		List<TblFeedback> listOfFeedbacks = foundCustomer.getFeedbackList(); 
@@ -30,6 +34,7 @@ public class FeedbackServices {
 		
 		foundCustomer.setFeedbackList(listOfFeedbacks);
 		customerRepo.save(foundCustomer);
+	
 	}
 	
 	//select all feedback
@@ -40,6 +45,7 @@ public class FeedbackServices {
 
 	//select one feedback
 	public TblFeedback findFeedback(int id) {
+		
 		TblCustomer foundCustomer = customerRepo.findById(id).orElse(null);
 		Predicate<? super TblFeedback> predicate= feedback -> feedback.getId() == id;
 		List<TblFeedback> feedbackList = foundCustomer.getFeedbackList();
@@ -51,6 +57,7 @@ public class FeedbackServices {
 	
 	//Delete Feedback
 	public void deleteFeedback(int id , int customerId) {
+		
 		TblCustomer foundCustomer = customerRepo.findById(id).orElse(null);
 		Predicate<? super TblFeedback> predicate= feedback -> feedback.getId() == id;
 		List<TblFeedback> feedbackList = foundCustomer.getFeedbackList();
@@ -58,6 +65,7 @@ public class FeedbackServices {
 		feedbackRepo.delete(foundFeedback);
 		feedbackList.removeIf(predicate);
 		customerRepo.save(foundCustomer);
+	
 	}
 	
 	//update Feedback

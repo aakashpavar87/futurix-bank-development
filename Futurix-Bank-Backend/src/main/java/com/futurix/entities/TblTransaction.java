@@ -1,6 +1,6 @@
 package com.futurix.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,9 +16,10 @@ public class TblTransaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-
+	
 	@Column(nullable = false)
 	private Integer transactionId;
+	
 	@Column(nullable = false)
 	private Long accountNumber;
 
@@ -27,7 +28,7 @@ public class TblTransaction {
 
 	private Double amount;
 
-	private Date date;
+	private LocalDate date;
 
 	@Column(nullable = false)
 	private Long receiverAccountNumber;
@@ -48,14 +49,13 @@ public class TblTransaction {
 	}
 
 	public TblTransaction(int id, Integer transactionId, Long accountNumber, String transactionType, Double amount,
-			Date date, Long receiverAccountNumber, String description, String status, Integer transactionLimit) {
+			 Long receiverAccountNumber, String description, String status, Integer transactionLimit) {
 		super();
 		this.id = id;
 		this.transactionId = transactionId;
 		this.accountNumber = accountNumber;
 		this.transactionType = transactionType;
 		this.amount = amount;
-		this.date = date;
 		this.receiverAccountNumber = receiverAccountNumber;
 		this.description = description;
 		this.status = status;
@@ -102,11 +102,11 @@ public class TblTransaction {
 		this.amount = amount;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

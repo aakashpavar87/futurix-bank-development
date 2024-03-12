@@ -28,6 +28,9 @@ public class TblLoan {
     private String status;
     
     @Column(nullable = false)
+    private int durationInYears;
+    
+    @Column(nullable = false)
     private LocalDate Date_of_origanation;
     
     @Column(nullable = false)
@@ -43,16 +46,16 @@ public class TblLoan {
     @JsonIgnore
     private TblCustomer customer;
     
-	public TblLoan(int loan_id, long account_number, double loan_amount, String status, LocalDate date_of_origanation,
-			LocalDate maturity_date) {
-		super();
-		Loan_id = loan_id;
-		Account_number = account_number;
+	public TblLoan(double loan_amount, int durationInYears) {
 		this.loan_amount = loan_amount;
-		this.status = status;
-		Date_of_origanation = date_of_origanation;
-		Maturity_date = maturity_date;
+		this.durationInYears = durationInYears;
 	}
+	
+	
+
+	public TblLoan() {
+	}
+
 
 
 	public int getLoan_id() {
@@ -90,6 +93,24 @@ public class TblLoan {
 	}
 
 
+	public int getDurationInYears() {
+		return durationInYears;
+	}
+
+
+
+	public void setDurationInYears(int durationInYears) {
+		this.durationInYears = durationInYears;
+	}
+
+
+
+	public TblBusiness_loan getBusinessLoan() {
+		return businessLoan;
+	}
+
+
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
@@ -125,11 +146,6 @@ public class TblLoan {
 	}
 
 
-	public TblBusiness_loan getbusinessLoan() {
-		return businessLoan;
-	}
-
-
 	public void setBusinessLoan(TblBusiness_loan businessLoan) {
 		this.businessLoan = businessLoan;
 	}
@@ -142,9 +158,6 @@ public class TblLoan {
 
 	public void setPersonal_Loan(TblPersonal_Loan personal_Loan) {
 		this.personal_Loan = personal_Loan;
-	}
-	
-	
-    
+	}   
     
 }

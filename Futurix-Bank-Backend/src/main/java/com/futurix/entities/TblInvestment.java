@@ -29,13 +29,9 @@ public class TblInvestment {
 	@JsonIgnore
 	private TblInvestor investor;
 
-	public TblInvestment(Integer investmentId, Double investmentAmount, Date investmentDate,
-			Long investorPhoneNumber, String investmentType) {
+	public TblInvestment(Double investmentAmount, String investmentType) {
 		super();
-		this.id = investmentId;
 		this.investmentAmount = investmentAmount;
-		this.investmentDate = investmentDate;
-		this.investorPhoneNumber = investorPhoneNumber;
 		this.investmentType = investmentType;
 	}
 

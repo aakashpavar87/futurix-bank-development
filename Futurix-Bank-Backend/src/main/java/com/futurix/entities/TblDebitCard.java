@@ -11,7 +11,29 @@ import jakarta.persistence.OneToOne;
 
 @Entity
 public class TblDebitCard {
-	    public int getId() {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+
+	private double Charges;
+	private double WithdrawLimit;
+
+	@OneToOne
+	@JsonIgnore
+	private TblCard card;
+
+	public TblDebitCard(double charges, double withdrawLimit) {
+		super();
+		Charges = charges;
+		WithdrawLimit = withdrawLimit;
+	}
+
+	public TblDebitCard() {
+		super();
+	}
+
+	public int getId() {
 		return id;
 	}
 
@@ -27,52 +49,19 @@ public class TblDebitCard {
 		this.card = card;
 	}
 
-		@Id
-		@GeneratedValue(strategy = GenerationType.AUTO)
-		private int id;
+	public double getCharges() {
+		return Charges;
+	}
 
-	    
-	    private String CardType;
-		private double Charges;
-		private double WithdrawLimit;
-		
-		
-		@OneToOne
-		@JsonIgnore
-		private TblCard card;
+	public void setCharges(double charges) {
+		Charges = charges;
+	}
 
-		public TblDebitCard(String cardType, double charges, double withdrawLimit) {
-			super();
-			CardType = cardType;
-			Charges = charges;
-			WithdrawLimit = withdrawLimit;
-		}
+	public double getWithdrawLimit() {
+		return WithdrawLimit;
+	}
 
-		public TblDebitCard() {
-			super();
-		}
-
-		public String getCardType() {
-			return CardType;
-		}
-
-		public void setCardType(String cardType) {
-			CardType = cardType;
-		}
-
-		public double getCharges() {
-			return Charges;
-		}
-
-		public void setCharges(double charges) {
-			Charges = charges;
-		}
-
-		public double getWithdrawLimit() {
-			return WithdrawLimit;
-		}
-
-		public void setWithdrawLimit(double withdrawLimit) {
-			WithdrawLimit = withdrawLimit;
-		}
+	public void setWithdrawLimit(double withdrawLimit) {
+		WithdrawLimit = withdrawLimit;
+	}
 }

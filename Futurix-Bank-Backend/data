@@ -1,3 +1,4 @@
+Customer
 {
   "name": "Bharat",
   "email": "bharat@gmail.com",
@@ -10,10 +11,121 @@
   "occupation":"Student"
 }
 
+Address
 {
   "street":"Sarangpur",
   "city":"Ahmedabad",
   "state":"Gujarat",
   "country":"India",
   "zipcode":"380001"
+}
+
+Admin Data
+{
+	"adminName" : "Aakash Pavar",
+	"adminAddress" : "Lakhaji Road, Baroda, 386521",
+	"adminGender" : "Male",
+	"adminPhoneNumber" : 8857465124,
+	"adminEmail" : "aakashpavar@gmail.com",
+	"adminDob" : "2004-11-22",
+	"adminPassword" : "Aakash@87" 
+}
+
+Card Data
+{
+	"card_status":"Active",
+	"cardType":"debit",
+	"date_of_issue":"2024-03-11",
+	"expiryDate":"2027-01-01",
+	"pin":856957
+}
+
+Credit Card
+{
+	"creditLimit" : 50000,
+	"statementPeriod" : "30 Days",
+	"charges" : 0
+}
+
+DebitCard
+{
+	"charges" : 0,
+	"withdrawLimit" : 25000
+}
+
+Account Data
+{
+	"account_type": "savings",
+	"balance": 1000,
+	"status": "active",
+	"dateofopening": "2021-09-20",
+	"lastactivitydate": "2024-03-10"
+}
+
+CurrentAccount
+{
+	"overdraft_limit": 10000,
+	"overdraft_status": "nothing",
+	"charges": 0
+}
+
+Savings Account
+{
+	"interest_rate": 4,
+	"interest_calc_method": "quarterly"	
+}
+
+
+Feedback
+{
+	"message": "Feeling like a sweet" 
+}
+
+Investment
+{
+	"investmentAmount": 150000,
+	"investmentType": "long term"
+}
+
+Investor
+{
+	"investorName": "Aakash Pavar",
+	"investorAddress" : "7, Jayantilal ni Chali",
+	"investorGender" : "Male",
+	"investorPhoneNumber" : 8856894475,
+	"investorEmail" : "aakashpavar87@gmail.com",
+	"investorDob" : "1998-11-22",
+	"investorPassword" : "AakashPavar87"
+}
+
+Loan
+{
+	"loan_amount": 2500000,
+	"durationInYears": 5
+}
+
+Personal Loan
+{
+	"loan_term": "long",
+	"mothly_payment": 15000,
+	"credit_Score": 750,
+	"annual_income_borrower": 75000 	
+}
+
+Business Loan
+{
+	"loan_term" : 12,
+	"business_name" : "Aakash Pvt Ltd",
+	"business_GST_no" : "33AAACR4849R2ZR",
+}
+
+Transaction
+{
+	"transactionId" : 1521,
+	"transactionType" : "deposit",
+	"amount" : 5000,
+	"receiverAccountNumber": 15645646545,
+	"description": "Demo description",
+	"transactionLimit" : 25000
+	
 }
