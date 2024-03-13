@@ -16,6 +16,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.futurix.entities.TblAccount;
 import com.futurix.services.AccountService;
 
+import jakarta.mail.MessagingException;
+
 @RestController
 public class AccountController {
 	
@@ -36,7 +38,7 @@ public class AccountController {
 	
 	
 	@PostMapping("/users/{id}/accounts")
-	public ResponseEntity<TblAccount> createAccount(@RequestBody TblAccount account , @PathVariable int id){
+	public ResponseEntity<TblAccount> createAccount(@RequestBody TblAccount account , @PathVariable int id) throws MessagingException{
 		accountService.createAccount(account, id);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 				.buildAndExpand(account.getAccountnumber()).toUri();

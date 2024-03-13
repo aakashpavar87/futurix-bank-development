@@ -29,10 +29,11 @@ public class AccountService {
 		accountRepo.save(account);
 		TblCustomer foundCustomer =  customerRepo.findById(id).orElse(null);
 		
-		// Sending Mail to Customer that they are registered successfully ...
-		emailSender.sendSimpleEmail(foundCustomer.getEmail(), "Account Opening in Bank", "Welcome to the future of Fintech");
-		
-//		emailSender.sendMailWithAttachment(foundCustomer.getEmail(), "Account open process is completed", "Welcome", "C:\\Users\\DELL\\Downloads\\op-min.png");
+		//	Sending Mail to Customer that they are registered successfully ...
+		System.out.println("Email Start");
+		//	emailSender.sendSimpleEmail(foundCustomer.getEmail(), "Account Opening in Bank", "Welcome to the future of Fintech");
+		emailSender.sendMailWithAttachment(foundCustomer.getEmail(), "Account open process is completed", "Welcome", "C:\\Users\\DELL\\Downloads\\goku.webp");
+		System.out.println("Email End");
 		foundCustomer.setAccount(account);
 		customerRepo.save(foundCustomer);
 		

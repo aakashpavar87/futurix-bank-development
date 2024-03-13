@@ -30,6 +30,7 @@ public class EmailSenderService {
 	}
 	
 	public void sendMailWithAttachment(String toMail, String subject, String body, String attachment) throws MessagingException {
+		
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		
 		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
@@ -49,5 +50,6 @@ public class EmailSenderService {
 		javaMailSender.send(mimeMessage);
 		
 		System.out.println("Mail was sended successfully to " + toMail);
+	
 	}
 }
