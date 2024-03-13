@@ -1,5 +1,4 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React, { useEffect } from 'react'
 import WithdrawalForm from './Withdraw.jsx'
 import './index.css'
 import DepositForm from './deposit.jsx'
@@ -20,28 +19,38 @@ import PersonalLoanVerificationForm from './Personal_loan2.jsx'
 import LoanForm from './Personal_loan.jsx'
 import BusinessForm from './Business_loan.jsx'
 import BusinessForm1 from './Business_loan1.jsx'
+import { getUsersApi } from './api/helloWorldApiService.js'
 
+export function App() {
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-  <AdminRegistrationForm />
-  <AdminLogin />
-  <AdminUpdateForm />
-  <BankingRegistrationForm />
-  <Address />
-  <Kyc />
-  <LoginForm />
-  <ProfileUpdateForm />
-  <InvestorLoginForm />
-  <InvestmentForm />
-  <DebitCardApplicationForm />
-  <CreditCardApplicationForm />
-  <LoanForm />
-  <PersonalLoanVerificationForm />
-  <BusinessForm />
-  <BusinessForm1 />
-    <DepositForm />
-    <WithdrawalForm />
-    <FeedbackForm />
-  </React.StrictMode>,
-)
+  useEffect(() => {
+    getUsersApi().then( (res) => console.log(res.data))
+      .catch( (err) => console.log(err))
+  }, [])
+  
+
+  return (
+    <>
+      <AdminRegistrationForm />
+      <AdminLogin />
+      <AdminUpdateForm />
+      <BankingRegistrationForm />
+      <Address />
+      <Kyc />
+      <LoginForm />
+      <ProfileUpdateForm />
+      <InvestorLoginForm />
+      <InvestmentForm />
+      <DebitCardApplicationForm />
+      <CreditCardApplicationForm />
+      <LoanForm />
+      <PersonalLoanVerificationForm />
+      <BusinessForm />
+      <BusinessForm1 />
+      <DepositForm />
+      <WithdrawalForm />
+      <FeedbackForm />
+    </>
+  )
+}
+

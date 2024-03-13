@@ -1,9 +1,0 @@
-.registration-form-container{
-    background-image: url('https://img.freepik.com/free-photo/light-trails-buildings_1359-715.jpg?w=996&t=st=1710004086~exp=1710004686~hmac=4d652bb6377e33355338a64fbba4d5e838bcb62d9c9472c6e2a3d83f46581356'); /* Set the background image using CSS class */
-    background-size: cover; /* Adjust background size if needed */
-    background-position: center; /* Adjust background position if needed */
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    
-}

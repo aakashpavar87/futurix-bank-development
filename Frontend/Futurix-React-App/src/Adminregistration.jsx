@@ -1,11 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-
+import { helloWorldApi } from './api/helloWorldApiService';
 function AdminRegistrationForm() {
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
   const onSubmit = data => {
     console.log(data); // You can handle form submission here
+    helloWorldApi().then( (res) => console.log(res.data)).catch( (err) => console.log(err))
   };
 
   const password = watch("password", "");
@@ -16,7 +17,7 @@ function AdminRegistrationForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="username">Username</label>
-          <input type="text" id="username" {...register("username", { required: true })} />
+          <input type="text" id="username" name="adminName" {...register("username", { required: true })} />
           {errors.username && <span>Username is required</span>}
         </div>
         <div>
