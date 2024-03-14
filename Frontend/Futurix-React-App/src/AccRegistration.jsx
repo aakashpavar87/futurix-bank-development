@@ -12,7 +12,6 @@ function BankingRegistrationForm() {
   const onSubmit = (data) => {
     // Perform validation and submission logic here
     console.log(data);
-    handleCustomerRegistration()
     // Here, you can perform any logic for form submission
   };
 

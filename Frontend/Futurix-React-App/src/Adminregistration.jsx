@@ -64,7 +64,7 @@ function AdminRegistrationForm() {
           type="number"
           id="phonenumber"
           name="phonenumber"
-          {...register("phonenumber", { required: true, min: 300, max: 850 })}
+          {...register("phonenumber", { required: true })}
         />
         {errors.phonenumber && <span>This field is required</span>}
       </div>
