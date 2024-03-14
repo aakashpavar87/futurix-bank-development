@@ -9,7 +9,7 @@ function Kyc() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform upload logic here, such as sending the file to a server
+   
     if (selectedFile) {
       console.log('Selected file:', selectedFile);
       // You can use FormData to prepare the file for uploading via fetch or Axios

@@ -24,14 +24,14 @@ function BankingRegistrationForm() {
 
       {/* Firstname */}
       <div className="form-group">
-        <label htmlFor="firstName">First Name:</label>
+        <label htmlFor="name">First Name:</label>
         <input
           type="text"
-          id="firstName"
-          name="firstName"
-          {...register("firstName", { required: true })}
+          id="name"
+          name="name"
+          {...register("name", { required: true })}
         />
-        {errors.firstName && <span className="error-message">First name is required</span>}
+        {errors.name && <span className="error-message">First name is required</span>}
       </div>
       {/* Lastname */}
       {/* <div className="form-group">
@@ -77,11 +77,11 @@ function BankingRegistrationForm() {
         <label htmlFor="creditScore">Phone number :</label>
         <input
           type="number"
-          id="phonenumber"
-          name="phonenumber"
-          {...register("phonenumber", { required: true, min: 300, max: 850 })}
+          id="phone"
+          name="phone"
+          {...register("phone", { required: true, min: 300, max: 850 })}
         />
-        {errors.phonenumber && <span>This field is required</span>}
+        {errors.phone && <span>This field is required</span>}
       </div>
       {/* Gender */}
       <div className="form-group">
@@ -120,11 +120,11 @@ function BankingRegistrationForm() {
       </div>
       
       
-      {/* <div>
+      <div>
         <label htmlFor="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" {...register("confirmPassword", { validate: value => value === password })} />
         {errors.confirmPassword && <span>Passwords must match</span>}
-      </div> */}
+      </div>
       {/* Account type */}
       {/* <div className="form-group">
         <label htmlFor="accountType">Account Type:</label>
@@ -143,9 +143,9 @@ function BankingRegistrationForm() {
       <div className="form-group">
         <label htmlFor="Occupation">Occupation:</label>
         <select
-          id="Occupation"
-          name="Occupation"
-          {...register("Occupation", { required: true })}
+          id="occupation"
+          name="occupation"
+          {...register("occupation", { required: true })}
         >
           <option value="Select Occupation"></option>
           <option value="Student">Student</option>
@@ -153,7 +153,7 @@ function BankingRegistrationForm() {
           <option value="job-professional">Job/Professional</option>
           <option value="Others">Others</option>
         </select>
-        {errors.Occupation && <span className="error-message">Please select an Occupaion</span>}
+        {errors.occupation && <span className="error-message">Please select an Occupaion</span>}
       </div>
       {/* Button */}
       <div className="form-group">
