@@ -15,72 +15,77 @@ function DebitCardApplicationForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Personal Information */}
         {/* Address */}
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="address">Address:</label>
           <input
             type="text"
             id="address"
+            name="address"
             {...register("address", { required: true })}
           />
           {errors.address && <span>This field is required</span>}
-        </div>
+        </div> */}
 
         {/* Contact Information */}
         <div className="form-group">
-          <label htmlFor="phone">Phone Number:</label>
+          <label htmlFor="phone">PIN:</label>
           <input
             type="text"
-            id="phone"
-            {...register("phone", { required: true })}
+            id="pin"
+            name="pin"
+            {...register("pin", { required: true })}
           />
-          {errors.phone && <span>This field is required</span>}
+          {errors.pin && <span>This field is required</span>}
         </div>
-
+{/* 
         <div className="form-group">
           <label htmlFor="email">Email Address:</label>
           <input
             type="email"
             id="email"
+            name="email"
             {...register("email", { required: true })}
           />
           {errors.email && <span>This field is required</span>}
-        </div>
+        </div> */}
 
         {/* Employment Information */}
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="employmentStatus">Employment Status:</label>
-          <select id="employmentStatus" {...register("employmentStatus", { required: true })}>
+          <select id="employmentStatus"  name="employmentStatus" {...register("employmentStatus", { required: true })}>
             <option value="employed">Employed</option>
             <option value="selfEmployed">Self-Employed</option>
             <option value="unemployed">Unemployed</option>
           </select>
           {errors.employmentStatus && <span>This field is required</span>}
-        </div>
+        </div> */}
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="employer">Employer:</label>
           <input
             type="text"
             id="employer"
+            name="employer"
             {...register("employer", { required: true })}
           />
           {errors.employer && <span>This field is required</span>}
-        </div>
+        </div> */}
 
         {/* Account Details */}
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="existingAccount">Do you have an existing account with us?</label>
           <input
             type="checkbox"
             id="existingAccount"
+            name="existingAccount"
             {...register("existingAccount")}
           />
-        </div>
+        </div> */}
 
         {/* Card Information */}
         <div className="form-group">
           <label htmlFor="cardType">Card Type:</label>
-          <select id="cardType" {...register("cardType", { required: true })}>
+          <select id="cardType" name="cardType" {...register("cardType", { required: true })}>
             <option value="debit">Debit</option>
             {/* <option value="credit">Credit</option> */}
           </select>
@@ -88,14 +93,14 @@ function DebitCardApplicationForm() {
         </div>
 
         {/* Authorization and Submission */}
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>
             <input type="checkbox" {...register("authorization", { required: true })} />
             I authorize this application
           </label>
           {errors.authorization && <span>This field is required</span>}
         </div>
-        
+         */}
         <button type="submit">Submit Application</button>
       </form>
     </div>

@@ -31,25 +31,27 @@ export function App() {
 
   return (
     <>
+    <BankingRegistrationForm />
+    <Address />
       <AdminRegistrationForm />
-      <AdminLogin />
-      <AdminUpdateForm />
-      <BankingRegistrationForm />
-      <Address />
-      <Kyc />
-      <LoginForm />
-      <ProfileUpdateForm />
+      <CreditCardApplicationForm />
+      <DebitCardApplicationForm />
+      <FeedbackForm />
       <InvestorLoginForm />
       <InvestmentForm />
-      <DebitCardApplicationForm />
-      <CreditCardApplicationForm />
       <LoanForm />
-      <PersonalLoanVerificationForm />
       <BusinessForm />
-      <BusinessForm1 />
       <DepositForm />
       <WithdrawalForm />
-      <FeedbackForm />
+      {/* <AdminLogin /> */}
+      {/* <AdminUpdateForm /> */}
+      
+      
+      {/* <Kyc /> */}
+      {/* <LoginForm />
+      <ProfileUpdateForm /> */}
+      {/* <PersonalLoanVerificationForm /> */}
+      {/* <BusinessForm1 /> */}
     </>
   )
 }

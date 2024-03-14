@@ -15,7 +15,7 @@ function DepositForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Account Information */}
         <div className="form-group">
-          <label htmlFor="accountNumber">Account Number:</label>
+          <label htmlFor="accountNumber">Receiever Account Number:</label>
           <input
             type="text"
             id="accountNumber"
@@ -44,17 +44,16 @@ function DepositForm() {
           {errors.amount && <span>This field is required</span>}
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="method">Deposit Method:</label>
           <select id="method" {...register("method", { required: true })}>
-            {/* <option value="cash">Cash</option>
-            <option value="check">Check</option> */}
+            
             <option value="online">Online Transfer</option>
           </select>
           {errors.method && <span>This field is required</span>}
-        </div>
+        </div> */}
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="date">Date:</label>
           <input
             type="date"
@@ -62,7 +61,7 @@ function DepositForm() {
             {...register("date", { required: true })}
           />
           {errors.date && <span>This field is required</span>}
-        </div>
+        </div> */}
 
         {/* Transaction Authorization */}
         <div className="form-group">

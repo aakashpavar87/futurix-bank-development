@@ -23,7 +23,17 @@ function InvestmentForm() {
           })} />
           {errors.amount && <span>{errors.amount.message}</span>}
         </div>
-        <div>
+
+        <div className="form-group">
+          <label htmlFor="cardType">Investment Type:</label>
+          <select id="investmentType" name="investmentType" {...register("investmentType", { required: true })}>
+            <option value="debit">Short-Term</option>
+            <option value="debit">Long-Term</option>
+            {/* <option value="credit">Credit</option> */}
+          </select>
+          {errors.investmentType && <span>This field is required</span>}
+        </div>
+        {/* <div>
           <label htmlFor="duration">Investment Duration (months)</label>
           <input type="number" id="duration" {...register("duration", { 
             required: "Investment duration is required",
@@ -33,7 +43,7 @@ function InvestmentForm() {
             }
           })} />
           {errors.duration && <span>{errors.duration.message}</span>}
-        </div>
+        </div> */}
         <button type="submit">Invest Now</button>
       </form>
     </div>

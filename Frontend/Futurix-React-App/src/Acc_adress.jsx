@@ -58,6 +58,19 @@ function Address() {
                     {errors.Country && <span className="error-message">Enter Country name</span>}
                 </div>
 
+                <div>
+      <label htmlFor="zipCode">Enter Zip Code:</label>
+      <input
+        type="number"
+        id="zipCode"
+        name="zipCode"
+        // value={zipCode}
+        // onChange={handleZipCodeChange}
+        // maxLength={6} // Limiting input length to 5 characters
+      />
+      {/* You can add additional validation/error handling here if needed */}
+    </div>
+
                 <div className="form-group">
                     <button className="btn" type="submit">Next Page</button>
                     <button className="previous" type="button">Previous</button>

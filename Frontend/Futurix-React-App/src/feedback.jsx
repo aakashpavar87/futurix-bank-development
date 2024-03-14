@@ -14,7 +14,7 @@ function FeedbackForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="feedback">Feedback</label>
-          <textarea id="feedback" {...register("feedback", { required: true })} />
+          <textarea id="feedback" name="feedback" {...register("feedback", { required: true })} />
           {errors.feedback && <span>Feedback is required</span>}
         </div>
         <button type="submit">Submit</button>
