@@ -1,5 +1,6 @@
 package com.futurix.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -23,6 +24,10 @@ public class LoanService {
 	// Add Loan
 	public void createLoan(TblLoan loan, int userId) {
 		TblCustomer foundCustomer = customerRepo.findById(userId).get();
+		loan.setAccount_number(foundCustomer.getAccountNumber());
+		loan.setDate_of_origanation(LocalDate.now());
+		loan.setMaturity_date(LocalDate.now().plusYears(loan.getDurationInYears()));
+		loan.setStatus("Not Active");
 		foundCustomer.getLoanList().add(loan);
 		loan.setCustomer(foundCustomer);
 		loanRepo.save(loan);
@@ -61,5 +66,10 @@ public class LoanService {
 		tblLoan = loan;
 		loanList.add(tblLoan);
 		loanRepo.save(tblLoan);
+	}
+
+	public List<TblLoan> getAllLoans() {
+		// TODO Auto-generated method stub
+		return loanRepo.findAll();
 	}
 }

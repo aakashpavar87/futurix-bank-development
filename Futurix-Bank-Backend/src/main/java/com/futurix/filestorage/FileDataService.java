@@ -21,9 +21,12 @@ public class FileDataService {
 		
 		String filePath = FOLDER_PATH+file.getOriginalFilename();		
 		FileData newFileData = new FileData();
+		
 		newFileData.setName(file.getOriginalFilename());
 		newFileData.setType(file.getContentType());
+		
 		newFileData.setFilePath(filePath);
+		
 		FileData fileData = fIleDataRepo.save(newFileData);
 		
 		file.transferTo(new File(filePath));

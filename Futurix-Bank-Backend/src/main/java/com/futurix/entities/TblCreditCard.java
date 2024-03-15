@@ -21,20 +21,25 @@ public class TblCreditCard {
 	
 	@Column(nullable = false)
     private Double creditLimit;
-	
-	
-    private String statementPeriod;
+	    
+	@Column(nullable = false)
+	private String pin;
     
-    private Double charges;
+	private Double charges;
+    
+    private String income;
+    
+    private String employment;
+    
+    private String creditScore;
     
     @OneToOne
     @JsonIgnore
     private TblCard card;
 
-	public TblCreditCard(Double creditLimit, String statementPeriod, Double charges) {
+	public TblCreditCard(Double creditLimit, Double charges) {
 		super();
 		this.creditLimit = creditLimit;
-		this.statementPeriod = statementPeriod;
 		this.charges = charges;
 	}
 
@@ -59,13 +64,6 @@ public class TblCreditCard {
 		this.creditLimit = creditLimit;
 	}
 
-	public String getStatementPeriod() {
-		return statementPeriod;
-	}
-
-	public void setStatementPeriod(String statementPeriod) {
-		this.statementPeriod = statementPeriod;
-	}
 
 	public Double getCharges() {
 		return charges;
@@ -81,6 +79,30 @@ public class TblCreditCard {
 
 	public void setCard(TblCard card) {
 		this.card = card;
+	}
+
+	public String getIncome() {
+		return income;
+	}
+
+	public void setIncome(String income) {
+		this.income = income;
+	}
+
+	public String getEmployment() {
+		return employment;
+	}
+
+	public void setEmployment(String employment) {
+		this.employment = employment;
+	}
+
+	public String getCreditScore() {
+		return creditScore;
+	}
+
+	public void setCreditScore(String creditScore) {
+		this.creditScore = creditScore;
 	}
 
 

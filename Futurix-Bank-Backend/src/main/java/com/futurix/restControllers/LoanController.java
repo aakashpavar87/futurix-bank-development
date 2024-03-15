@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -19,18 +18,17 @@ import com.futurix.entities.TblLoan;
 import com.futurix.services.LoanService;
 
 @RestController
-@RequestMapping("/users/{userId}")
 public class LoanController {
 	
 	@Autowired
 	private LoanService loanService;
 	
-	@GetMapping("/loan/{loanId}")
+	@GetMapping("/users/{userId}/loan/{loanId}")
 	public TblLoan retrieveLoanFromDatabase(@PathVariable int userId, @PathVariable int loanId) {
 		 return loanService.retrieveLoan(userId,loanId);
 	}
 	
-	@PostMapping("/loan")
+	@PostMapping("/users/{userId}/loan")
 	public ResponseEntity<TblLoan> createLoan(@RequestBody TblLoan loan, @PathVariable int userId) {
 		
 		loanService.createLoan(loan, userId);
@@ -43,18 +41,18 @@ public class LoanController {
 		return ResponseEntity.created(location ).build();
 	}
 	
-	@GetMapping("/loan")
+	@GetMapping("/users/{userId}/loan")
 	public List<TblLoan> getAllLoansOfCustomer(@PathVariable int userId) {
 		return loanService.retrieveAllLoansOfCustomer(userId);
 	}
 	
-	@DeleteMapping("/loan/{loanId}")
+	@DeleteMapping("/users/{userId}/loan/{loanId}")
 	public ResponseEntity<Void> deleteLoan(@PathVariable int userId, @PathVariable int loanId) {
 		loanService.deleteLoan(userId, loanId);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping("/loan/{loanId}")
+	@PutMapping("/users/{userId}/loan/{loanId}")
 	public ResponseEntity<TblLoan> updateLoanOfCustomer(@PathVariable int userId,
 				@PathVariable int loanId, @RequestBody TblLoan loan) {
 		
@@ -63,8 +61,12 @@ public class LoanController {
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 				.buildAndExpand()
 				.toUri();
-		return ResponseEntity.created(location ).build()
-;	}
+		return ResponseEntity.created(location ).build();
+		
+	}
 	
-	
+	@GetMapping("/loans")
+	public List<TblLoan> getAllLoansOfBank() {
+		return loanService.getAllLoans();
+	}
 }

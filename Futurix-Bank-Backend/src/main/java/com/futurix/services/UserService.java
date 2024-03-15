@@ -1,6 +1,8 @@
 package com.futurix.services;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,18 @@ public class UserService {
 	
 	// Insert Customer
 	public void createUser(TblCustomer customer) {
+		
+	    Random rand = new Random();
+	    String accountNumber = "";
+	    for (int i = 0; i < 14; i++)
+	    {
+	        int n = rand.nextInt(10) + 0;
+	        accountNumber += Integer.toString(n);
+	    }
+		
+		customer.setDateOfOpening(LocalDate.now());
+		customer.setAccountNumber(Long.parseLong(accountNumber));
+		customer.setAccountNumber(0);
 		customerRepo.save(customer);
 	}
 	

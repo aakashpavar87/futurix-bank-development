@@ -18,7 +18,6 @@ public class TblBusiness_loan {
 	@Column(nullable = false)
 	private int Loan_term;
 	
-
 	@Column(nullable = false)
 	private double Interest_rate;
 	
@@ -30,6 +29,33 @@ public class TblBusiness_loan {
 	
 	@Column(nullable = false)
 	private String Email;
+	
+	@Column(nullable = false)
+	private String annualProfitLoss;
+	
+	@Column(nullable = false)
+	private String annualRevenue;
+	
+	@Column(nullable = false)
+	private String businessType;
+	
+	@Column(nullable = false)
+	private String city;
+	
+	@Column(nullable = false)
+	private String loanPurpose;
+	
+	@Column(nullable = false)
+	private String state;
+	
+	@Column(nullable = false)
+	private String streetAddress;
+	
+	@Column(nullable = false)
+	private String yearsinbusiness;
+	
+	@Column(nullable = false)
+	private String zipCode;
 	
 	@OneToOne
 	@JsonIgnore
@@ -101,6 +127,61 @@ public class TblBusiness_loan {
 	public void setLoan(TblLoan loan) {
 		this.loan = loan;
 	}
+	public String getAnnualProfitLoss() {
+		return annualProfitLoss;
+	}
+	public void setAnnualProfitLoss(String annualProfitLoss) {
+		this.annualProfitLoss = annualProfitLoss;
+	}
+	public String getAnnualRevenue() {
+		return annualRevenue;
+	}
+	public void setAnnualRevenue(String annualRevenue) {
+		this.annualRevenue = annualRevenue;
+	}
+	public String getBusinessType() {
+		return businessType;
+	}
+	public void setBusinessType(String businessType) {
+		this.businessType = businessType;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getLoanPurpose() {
+		return loanPurpose;
+	}
+	public void setLoanPurpose(String loanPurpose) {
+		this.loanPurpose = loanPurpose;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getStreetAddress() {
+		return streetAddress;
+	}
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
+	}
+	public String getYearsinbusiness() {
+		return yearsinbusiness;
+	}
+	public void setYearsinbusiness(String yearsinbusiness) {
+		this.yearsinbusiness = yearsinbusiness;
+	}
+	public String getZipCode() {
+		return zipCode;
+	}
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+	
 	
 	
 }

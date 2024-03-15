@@ -22,6 +22,8 @@ public class FileController {
 	@Autowired
 	private FileDataService fileDataService;
 	
+	
+	
 	@PostMapping("/upload")
 	public ResponseEntity<?> uploadFileToDatabase(@RequestParam(name = "image") MultipartFile file) throws IllegalStateException, IOException {
 		String uploadImage = fileDataService.uploadToFileStorage(file);

@@ -17,11 +17,11 @@ public class TblCard {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long card_number;
 	
+	private String email;
 	private Long accountnumber;
 	private String card_status;
 	private Date date_of_issue;
 	private Date expiryDate;
-	private int pin;
 	private String cardType;
 		
 	@OneToOne
@@ -35,14 +35,13 @@ public class TblCard {
 	private TblCustomer customer;
 		
 	public TblCard(String card_status, String cardType , Date date_of_issue,
-			Date date_of_exspiry, int pin) {
+			Date date_of_exspiry) {
 	
 		super();
 		this.card_status = card_status;
 		this.cardType = cardType;
 		this.date_of_issue = date_of_issue;
 		this.expiryDate = date_of_exspiry;
-		this.pin = pin;
 		
 	}
 	
@@ -94,14 +93,6 @@ public class TblCard {
 	public void setDate_of_exspiry(Date date_of_exspiry) {
 		this.expiryDate = date_of_exspiry;
 	}
-	
-	public int getPin() {
-		return pin;
-	}
-	
-	public void setPin(int pin) {
-		this.pin = pin;
-	}
 
 	public Date getExpiryDate() {
 		return expiryDate;
@@ -143,4 +134,12 @@ public class TblCard {
 		this.cardType = cardType;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 }

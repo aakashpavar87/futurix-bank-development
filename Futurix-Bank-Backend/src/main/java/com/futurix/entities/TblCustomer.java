@@ -69,16 +69,13 @@ public class TblCustomer {
 	public TblCustomer() {
 	}
 
-	public TblCustomer(String name, String email, String password, String phone, LocalDate dob, LocalDate dateOfOpening,
-			long accountNumber, String gender, String occupation) {
+	public TblCustomer(String name, String email, String password, String phone, LocalDate dob, String gender, String occupation) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.phone = phone;
 		this.dob = dob;
-		this.dateOfOpening = dateOfOpening;
-		this.accountNumber = accountNumber;
 		this.gender = gender;
 		this.occupation = occupation;
 	}
