@@ -23,7 +23,7 @@ public class TblInvestment {
 
 	private Long investorPhoneNumber;
 
-	private String investmentType;
+	private String investmentDuration;
 
 	@ManyToOne
 	@JsonIgnore
@@ -32,7 +32,7 @@ public class TblInvestment {
 	public TblInvestment(Double investmentAmount, String investmentType) {
 		super();
 		this.investmentAmount = investmentAmount;
-		this.investmentType = investmentType;
+		this.investmentDuration = investmentType;
 	}
 
 	public TblInvestment() {
@@ -72,11 +72,11 @@ public class TblInvestment {
 	}
 
 	public String getInvestmentType() {
-		return investmentType;
+		return investmentDuration;
 	}
 
 	public void setInvestmentType(String investmentType) {
-		this.investmentType = investmentType;
+		this.investmentDuration = investmentType;
 	}
 
 	public TblInvestor getInvestor() {

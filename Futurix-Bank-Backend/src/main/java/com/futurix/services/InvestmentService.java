@@ -24,7 +24,9 @@ public class InvestmentService {
 		
 		TblInvestor tblInvestor = investorRepo.findById(investorId).get();
 		List<TblInvestment> foundInvestmentList = tblInvestor.getInvestmentList();
+		
 		investment.setInvestor(tblInvestor);
+		
 		foundInvestmentList.add(investment);
 		tblInvestor.setInvestmentList(foundInvestmentList);
 		
