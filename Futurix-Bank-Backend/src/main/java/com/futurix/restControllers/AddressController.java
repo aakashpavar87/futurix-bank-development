@@ -28,7 +28,7 @@ public class AddressController {
 	@PostMapping("/users/{userId}/address")
 	public ResponseEntity<TblAddress> addAddress(@RequestBody TblAddress address, @PathVariable int userId) {
 		addressService.createAddress(address, userId);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(address.getAddress_id()).toUri();
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(address.getAddressId()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 
@@ -49,7 +49,7 @@ public class AddressController {
 	@PutMapping("/users/{userId}/address")
 	public ResponseEntity<TblAddress> updatAddress(@PathVariable int userId, @RequestBody TblAddress address) {
 		addressService.updateAddress(userId, address);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(address.getAddress_id()).toUri();
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(address.getAddressId()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 

@@ -13,7 +13,7 @@ import jakarta.persistence.OneToOne;
 public class TblAddress {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int Address_id;
+	private int addressId;
 	
 	
 	@Column(nullable = false)
@@ -42,14 +42,6 @@ public class TblAddress {
 		State = state;
 		Country = country;
 		Zipcode = zipcode;
-	}
-	
-	public int getAddress_id() {
-		return Address_id;
-	}
-	
-	public void setAddress_id(int address_id) {
-		Address_id = address_id;
 	}
 	
 	public String getStreet() {
@@ -98,6 +90,14 @@ public class TblAddress {
 
 	public void setCustomer(TblCustomer customer) {
 		this.customer = customer;
+	}
+
+	public int getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(int addressId) {
+		this.addressId = addressId;
 	}
 	
 }

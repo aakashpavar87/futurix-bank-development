@@ -13,22 +13,22 @@ import jakarta.persistence.OneToOne;
 public class TblPersonal_Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int Loan_id;
-    
-    @Column(nullable = false)
-	private int Loan_term;
+	private int loanId;
         
     @Column(nullable = false)
-	private double interese_rate;
+	private double interestRate;
     
     @Column(nullable = false)
-	private double Monthly_payment;
+	private int creditScore;
     
     @Column(nullable = false)
-	private int Credit_Score;
+    private String purpose;
     
     @Column(nullable = false)
-	private int Annual_income_borrower;
+    private String employment;
+    
+    @Column(nullable = false)
+    private String income;
     
     @OneToOne
     @JsonIgnore
@@ -37,73 +37,45 @@ public class TblPersonal_Loan {
 	public TblPersonal_Loan() {
 	}
 
-	public TblPersonal_Loan(int loan_term, double monthly_payment,
-			int credit_Score, int annual_income_borrower) {
+	public TblPersonal_Loan(int loan_id, double interestRate, int credit_Score, String purpose, String employment,
+			TblLoan loan) {
 		super();
-		Loan_term = loan_term;
-		Monthly_payment = monthly_payment;
-		Credit_Score = credit_Score;
-		Annual_income_borrower = annual_income_borrower;
+		loanId = loan_id;
+		this.interestRate = interestRate;
+		creditScore = credit_Score;
+		this.purpose = purpose;
+		this.employment = employment;
+		this.loan = loan;
 	}
 
 
+
+
 	public int getLoan_id() {
-		return Loan_id;
+		return loanId;
 	}
 
 
 	public void setLoan_id(int loan_id) {
-		Loan_id = loan_id;
+		loanId = loan_id;
 	}
-
-
-	public int getLoan_term() {
-		return Loan_term;
-	}
-
-
-	public void setLoan_term(int loan_term) {
-		Loan_term = loan_term;
-	}
-
 
 	public double getInterese_rate() {
-		return interese_rate;
+		return interestRate;
 	}
 
 
 	public void setInterese_rate(double interese_rate) {
-		this.interese_rate = interese_rate;
+		this.interestRate = interese_rate;
 	}
-
-
-	public double getMonthly_payment() {
-		return Monthly_payment;
-	}
-
-
-	public void setMonthly_payment(double monthly_payment) {
-		Monthly_payment = monthly_payment;
-	}
-
 
 	public int getCredit_Score() {
-		return Credit_Score;
+		return creditScore;
 	}
 
 
 	public void setCredit_Score(int credit_Score) {
-		Credit_Score = credit_Score;
-	}
-
-
-	public int getAnnual_income_borrower() {
-		return Annual_income_borrower;
-	}
-
-
-	public void setAnnual_income_borrower(int annual_income_borrower) {
-		Annual_income_borrower = annual_income_borrower;
+		creditScore = credit_Score;
 	}
 
 	public TblLoan getLoan() {
@@ -112,6 +84,38 @@ public class TblPersonal_Loan {
 
 	public void setLoan(TblLoan loan) {
 		this.loan = loan;
+	}
+
+	public double getInterestRate() {
+		return interestRate;
+	}
+
+	public void setInterestRate(double interestRate) {
+		this.interestRate = interestRate;
+	}
+
+	public String getPurpose() {
+		return purpose;
+	}
+
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
+	}
+
+	public String getEmployment() {
+		return employment;
+	}
+
+	public void setEmployment(String employment) {
+		this.employment = employment;
+	}
+
+	public String getIncome() {
+		return income;
+	}
+
+	public void setIncome(String income) {
+		this.income = income;
 	}
 	
 	

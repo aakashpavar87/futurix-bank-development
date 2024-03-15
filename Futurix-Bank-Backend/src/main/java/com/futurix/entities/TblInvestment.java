@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,9 @@ public class TblInvestment {
 	private Double investmentAmount;
 
 	private Date investmentDate;
+	
+	@Column(nullable = false)
+	private String investmentType;
 
 	private Long investorPhoneNumber;
 
@@ -81,6 +85,22 @@ public class TblInvestment {
 
 	public TblInvestor getInvestor() {
 		return investor;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getInvestmentDuration() {
+		return investmentDuration;
+	}
+
+	public void setInvestmentDuration(String investmentDuration) {
+		this.investmentDuration = investmentDuration;
 	}
 
 	public void setInvestor(TblInvestor investor) {

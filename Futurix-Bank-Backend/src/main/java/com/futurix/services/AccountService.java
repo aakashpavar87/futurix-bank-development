@@ -1,5 +1,6 @@
 package com.futurix.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,20 @@ public class AccountService {
 	//	Create Account
 	public void createAccount(TblAccount account , int id) throws MessagingException {
 
-		accountRepo.save(account);
-		TblCustomer foundCustomer =  customerRepo.findById(id).orElse(null);
 		
+		account.setDateofopening(LocalDate.now());
+		account.setLastactivitydate(LocalDate.now());
+		TblCustomer foundCustomer =  customerRepo.findById(id).orElse(null);
+		account.setAccountnumber((int) foundCustomer.getAccountNumber());
+		account.setBalance((double) 0);
+		account.setStatus("Not Verified");
+		accountRepo.save(account);
 		//	Sending Mail to Customer that they are registered successfully ...
 		System.out.println("Email Start");
 		//	emailSender.sendSimpleEmail(foundCustomer.getEmail(), "Account Opening in Bank", "Welcome to the future of Fintech");
-		emailSender.sendMailWithAttachment(foundCustomer.getEmail(), "Account open process is completed", "Welcome", "C:\\Users\\DELL\\Downloads\\goku.webp");
+		emailSender.sendMailWithAttachment(foundCustomer.getEmail(), 
+				"Account open process is completed", "Welcome", 
+				"C:\\Users\\DELL\\OneDrive\\Desktop\\TYProject\\futurix-bank-development\\Futurix-Bank-Backend\\documents\\goku.webp");
 		System.out.println("Email End");
 		foundCustomer.setAccount(account);
 		customerRepo.save(foundCustomer);

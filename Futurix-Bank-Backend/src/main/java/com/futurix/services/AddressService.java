@@ -35,7 +35,7 @@ public class AddressService {
 	}
 
 	public TblAddress retrieveOneAddress(int userId) {
-		return addressRepo.findById(customerRepo.findById(userId).get().getAddress().getAddress_id()).get();
+		return addressRepo.findById(customerRepo.findById(userId).get().getAddress().getAddressId()).get();
 	}
 
 	// Update Address from Database
@@ -46,7 +46,7 @@ public class AddressService {
 		TblAddress foundAddress = foundCustomer.getAddress();
 
 		foundAddress = address;
-		foundAddress.setAddress_id(foundAddress.getAddress_id());
+		foundAddress.setAddressId(foundAddress.getAddressId());
 		addressRepo.save(foundAddress);
 
 	}
@@ -85,6 +85,6 @@ public class AddressService {
 	// Delete Address From Database
 	public void deleteAddress(int userId) {
 		TblCustomer foundCustomer = customerRepo.findById(userId).get();
-		addressRepo.deleteById(foundCustomer.getAddress().getAddress_id());
+		addressRepo.deleteById(foundCustomer.getAddress().getAddressId());
 	}
 }

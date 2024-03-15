@@ -26,7 +26,7 @@ public class TblAccount {
 	private int accountnumber;
 		
 	@Column(nullable = false)
-	private String account_type;
+	private String accountType;
 	
 	@Column(nullable = false)
 	private Double balance;
@@ -69,7 +69,7 @@ public class TblAccount {
 	public TblAccount(String account_type, Double balance, String status,
 			LocalDate dateofopening, LocalDate lastactivitydate) {
 		super();
-		this.account_type = account_type;
+		this.accountType = account_type;
 		this.balance = balance;
 		this.status = status;
 		this.dateofopening = dateofopening;
@@ -84,12 +84,12 @@ public class TblAccount {
 		this.accountnumber = accountnumber;
 	}
 
-	public String getAccount_type() {
-		return account_type;
+	public String getAccountType() {
+		return accountType;
 	}
 
-	public void setAccount_type(String account_type) {
-		this.account_type = account_type;
+	public void setAccountType(String account_type) {
+		this.accountType = account_type;
 	}
 
 	public Double getBalance() {

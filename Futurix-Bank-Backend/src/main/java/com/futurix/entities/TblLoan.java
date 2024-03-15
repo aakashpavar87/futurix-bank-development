@@ -19,10 +19,10 @@ public class TblLoan {
 	private int Loan_id;
     
     @Column(nullable = false)
-    private long Account_number;
+    private long accountNumber;
     
     @Column(nullable = false)
-    private double loan_amount;
+    private double loanAmount;
     
     @Column(nullable = false)
     private String status;
@@ -31,10 +31,10 @@ public class TblLoan {
     private int durationInYears;
     
     @Column(nullable = false)
-    private LocalDate Date_of_origanation;
+    private LocalDate originDate;
     
     @Column(nullable = false)
-    private LocalDate Maturity_date;
+    private LocalDate matureDate;
     
     @OneToOne
     private TblBusiness_loan businessLoan;
@@ -47,114 +47,104 @@ public class TblLoan {
     private TblCustomer customer;
     
 	public TblLoan(double loan_amount, int durationInYears) {
-		this.loan_amount = loan_amount;
+		this.loanAmount = loan_amount;
 		this.durationInYears = durationInYears;
 	}
-	
-	
 
 	public TblLoan() {
 	}
-
-
 
 	public int getLoan_id() {
 		return Loan_id;
 	}
 
-
 	public void setLoan_id(int loan_id) {
 		Loan_id = loan_id;
 	}
 
-
 	public long getAccount_number() {
-		return Account_number;
+		return accountNumber;
 	}
-
 
 	public void setAccount_number(long account_number) {
-		Account_number = account_number;
+		accountNumber = account_number;
 	}
-
 
 	public double getLoan_amount() {
-		return loan_amount;
+		return loanAmount;
 	}
-
 
 	public void setLoan_amount(double loan_amount) {
-		this.loan_amount = loan_amount;
+		this.loanAmount = loan_amount;
 	}
-
 
 	public String getStatus() {
 		return status;
 	}
 
-
 	public int getDurationInYears() {
 		return durationInYears;
 	}
-
-
 
 	public void setDurationInYears(int durationInYears) {
 		this.durationInYears = durationInYears;
 	}
 
-
-
 	public TblBusiness_loan getBusinessLoan() {
 		return businessLoan;
 	}
-
-
 
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-
-	public LocalDate getDate_of_origanation() {
-		return Date_of_origanation;
-	}
-
-
-	public void setDate_of_origanation(LocalDate date_of_origanation) {
-		Date_of_origanation = date_of_origanation;
-	}
-
-
-	public LocalDate getMaturity_date() {
-		return Maturity_date;
-	}
-
-
-	public void setMaturity_date(LocalDate maturity_date) {
-		Maturity_date = maturity_date;
-	}
-
-
 	public TblCustomer getCustomer() {
 		return customer;
 	}
-
 
 	public void setCustomer(TblCustomer customer) {
 		this.customer = customer;
 	}
 
-
 	public void setBusinessLoan(TblBusiness_loan businessLoan) {
 		this.businessLoan = businessLoan;
 	}
-
 
 	public TblPersonal_Loan getPersonal_Loan() {
 		return personal_Loan;
 	}
 
+	public long getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(long accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
+	public double getLoanAmount() {
+		return loanAmount;
+	}
+
+	public void setLoanAmount(double loanAmount) {
+		this.loanAmount = loanAmount;
+	}
+
+	public LocalDate getOriginDate() {
+		return originDate;
+	}
+
+	public void setOriginDate(LocalDate originDate) {
+		this.originDate = originDate;
+	}
+
+	public LocalDate getMatureDate() {
+		return matureDate;
+	}
+
+	public void setMatureDate(LocalDate matureDate) {
+		this.matureDate = matureDate;
+	}
 
 	public void setPersonal_Loan(TblPersonal_Loan personal_Loan) {
 		this.personal_Loan = personal_Loan;

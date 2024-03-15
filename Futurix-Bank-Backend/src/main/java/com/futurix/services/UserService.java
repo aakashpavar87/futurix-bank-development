@@ -28,7 +28,6 @@ public class UserService {
 		
 		customer.setDateOfOpening(LocalDate.now());
 		customer.setAccountNumber(Long.parseLong(accountNumber));
-		customer.setAccountNumber(0);
 		customerRepo.save(customer);
 	}
 	

@@ -24,9 +24,10 @@ public class LoanService {
 	// Add Loan
 	public void createLoan(TblLoan loan, int userId) {
 		TblCustomer foundCustomer = customerRepo.findById(userId).get();
+		
 		loan.setAccount_number(foundCustomer.getAccountNumber());
-		loan.setDate_of_origanation(LocalDate.now());
-		loan.setMaturity_date(LocalDate.now().plusYears(loan.getDurationInYears()));
+		loan.setOriginDate(LocalDate.now());
+		loan.setMatureDate(LocalDate.now().plusYears(loan.getDurationInYears()));
 		loan.setStatus("Not Active");
 		foundCustomer.getLoanList().add(loan);
 		loan.setCustomer(foundCustomer);
