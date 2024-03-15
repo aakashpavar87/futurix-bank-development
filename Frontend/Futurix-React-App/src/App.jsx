@@ -20,6 +20,8 @@ import LoanForm from './Personal_loan.jsx'
 import BusinessForm from './Business_loan.jsx'
 import BusinessForm1 from './Business_loan1.jsx'
 import { getUsersApi } from './api/helloWorldApiService.js'
+import Loan from './Loan.jsx'
+import Card from './Card.jsx'
 
 export function App() {
 
@@ -34,11 +36,13 @@ export function App() {
     <BankingRegistrationForm />
     <Address />
       <AdminRegistrationForm />
+      <Card />
       <CreditCardApplicationForm />
       <DebitCardApplicationForm />
       <FeedbackForm />
       <InvestorLoginForm />
       <InvestmentForm />
+      <Loan />
       <LoanForm />
       <BusinessForm />
       <DepositForm />

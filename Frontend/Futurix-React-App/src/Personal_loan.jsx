@@ -14,43 +14,11 @@ function LoanForm() {
     <div>
       <h2>Loan Application</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-      {/* Loan amount */}
-        <div className="form-group">
-          <label htmlFor="loanAmount">Loan Amount:</label>
-          <input
-            type="number"
-            id="loanAmount"
-            name="loanAmount"
-            placeholder="Enter loan amount"
-            {...register("loanAmount", { required: true, min: 0 })}
-          />
-          {errors.loanAmount && <span>This field is required</span>}
-        </div>
-        {/* LOan term */}
-        <div className="form-group">
-          <label htmlFor="loanTerm">Loan Term (Years):</label>
-          <input
-            type="number"
-            id="loanTerm"
-            name="loanTerm"
-            placeholder="Enter loan term in months"
-            {...register("loanTerm", { required: true, min: 1 })}
-          />
-          {errors.loanTerm && <span>This field is required</span>}
-        </div>
-        {/* Interest rate  */}
-        {/* <div className="form-group">
-          <label htmlFor="interestRate">Interest Rate (%):</label>
-        0  <input
-            type="number"
-            id="interestRate"
-            placeholder="Enter interest rate"
-            {...register("interestRate", { required: true, min: 0, max: 100 })}
-          />
-          {errors.interestRate && <span>This field is required</span>}
-        </div> */}
+      
+        
+       
         {/* Loan purposes */}
-        {/* <div className="form-group">
+         <div className="form-group">
           <label htmlFor="loanPurpose">Loan Purpose:</label>
           <select id="loanPurpose" {...register("loanPurpose", { required: true })}>
             <option value="">Select loan purpose</option>
@@ -60,8 +28,8 @@ function LoanForm() {
             <option value="Debt consolidation">Debt consolidation</option>
           </select>
           {errors.loanPurpose && <span>This field is required</span>}
-        </div> */}
-        {/* <div className="form-group">
+        </div>
+        <div className="form-group">
           <label>Employment Status:</label>
           <div>
             <label>
@@ -82,7 +50,7 @@ function LoanForm() {
             </label>
           </div>
           {errors.employmentStatus && <span>This field is required</span>}
-        </div> */}
+        </div>
         <div className="form-group">
           <label htmlFor="creditScore">Credit Score:</label>
           <input
@@ -109,7 +77,7 @@ function LoanForm() {
         </div>
         
         {/* Personal Information */}
-        {/* <h3>Personal Information</h3>
+        <h3>Personal Information</h3>
         <div className="form-group">
           <label htmlFor="firstName">First Name:</label>
           <input
@@ -177,9 +145,9 @@ function LoanForm() {
             {...register("address.zip", { required: true })}
           />
           {errors.address && <span>This field is required</span>}
-        </div> */}
+        </div>
         {/* Additional Information */}
-        {/* <h3>Additional Information</h3>
+        <h3>Additional Information</h3>
         <div className="form-group">
           <label htmlFor="citizenship">Citizenship:</label>
           <input
@@ -208,7 +176,7 @@ function LoanForm() {
             {...register("ssn", { required: true })}
           />
           {errors.ssn && <span>This field is required</span>}
-        </div> */}
+        </div>
         {/* Agreement */}
         <div className="form-group">
           <label>

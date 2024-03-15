@@ -50,7 +50,7 @@ function DebitCardApplicationForm() {
         </div> */}
 
         {/* Employment Information */}
-        {/* <div className="form-group">
+        <div className="form-group">
           <label htmlFor="employmentStatus">Employment Status:</label>
           <select id="employmentStatus"  name="employmentStatus" {...register("employmentStatus", { required: true })}>
             <option value="employed">Employed</option>
@@ -58,7 +58,7 @@ function DebitCardApplicationForm() {
             <option value="unemployed">Unemployed</option>
           </select>
           {errors.employmentStatus && <span>This field is required</span>}
-        </div> */}
+        </div>
 
         {/* <div className="form-group">
           <label htmlFor="employer">Employer:</label>
@@ -86,8 +86,9 @@ function DebitCardApplicationForm() {
         <div className="form-group">
           <label htmlFor="cardType">Card Type:</label>
           <select id="cardType" name="cardType" {...register("cardType", { required: true })}>
-            <option value="debit">Debit</option>
-            {/* <option value="credit">Credit</option> */}
+            <option value="Mater_Card">Master Card</option>
+            <option value="Visa">Visa</option>
+            <option value="Rupay">Rupay</option>
           </select>
           {errors.cardType && <span>This field is required</span>}
         </div>

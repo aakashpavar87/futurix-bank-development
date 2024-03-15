@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { createUserApi , getUsersApi } from './api/helloWorldApiService';
 
 
 function BankingRegistrationForm() {
@@ -7,13 +8,20 @@ function BankingRegistrationForm() {
 
   const { register, handleSubmit, formState: { errors }, watch} = useForm();
 
+  
+
   const password = watch("password", "");
 
+  useEffect(() => {
+    getUsersApi().then(res => {console.log(res.data)})
+    .catch(err => {console.log(err)
+    })
+  }, [])
   const onSubmit = (data) => {
     // Perform validation and submission logic here
     console.log(data);
-    handleCustomerRegistration()
-    // Here, you can perform any logic for form submission
+    createUserApi(data).then(res =>  console.log(res.data)).catch(err => console.log(err))
+  
   };
 
   return (
@@ -79,7 +87,7 @@ function BankingRegistrationForm() {
           type="number"
           id="phone"
           name="phone"
-          {...register("phone", { required: true, min: 300, max: 850 })}
+          {...register("phone", { required: true })}
         />
         {errors.phone && <span>This field is required</span>}
       </div>

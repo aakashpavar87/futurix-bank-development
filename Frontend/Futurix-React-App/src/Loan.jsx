@@ -1,29 +1,21 @@
 import React ,{useEffect}from 'react';
 import { useForm } from 'react-hook-form';
-import { createinvestmentApi ,getinvestmentApi} from './api/helloWorldApiService';
 
-function InvestmentForm() {
+function Loan() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-
-  useEffect(() => {
-    getinvestmentApi(2).then(res => {console.log(res.data)})
-    .catch(err => {console.log(err)
-    })
-  }, [])
 
   const onSubmit = data => {
     console.log(data); // You can handle form submission here
-    createinvestmentApi(data,2).then(res =>  console.log(res.data)).catch(err => console.log(err))
-  
+
   };
 
   return (
     <div>
-      <h2>Investment Form</h2>
+      <h2>Loan Form</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="amount">Investment Amount ($)</label>
-          <input type="number" id="investmentAmount" name="investmentAmount"{...register("investmentAmount", { 
+          <label htmlFor="amount">Loan Amount ($)</label>
+          <input type="number" id="loan_amount" name="loan_amount"{...register("loan_amount", { 
             required: "Investment amount is required",
             min: {
               value: 1,
@@ -34,17 +26,17 @@ function InvestmentForm() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="cardType">Investment Type:</label>
-          <select id="investmentType" name="investmentType" {...register("investmentType", { required: true })}>
-            <option value="Short-term">Short-Term</option>
-            <option value="Long-term">Long-Term</option>
+          <label htmlFor="cardType">Loan Type:</label>
+          <select id="LoanType" name="LoanType" {...register("LoanType", { required: true })}>
+            <option value="personal">Personal</option>
+            <option value="Business">Business</option>
             {/* <option value="credit">Credit</option> */}
           </select>
           {errors.investmentType && <span>This field is required</span>}
         </div>
         <div>
-          <label htmlFor="duration">Investment Duration (months)</label>
-          <input type="number" id="duration" {...register("duration", { 
+          <label htmlFor="duration">Loan Duration (Years)</label>
+          <input type="number" id="durationInYears" {...register("durationInYears", { 
             required: "Investment duration is required",
             min: {
               value: 1,
@@ -53,10 +45,10 @@ function InvestmentForm() {
           })} />
           {errors.duration && <span>{errors.duration.message}</span>}
         </div>
-        <button type="submit">Invest Now</button>
+        <button type="submit">Next</button>
       </form>
     </div>
   );
 }
 
-export default InvestmentForm;
+export default Loan;

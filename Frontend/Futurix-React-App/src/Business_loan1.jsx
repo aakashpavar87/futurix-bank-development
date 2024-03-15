@@ -59,10 +59,10 @@ const BusinessForm1 = () => {
           
         </select>
       </div>
-      <div>
+      {/* <div>
         <label htmlFor="creditScore">Credit Score:</label>
         <input type="number" id="creditScore" name="creditScore" {...register} aria-label="Credit Score" />
-      </div>
+      </div> */}
       <div>
         <label htmlFor="outstandingDebts">Outstanding Debts/Liabilities:</label>
         <input type="number" id="outstandingDebts" name="outstandingDebts" {...register} aria-label="Outstanding Debts/Liabilities" />

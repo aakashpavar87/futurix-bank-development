@@ -1,12 +1,19 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { useForm } from 'react-hook-form';
+import { createAddressapi ,getAddressapi} from './api/helloWorldApiService';
 
 function Address() {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
+    useEffect(() => {
+        getAddressapi(1).then(res => {console.log(res.data)})
+        .catch(err => {console.log(err)
+        })
+      }, [])
+
     const onSubmit = (data) => {
-        // Perform validation and submission logic here
         console.log(data);
+        createAddressapi(data,2).then(res => console.log(res.data)).catch(err => console.log(err))
     };
 
     return (
@@ -18,55 +25,53 @@ function Address() {
                     <label htmlFor="Street">Street:</label>
                     <input
                         type="text"
-                        id="Street"
-                        name="Street"
-                        {...register("Street", { required: true })}
+                        id="street"
+                        name="street"
+                        {...register("street", { required: true })}
                     />
-                    {errors.Street && <span className="error-message">Street name is required</span>}
+                    {errors.street && <span className="error-message">Street name is required</span>}
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="City">City:</label>
                     <input
                         type="text"
-                        id="City"
-                        name="City"
-                        {...register("City", { required: true })}
+                        id="city"
+                        name="city"
+                        {...register("city", { required: true })}
                     />
-                    {errors.City && <span className="error-message">Enter City name</span>}
+                    {errors.city && <span className="error-message">Enter City name</span>}
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="State">State:</label>
                     <input
                         type="text"
-                        id="State"
-                        name="State"
-                        {...register("State", { required: true })}
+                        id="state"
+                        name="state"
+                        {...register("state", { required: true })}
                     />
-                    {errors.State && <span className="error-message">Enter State name</span>}
+                    {errors.state && <span className="error-message">Enter State name</span>}
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="Country">Country:</label>
                     <input
                         type="text"
-                        id="Country"
-                        name="Country"
-                        {...register("Country", { required: true })}
+                        id="country"
+                        name="country"
+                        {...register("country", { required: true })}
                     />
-                    {errors.Country && <span className="error-message">Enter Country name</span>}
+                    {errors.country && <span className="error-message">Enter Country name</span>}
                 </div>
 
                 <div>
       <label htmlFor="zipCode">Enter Zip Code:</label>
       <input
         type="number"
-        id="zipCode"
-        name="zipCode"
-        // value={zipCode}
-        // onChange={handleZipCodeChange}
-        // maxLength={6} // Limiting input length to 5 characters
+        id="zipcode"
+        name="zipcode"
+        {...register("zipcode", { required: true })}
       />
       {/* You can add additional validation/error handling here if needed */}
     </div>
