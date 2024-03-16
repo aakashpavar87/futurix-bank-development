@@ -63,7 +63,7 @@ public class TblCustomer {
 	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
 	private List<TblCard> cardList = new ArrayList<>();
 	
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@OneToOne(cascade = CascadeType.ALL)
 	private TblAccount account;
 
 	public TblCustomer() {

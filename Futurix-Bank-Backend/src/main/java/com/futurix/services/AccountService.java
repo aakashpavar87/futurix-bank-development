@@ -27,7 +27,6 @@ public class AccountService {
 	//	Create Account
 	public void createAccount(TblAccount account , int id) throws MessagingException {
 
-		
 		account.setDateofopening(LocalDate.now());
 		account.setLastactivitydate(LocalDate.now());
 		TblCustomer foundCustomer =  customerRepo.findById(id).orElse(null);

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,9 +35,12 @@ public class TblLoan {
     private LocalDate originDate;
     
     @Column(nullable = false)
+    private String loanType;
+    
+    @Column(nullable = false)
     private LocalDate matureDate;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private TblBusiness_loan businessLoan;
     
     @OneToOne
@@ -144,6 +148,14 @@ public class TblLoan {
 
 	public void setMatureDate(LocalDate matureDate) {
 		this.matureDate = matureDate;
+	}
+
+	public String getLoanType() {
+		return loanType;
+	}
+
+	public void setLoanType(String loanType) {
+		this.loanType = loanType;
 	}
 
 	public void setPersonal_Loan(TblPersonal_Loan personal_Loan) {

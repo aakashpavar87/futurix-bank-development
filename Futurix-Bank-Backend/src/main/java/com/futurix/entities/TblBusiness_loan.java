@@ -2,6 +2,7 @@ package com.futurix.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,10 +23,10 @@ public class TblBusiness_loan {
 	private double Interest_rate;
 	
 	@Column(nullable = false)
-	private String Business_name;
+	private String business_name;
 	
 	@Column(nullable = false)
-	private String Business_GST_no;
+	private String business_gst_no;
 	
 	@Column(nullable = false)
 	private String Email;
@@ -57,7 +58,7 @@ public class TblBusiness_loan {
 	@Column(nullable = false)
 	private String zipCode;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private TblLoan loan;
 	
@@ -67,17 +68,30 @@ public class TblBusiness_loan {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public TblBusiness_loan(int loan_id, int loan_term, double interest_rate, String business_name,
-			String business_GST_no, String email) {
+	
+	public TblBusiness_loan(int id, int loan_term, double interest_rate, String business_name, String business_gst_no,
+			String email, String annualProfitLoss, String annualRevenue, String businessType, String city,
+			String loanPurpose, String state, String streetAddress, String yearsinbusiness, String zipCode,
+			TblLoan loan) {
 		super();
-		
-		id = loan_id;
+		this.id = id;
 		Loan_term = loan_term;
 		Interest_rate = interest_rate;
-		Business_name = business_name;
-		Business_GST_no = business_GST_no;
+		this.business_name = business_name;
+		this.business_gst_no = business_gst_no;
 		Email = email;
+		this.annualProfitLoss = annualProfitLoss;
+		this.annualRevenue = annualRevenue;
+		this.businessType = businessType;
+		this.city = city;
+		this.loanPurpose = loanPurpose;
+		this.state = state;
+		this.streetAddress = streetAddress;
+		this.yearsinbusiness = yearsinbusiness;
+		this.zipCode = zipCode;
+		this.loan = loan;
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -104,16 +118,16 @@ public class TblBusiness_loan {
 		Interest_rate = interest_rate;
 	}
 	public String getBusiness_name() {
-		return Business_name;
+		return business_name;
 	}
 	public void setBusiness_name(String business_name) {
-		Business_name = business_name;
+		this.business_name = business_name;
 	}
-	public String getBusiness_GST_no() {
-		return Business_GST_no;
+	public String getBusiness_gst_no() {
+		return business_gst_no;
 	}
-	public void setBusiness_GST_no(String business_GST_no) {
-		Business_GST_no = business_GST_no;
+	public void setBusiness_gst_no(String business_gst_no) {
+		this.business_gst_no = business_gst_no;
 	}
 	public String getEmail() {
 		return Email;
