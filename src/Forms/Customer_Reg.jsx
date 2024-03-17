@@ -291,6 +291,16 @@ const Customer_Reg = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
 
+  const [focusedInput, setFocusedInput] = useState(null);
+    
+  const handleFocus = (inputName) => {
+      setFocusedInput(inputName);
+  };
+
+  const handleBlur = () => {
+      setFocusedInput(null);
+  };
+
   const onSubmit = (data) => {
     console.log(data); // You can handle the form submission here
   };
@@ -306,9 +316,8 @@ const Customer_Reg = () => {
     marginTop: '-8px',
     cursor: 'pointer',
   };
- const handleBlur = () => {
-    setIsFocused(false);
-  };
+  const borderColor = focusedInput ? 'bg-gradient-to-r from-blue-500 to-blue-700' : '';
+
   return (
     <div  className="flex justify-center items-center min-h-screen "style={{ backgroundImage: 'linear-gradient(180deg, #050c1b, #2a4365)', padding: "25px", borderRadius: "20px" }}>
          <img src="Untitled design.png " className='mr-2 w-2/4 hidden md:block place-self-flex shadow-lg shadow-white rounded-md backdrop-blur-md'  /> 
@@ -320,11 +329,13 @@ const Customer_Reg = () => {
               type="text"
               id="firstName"
               name="firstName"
-              className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white `}
+              className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white focus:border-blue-500 focus:ring-blue-500 ${focusedInput === "firstName" ? 'animate-pulse' : ''}`}
               {...register("firstName", { required: { value: true, message: 'Please Enter First Name' } })}
               autoComplete="given-name"
-              placeholder="First Name"
-              style={{ transition: 'background-color 0.3s', className  :"shadow-white rounded-md " }}
+              placeholder="Enter First Name"
+              style={{ transition: 'background-color 0.3s', className  :"shadow-white rounded-md ",background: borderColor }}
+              onFocus={() => handleFocus("firstName")}
+              onBlur={handleBlur}
             />
             {errors.firstName && <p className="text-amber-400 text-xs mt-1">{errors.firstName.message}</p>}
             <label
@@ -339,11 +350,14 @@ const Customer_Reg = () => {
               type="text"
               id="lastName"
               name="lastName"
-              className={`border rounded-md px-3 py-2 w-full  shadow-sm shadow-white`}
+              className={`border rounded-md px-3 py-2 w-full  shadow-sm shadow-whitefocus:border-blue-500 focus:ring-blue-500 ${focusedInput === "lastName" ? 'animate-pulse' : ''}`}
               {...register("lastName", { required: { value: true, message: 'Please Enter Last Name' } })}
               autoComplete="family-name"
-              placeholder="Last Name"
-              style={{ transition: 'background-color 0.3s' }}
+              placeholder="Enter Last Name"
+              style={{ transition: 'background-color 0.3s',
+              background: borderColor }}
+              onFocus={() => handleFocus("lastName")}
+              onBlur={handleBlur}
             />
             {errors.lastName && <p className="text-amber-400  text-xs mt-1">{errors.lastName.message}</p>}
             <label
@@ -357,14 +371,16 @@ const Customer_Reg = () => {
               type="text"
               id="email"
               name="email"
-              className={`border rounded-md px-3 py-2 w-full   shadow-sm shadow-white`}
+              className={`border rounded-md px-3 py-2 w-full   shadow-sm shadow-whitefocus:border-blue-500 focus:ring-blue-500 ${focusedInput === "email" ? 'animate-pulse' : ''}`}
               {...register("Email", {
                 required: { value: true, message: 'Please Enter Your Email ' },
                 pattern: { value: /^\S+@\S+$/i, message: 'Enter valid  Email ' }
               })}
               autoComplete="email"
               placeholder="Email : Ex. abc@gmail.com"
-              style={{ transition: 'background-color 0.3s' }}
+              style={{ transition: 'background-color 0.3s' ,background: borderColor }}
+              onFocus={() => handleFocus("email")}
+              onBlur={handleBlur}
             />
             {errors.Email && <p className="text-amber-400  text-xs mt-1">{errors.Email.message}</p>}
             <label
@@ -378,13 +394,15 @@ const Customer_Reg = () => {
               type={showPassword ? 'text' : 'password'}
               id="password"
               name="password"
-              className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white`}
+              className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white focus:border-blue-500 focus:ring-blue-500 ${focusedInput === "password" ? 'animate-pulse' : ''}focus:border-blue-500 focus:ring-blue-500 ${focusedInput === "password" ? 'animate-pulse' : ''}`}
               {...register("password", {
                 required: { value: true, message: 'Please Enter Your Password ' }
               })}
               autoComplete="new-password"
               placeholder="Password: Ex. Abcd@1234"
-              style={{ transition: 'background-color 0.3s' }}
+              style={{ transition: 'background-color 0.3s' , background: borderColor }}
+              onFocus={() => handleFocus("password")}
+              onBlur={handleBlur} 
             />
             {showPassword ? (
               <svg
@@ -411,21 +429,23 @@ const Customer_Reg = () => {
               </svg>
             )}
           </div>
-          {errors.password && <p className="text-amber-400  text-xs ">{errors.password.message}</p>}
+          {errors.password && <p className="text-amber-400  text-xs mt-0">{errors.password.message}</p>}
 
           <div className="relative">
   <input
     type={showPassword ? 'text' : 'password'}
     id="confirmPassword"
     name="confirmPassword"
-    className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white`}
+    className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-whitefocus:border-blue-500 focus:ring-blue-500 ${focusedInput === "confirmPassword" ? 'animate-pulse' : ''}focus:border-blue-500 focus:ring-blue-500 ${focusedInput === "confirmPassword" ? 'animate-pulse' : ''}`}
     {...register("confirmPassword", {
       required: { value: true, message: 'Please confirm your password' },
       validate: value => value !== password || 'The passwords does not match'
     })}
     autoComplete="confirmPassword"
     placeholder="Confirm Password"
-    style={{ transition: 'background-color 0.3s' }}
+    style={{ transition: 'background-color 0.3s' ,background: borderColor }}
+    onFocus={() => handleFocus("confirmPassword")}
+    onBlur={handleBlur}
   />
   {showPassword ? (
     <svg
@@ -460,12 +480,14 @@ const Customer_Reg = () => {
             <input
               type="text"
               id="occupation"
-              name="occupation" occupation
-              className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white`}
+              name="occupation" 
+              className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-whitefocus:border-blue-500 focus:ring-blue-500 ${focusedInput === "occupation" ? 'animate-pulse' : ''}`}
               {...register("occupation", { required: { value: true, message: 'Please Enter Your Occupation ' } })}
               autoComplete="occupation"
-              placeholder="Occupation"
-              style={{ transition: 'background-color 0.3s' }}
+              placeholder="Enter Occupation"
+              style={{ transition: 'background-color 0.3s', background: borderColor }}
+              onFocus={() => handleFocus("occupation")}
+              onBlur={handleBlur}
             />
             <label
               htmlFor="occupation"
@@ -482,6 +504,8 @@ const Customer_Reg = () => {
               name="dob"
               className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white`}
               {...register("dob", { required: { value: true, message: 'Please Enter Your D.O.B ' } })}
+              onFocus={(e) => e.target.type = 'date'}
+              onBlur={(e) => !e.target.value && (e.target.type = 'text')}
               placeholder="Date of Birth"
               style={{ transition: 'background-color 0.3s' }}
             />

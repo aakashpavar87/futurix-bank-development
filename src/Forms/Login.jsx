@@ -4,12 +4,21 @@ import { useForm } from 'react-hook-form';
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState(false);
+    const [focusedInput, setFocusedInput] = useState(null);
+    const handleFocus = (inputName) => {
+        setFocusedInput(inputName);
+    };
+
+    const handleBlur = () => {
+        setFocusedInput(null);
+    };
 
     const onSubmit = (data) => {
         console.log(data); // You can handle the form submission here
     };
 
     const handlePasswordToggle = () => setShowPassword(!showPassword);
+    const borderColor = focusedInput ? 'bg-gradient-to-r from-blue-500 to-blue-700' : '';
 
     const eyeIconStyle = {
         width: '16px',
@@ -31,11 +40,15 @@ const Login = () => {
                             type="text"
                             id="email"
                             name="email"
-                            className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white`}
+                            className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white 
+                            focus:border-blue-500 focus:ring-blue-500 ${focusedInput === "email" ? 'animate-pulse' : ''}`}
                             {...register("email", { required: { value: true, message: 'Please Enter your email' } })}
                             autoComplete="given-name"
                             placeholder="Enter your Email"
-                            style={{ transition: 'background-color 0.3s' }}
+                            style={{ transition: 'background-color 0.3s',
+                            background: borderColor }}
+                            onFocus={() => handleFocus("email")}
+                            onBlur={handleBlur}
                         />
                     </div>
                     {errors.email && <p className="text-amber-400 text-xs ">{errors.email.message}</p>}
@@ -44,13 +57,16 @@ const Login = () => {
                             type={showPassword ? 'text' : 'password'}
                             id="password"
                             name="password"
-                            className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white`}
+                            className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white focus:border-blue-500 focus:ring-blue-500 ${focusedInput === "password" ? 'animate-pulse' : ''}`}
                             {...register("password", {
                                 required: { value: true, message: 'Please Enter Your Password ' }
                             })}
                             autoComplete="new-password"
                             placeholder="Enter Password"
-                            style={{ transition: 'background-color 0.3s' }}
+                            style={{ transition: 'background-color 0.3s',
+                            background: borderColor }}
+                            onFocus={() => handleFocus("password")}
+                            onBlur={handleBlur}
                         />
                         {showPassword ? (
                             <svg

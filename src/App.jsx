@@ -25,6 +25,10 @@ import Card from './Card.jsx'
 import Customer_Reg from './Forms/Customer_Reg.jsx'
 import 'tailwindcss/tailwind.css';
 import Login from './Forms/Login.jsx'
+import AddressForm from './Forms/AddressForm.jsx'
+import Investor_Reg from './Forms/Investor_Reg.jsx'
+import Chatbox from './Forms/Chatbot.jsx'
+import Chatbot from './Forms/Chatbot.jsx'
 export function App() {
 
   useEffect(() => {
@@ -35,11 +39,14 @@ export function App() {
 
   return (
     <>
-    <Customer_Reg />
-    {/* <Login/> */}
-    {/* <BankingRegistrationForm />
-    <Address />
-      <AdminRegistrationForm />
+     {/* <Customer_Reg/> 
+    <Investor_Reg/> */}
+    <Chatbot/>
+
+    {/* <Login/>  */}
+  
+    {/* <AddressForm /> */}
+   {/*   <AdminRegistrationForm />
       <Card />
       <CreditCardApplicationForm />
       <DebitCardApplicationForm />
