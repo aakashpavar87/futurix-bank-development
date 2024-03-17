@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.futurix.entities.TblAccount;
 import com.futurix.entities.TblCustomer;
 import com.futurix.exception.InsufficientAmountException;
+import com.futurix.exception.NotFoundException;
 import com.futurix.repositories.AccountRepo;
 import com.futurix.repositories.CustomerRepo;
 
@@ -44,6 +45,9 @@ public class AccountService {
 		account.setAccountnumber(Long.parseLong(accountNumber));
 		
 		TblCustomer foundCustomer =  customerRepo.findById(id).orElse(null);
+		if(foundCustomer == null)
+			throw new NotFoundException("Account not found with " + id);
+		
 		account.setBalance((double) 0);
 		account.setStatus("Not Verified");
 		accountRepo.save(account);
@@ -70,8 +74,14 @@ public class AccountService {
 	
 	//	Select one account
 	public TblAccount findAccount(int id) {
+		
 		TblCustomer foundCustomer = customerRepo.findById(id).orElse(null);
+		
+		if(foundCustomer == null)
+			throw new NotFoundException("Account not found with " + id);
+		
 		TblAccount foundAccount =  foundCustomer.getAccount();		
+		
 		return foundAccount;
 	}
 	
@@ -94,7 +104,7 @@ public class AccountService {
 	// Deposit in Account
 	public void depositInAccount(int accId, int amount, String desc) {
 		 TblAccount tblAccount = accountRepo.findById(accId).get();
-		 TblCustomer foundCustomer = tblAccount.getCustomer();
+//		 TblCustomer foundCustomer = tblAccount.getCustomer();
 		 		 
 //		 String mailMessage = """
 //		 		<h1>Rs. %s Depositted To Your Account Successfully</h1>

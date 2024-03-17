@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.futurix.entities.TblCustomer;
+import com.futurix.exception.NotFoundException;
 import com.futurix.repositories.CustomerRepo;
 
 @Component
@@ -32,7 +33,10 @@ public class UserService {
 	
 	// Select one Customer
 	public TblCustomer findCustomer(int id) {
-		return customerRepo.findById(id).orElse(null);
+		TblCustomer foundCustomer = customerRepo.findById(id).orElse(null);
+		if(foundCustomer == null)
+			throw new NotFoundException("User not found with " + id);
+		return foundCustomer;
 	}
 	
 	// Update one customer
