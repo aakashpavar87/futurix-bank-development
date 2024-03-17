@@ -39,13 +39,13 @@ export function App() {
 
   return (
     <>
-     {/* <Customer_Reg/> 
-    <Investor_Reg/> */}
-    <Chatbot/>
+     {/* <Customer_Reg/>  */}
+    {/* <Investor_Reg/>  */}
+    {/* <Chatbot/> */}
 
     {/* <Login/>  */}
   
-    {/* <AddressForm /> */}
+    <AddressForm />
    {/*   <AdminRegistrationForm />
       <Card />
       <CreditCardApplicationForm />
