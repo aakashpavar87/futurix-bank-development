@@ -118,14 +118,6 @@ public class TblLoan {
 		return personal_Loan;
 	}
 
-	public long getAccountNumber() {
-		return accountNumber;
-	}
-
-	public void setAccountNumber(long accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
 	public double getLoanAmount() {
 		return loanAmount;
 	}

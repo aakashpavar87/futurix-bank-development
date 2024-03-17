@@ -18,10 +18,10 @@ public class TblTransaction {
 	private int id;
 	
 	@Column(nullable = false)
-	private Integer transactionId;
+	private String transactionCode;
 	
 	@Column(nullable = false)
-	private int accountNumber;
+	private long accountNumber;
 
 	@Column(nullable = false)
 	private String transactionType;
@@ -30,14 +30,14 @@ public class TblTransaction {
 
 	private LocalDate date;
 
-	@Column(nullable = false)
 	private Long receiverAccountNumber;
 
 	private String description;
+	
 	@Column(nullable = false)
 	private String status;
 
-	private Integer transactionLimit;
+	private int transactionLimit;
 	
 	@ManyToOne
 	@JsonIgnore
@@ -48,11 +48,10 @@ public class TblTransaction {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TblTransaction(int id, Integer transactionId, int accountNumber, String transactionType, Double amount,
-			 Long receiverAccountNumber, String description, String status, Integer transactionLimit) {
+	public TblTransaction(int id, int accountNumber, String transactionType, Double amount,
+			 Long receiverAccountNumber, String description, String status, int transactionLimit) {
 		super();
 		this.id = id;
-		this.transactionId = transactionId;
 		this.accountNumber = accountNumber;
 		this.transactionType = transactionType;
 		this.amount = amount;
@@ -70,19 +69,11 @@ public class TblTransaction {
 		this.id = id;
 	}
 
-	public Integer getTransactionId() {
-		return transactionId;
-	}
-
-	public void setTransactionId(Integer transactionId) {
-		this.transactionId = transactionId;
-	}
-
-	public int getAccountNumber() {
+	public long getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(int accountNumber) {
+	public void setAccountNumber(long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 
@@ -134,11 +125,11 @@ public class TblTransaction {
 		this.status = status;
 	}
 
-	public Integer getTransactionLimit() {
+	public int getTransactionLimit() {
 		return transactionLimit;
 	}
 
-	public void setTransactionLimit(Integer transactionLimit) {
+	public void setTransactionLimit(int transactionLimit) {
 		this.transactionLimit = transactionLimit;
 	}
 
@@ -148,6 +139,14 @@ public class TblTransaction {
 
 	public void setAccount(TblAccount account) {
 		this.account = account;
+	}
+
+	public String getTransactionCode() {
+		return transactionCode;
+	}
+
+	public void setTransactionCode(String transactionCode) {
+		this.transactionCode = transactionCode;
 	}
 
 }

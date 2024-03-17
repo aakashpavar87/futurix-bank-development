@@ -40,9 +40,6 @@ public class TblCustomer {
 	private LocalDate dateOfOpening;
 	
 	@Column(nullable = false)
-	private long accountNumber;
-	
-	@Column(nullable = false)
 	private String gender;
 	
 	@Column(nullable = false)
@@ -134,14 +131,6 @@ public class TblCustomer {
 
 	public void setDateOfOpening(LocalDate dateOfOpening) {
 		this.dateOfOpening = dateOfOpening;
-	}
-
-	public long getAccountNumber() {
-		return accountNumber;
-	}
-
-	public void setAccountNumber(long accountNumber) {
-		this.accountNumber = accountNumber;
 	}
 
 	public String getGender() {

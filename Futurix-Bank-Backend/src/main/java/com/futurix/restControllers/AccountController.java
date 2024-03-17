@@ -4,12 +4,14 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -51,6 +53,25 @@ public class AccountController {
 	{
 		accountService.deleteAccount(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@PostMapping("/account/{accId}/deposit")
+	public ResponseEntity<String> depositMoneyInAccount(@PathVariable int accId, @RequestParam int amount, @RequestParam String desc) {
+		
+		accountService.depositInAccount(accId, amount, desc != null ? desc : "");
+		return new ResponseEntity<String>("Amount Deposited Successfully", HttpStatus.OK);
+	}
+	
+	@PostMapping("/account/{accId}/transfer")
+	public ResponseEntity<String> transferMoneyToAnotherAccount(@PathVariable int accId, @RequestParam int accountNumber, @RequestParam int amount, @RequestParam String desc) {
+		accountService.transferFromOneAccountToAnother(accId, amount, accountNumber, desc != null ? desc : "");
+		return new ResponseEntity<String>("Money transferred to Account Number : "+accountNumber, HttpStatus.OK);
+	}
+	
+	@PostMapping("/account/{accId}/withdraw")
+	public ResponseEntity<String> withdrawMoneyFromAccount(@PathVariable int accId, @RequestParam int amount, @RequestParam String desc) {
+		accountService.withdrawFromAccount(accId, amount, desc != null ? desc : "");
+		return new ResponseEntity<String>("Successfully withdrawn money", HttpStatus.OK);
 	}
 	
 }

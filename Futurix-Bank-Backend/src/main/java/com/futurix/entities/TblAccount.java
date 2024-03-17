@@ -23,7 +23,10 @@ public class TblAccount {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int accountnumber;
+	private int id;
+	
+	@Column(nullable = false)
+	private long accountnumber;
 		
 	@Column(nullable = false)
 	private String accountType;
@@ -77,11 +80,11 @@ public class TblAccount {
 	}
 
 
-	public int getAccountnumber() {
+	public long getAccountnumber() {
 		return accountnumber;
 	}
 
-	public void setAccountnumber(int accountnumber) {
+	public void setAccountnumber(long accountnumber) {
 		this.accountnumber = accountnumber;
 	}
 
@@ -99,6 +102,14 @@ public class TblAccount {
 
 	public void setBalance(Double balance) {
 		this.balance = balance;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getStatus() {

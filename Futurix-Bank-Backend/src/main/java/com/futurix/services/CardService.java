@@ -22,7 +22,7 @@ public class CardService {
 	public void createCard(TblCard card, int id) {
 		TblCustomer foundCustomer = customerRepo.findById(id).orElse(null);
 		List<TblCard> foundCardList = foundCustomer.getCardList();
-		card.setAccountnumber(foundCustomer.getAccountNumber());
+		card.setAccountnumber(foundCustomer.getAccount().getAccountnumber());
 		foundCardList.add(card);
 		
 		// loging

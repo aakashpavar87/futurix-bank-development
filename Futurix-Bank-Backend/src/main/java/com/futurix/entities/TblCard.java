@@ -18,7 +18,7 @@ public class TblCard {
 	private Long card_number;
 	
 	private String email;
-	private Long accountnumber;
+	private long accountnumber;
 	private String card_status;
 	private Date date_of_issue;
 	private Date expiryDate;
@@ -62,11 +62,11 @@ public class TblCard {
 		this.card_number = card_number;
 	}
 	
-	public Long getAccountnumber() {
+	public long getAccountnumber() {
 		return accountnumber;
 	}
 	
-	public void setAccountnumber(Long accountnumber) {
+	public void setAccountnumber(long accountnumber) {
 		this.accountnumber = accountnumber;
 	}
 	
