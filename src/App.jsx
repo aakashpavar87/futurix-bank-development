@@ -39,8 +39,8 @@ export function App() {
 
   return (
     <>
-     {/* <Customer_Reg/> 
-    <Investor_Reg/> */}
+      {/* <Customer_Reg/>  */}
+    {/* <Investor_Reg/> */} 
     <Chatbot/>
 
     {/* <Login/>  */}
@@ -70,4 +70,5 @@ export function App() {
     </>
   )
 }
+
 
