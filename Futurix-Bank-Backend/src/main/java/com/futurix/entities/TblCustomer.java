@@ -1,8 +1,11 @@
 package com.futurix.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.futurix.filestorage.ProfileImageData;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -45,10 +48,16 @@ public class TblCustomer {
 	@Column(nullable = false)
 	private String occupation;
 	
+	private Boolean active;
+	
+	private String otp;
+	
+	private LocalDateTime otpGeneratedTime;
+	
 	
 	// Relation Ships between Entities
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private TblAddress address;
 	
 	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
@@ -62,6 +71,10 @@ public class TblCustomer {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private TblAccount account;
+	
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private ProfileImageData profileImage;
 
 	public TblCustomer() {
 	}
@@ -159,6 +172,42 @@ public class TblCustomer {
 
 	public List<TblLoan> getLoanList() {
 		return loanList;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+
+	public LocalDateTime getOtpGeneratedTime() {
+		return otpGeneratedTime;
+	}
+
+	public void setOtpGeneratedTime(LocalDateTime otpGeneratedTime) {
+		this.otpGeneratedTime = otpGeneratedTime;
+	}
+
+	public ProfileImageData getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(ProfileImageData profileImage) {
+		this.profileImage = profileImage;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public void setLoanList(List<TblLoan> loanList) {

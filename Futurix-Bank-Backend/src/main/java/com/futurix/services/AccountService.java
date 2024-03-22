@@ -30,8 +30,11 @@ public class AccountService {
 	private TransactionService transactionService;
 	
 	//	Create Account
-	public void createAccount(TblAccount account , int id) throws MessagingException {
+	public TblAccount createAccount(String account_type , int id) throws MessagingException {
 
+		TblAccount account=new TblAccount();
+		
+		account.setAccountType(account_type);
 		Random rand = new Random();
 	    String accountNumber = "100";
 	    for (int i = 0; i < 8; i++)
@@ -49,8 +52,13 @@ public class AccountService {
 			throw new NotFoundException("Account not found with " + id);
 		
 		account.setBalance((double) 0);
-		account.setStatus("Not Verified");
-		accountRepo.save(account);
+		Boolean active = foundCustomer.getActive();
+		if (active) {
+			account.setStatus(true);
+		}else {
+			account.setStatus(false);
+		}
+//		accountRepo.save(account);
 		//	Sending Mail to Customer that they are registered successfully ...
 		System.out.println("Email Start");
 //		String imagePathString = "C:\\Users\\DELL\\OneDrive\\Desktop\\TYProject\\futurix-bank-development\\Futurix-Bank-Backend\\documents\\goku.webp";
@@ -62,7 +70,7 @@ public class AccountService {
 		customerRepo.save(foundCustomer);
 		
 		account.setCustomer(foundCustomer);
-		accountRepo.save(account);
+		return accountRepo.save(account);
 		
 	}
 	

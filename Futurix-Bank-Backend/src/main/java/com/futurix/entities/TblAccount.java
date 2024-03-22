@@ -34,8 +34,7 @@ public class TblAccount {
 	@Column(nullable = false)
 	private Double balance;
 	
-	@Column(nullable = false)
-	private String status;
+	private boolean status;
 	
 	@Column(nullable = false)
 	private LocalDate dateofopening;
@@ -69,7 +68,7 @@ public class TblAccount {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TblAccount(String account_type, Double balance, String status,
+	public TblAccount(String account_type, Double balance, Boolean status,
 			LocalDate dateofopening, LocalDate lastactivitydate) {
 		super();
 		this.accountType = account_type;
@@ -112,11 +111,11 @@ public class TblAccount {
 		this.id = id;
 	}
 
-	public String getStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 

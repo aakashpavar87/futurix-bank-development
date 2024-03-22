@@ -1,6 +1,5 @@
 package com.futurix.restControllers;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +9,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.futurix.entities.TblAccount;
 import com.futurix.services.AccountService;
@@ -34,18 +31,14 @@ public class AccountController {
 	
 	@GetMapping("/users/{id}/account")
 	public TblAccount reteriveOneAccount(@PathVariable int id) {
-		return accountService.findAccount(id);
+		return accountService.findAccount(id);	
 		
 	}
 	
 	
 	@PostMapping("/users/{id}/accounts")
-	public ResponseEntity<TblAccount> createAccount(@RequestBody TblAccount account , @PathVariable int id) throws MessagingException{
-		accountService.createAccount(account, id);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-				.buildAndExpand(account.getAccountnumber()).toUri();
-		return ResponseEntity.created(location).build();
-	
+	public ResponseEntity<TblAccount> createAccount(@RequestParam String account_type , @PathVariable int id) throws MessagingException{
+		return new ResponseEntity<TblAccount>(accountService.createAccount(account_type, id), HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/users/{id}/accounts")

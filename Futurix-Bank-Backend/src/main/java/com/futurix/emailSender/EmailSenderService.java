@@ -1,6 +1,7 @@
 package com.futurix.emailSender;
 
 import java.io.File;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -52,4 +53,31 @@ public class EmailSenderService {
 		System.out.println("Mail was sended successfully to " + toMail);
 	
 	}
+
+	public void sendOtpEmail(String email, String otp) throws MessagingException {
+		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+		mimeMessageHelper.setTo(email);
+		mimeMessageHelper.setSubject("Verify OTP");
+		mimeMessageHelper.setText("""
+		    <div>
+		      <h1>Account Registration OTP : </h1>
+		      <h3>%s</h3>
+		    </div>
+		    """.formatted(otp), true);
+		
+		javaMailSender.send(mimeMessage);
+	}
+
+	public String generateOtp() {
+	    Random random = new Random();
+	    int randomNumber = random.nextInt(999999);
+	    String output = Integer.toString(randomNumber);
+
+	    while (output.length() < 6) {
+	      output = "0" + output;
+	    }
+	    return output;
+	}
+
 }
