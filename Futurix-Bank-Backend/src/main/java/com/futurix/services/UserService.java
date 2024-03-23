@@ -33,7 +33,7 @@ public class UserService {
 	private FileDataService fileDataService;
 
 	// Insert Customer
-	public void createUser(TblCustomer customer) {
+	public TblCustomer createUser(TblCustomer customer) {
 		customer.setDateOfOpening(LocalDate.now());
 		try {
 			String otp = emailSenderService.generateOtp();
@@ -44,7 +44,7 @@ public class UserService {
 			// TODO Auto-generated catch block
 			throw new RuntimeException("Unable to send otp please try again");
 		}
-		customerRepo.save(customer);
+		return customerRepo.save(customer);
 	}
 
 	// Select All Customer
@@ -101,7 +101,7 @@ public class UserService {
 	}
 	
 	public TblCustomer addProfileImage(int id, MultipartFile file) throws IllegalStateException, IOException {
-		TblCustomer tblCustomer = customerRepo.findById(id).get();
+		TblCustomer tblCustomer = customerRepo.findById(id).orElse(null);
 		if(file != null) {
 			ProfileImageData image = fileDataService.uploadToProfileImageStorage(file);
 			tblCustomer.setProfileImage(image);
@@ -110,6 +110,14 @@ public class UserService {
 		} else {
 			throw new NotFoundException("Sorry but user not exists");
 		}
+		return tblCustomer;
+	}
+
+	public TblCustomer findCustomerByEmail(String email) {
+		
+		TblCustomer tblCustomer = customerRepo.findByEmail(email).orElse(null);
+		if(tblCustomer == null)
+			throw new NotFoundException("Customer is not found with this email "+email);
 		return tblCustomer;
 	}
 }

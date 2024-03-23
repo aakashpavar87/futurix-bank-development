@@ -54,10 +54,7 @@ public class UserController {
 
 	@PostMapping("/users")
 	public ResponseEntity<TblCustomer> createUser(@RequestBody TblCustomer customer) {
-		userService.createUser(customer);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(customer.getId())
-				.toUri();
-		return ResponseEntity.created(location).build();
+		return new ResponseEntity<TblCustomer>(userService.createUser(customer), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/users/{id}/profileImage")
@@ -70,6 +67,11 @@ public class UserController {
 	@GetMapping("/users/{id}")
 	public TblCustomer retrieveOneCustomer(@PathVariable int id) {
 		return userService.findCustomer(id);
+	}
+	
+	@GetMapping("/users/email/{email}")
+	public TblCustomer retrieveCustomerByEmail(@PathVariable String email) {
+		return userService.findCustomerByEmail(email);
 	}
 
 	@PutMapping("/users/{id}")

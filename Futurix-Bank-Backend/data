@@ -5,8 +5,6 @@ Customer
   "password":"Aakash@133",
   "phone":"9778525678",
   "dob":"2004-11-22",
-  "dateOfOpening":"2021-11-20",
-  "accountNumber":7685494321,
   "gender":"Male",
   "occupation":"Student"
 }
