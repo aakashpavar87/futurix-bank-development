@@ -7,7 +7,6 @@ import FeedbackForm from './feedback.jsx'
 import ProfileUpdateForm from './profileupdate.jsx'
 import InvestorLoginForm from './investorlogin.jsx'
 import InvestmentForm from './Investment.jsx'
-import AdminRegistrationForm from './Adminregistration.jsx'
 import AdminLogin from './admin.jsx'
 import AdminUpdateForm from './adminupdata.jsx'
 import BankingRegistrationForm from './AccRegistration.jsx'
@@ -29,6 +28,10 @@ import AddressForm from './Forms/AddressForm.jsx'
 import Investor_Reg from './Forms/Investor_Reg.jsx'
 import Chatbox from './Forms/Chatbot.jsx'
 import Chatbot from './Forms/Chatbot.jsx'
+import AdminRegistrationForm from './Forms/AdminRegistrationForm.jsx'
+import CardForm from './Forms/CardForm .jsx'
+import KYCForm from './Forms/KYCForm.jsx'
+import CreditCardForm from './Forms/CreditCardForm.jsx'
 export function App() {
 
   useEffect(() => {
@@ -39,18 +42,19 @@ export function App() {
 
   return (
     <>
-      {/* <Customer_Reg/>  */}
-    {/* <Investor_Reg/> */} 
-    <Chatbot/>
 
+    {/* <Customer_Reg/>  */}
+    {/* <Investor_Reg/>  */}
+    {/* <Chatbot/> */}
     {/* <Login/>  */}
-  
+    {/* <KYCForm/> */}
     {/* <AddressForm /> */}
-   {/*   <AdminRegistrationForm />
-      <Card />
-      <CreditCardApplicationForm />
-      <DebitCardApplicationForm />
-      <FeedbackForm />
+    {/* <AdminRegistrationForm /> */}
+    
+    <CreditCardForm/>
+   
+    {/*  <DebitCardApplicationForm /> */}
+       {/*<FeedbackForm />
       <InvestorLoginForm />
       <InvestmentForm />
       <Loan />
