@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.futurix.filestorage.ProfileImageData;
+import com.futurix.filestorage.kyc.UserKycDocument;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -75,6 +76,9 @@ public class TblCustomer {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private ProfileImageData profileImage;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private UserKycDocument userKycDocument;
 
 	public TblCustomer() {
 	}
@@ -196,6 +200,14 @@ public class TblCustomer {
 
 	public void setOtpGeneratedTime(LocalDateTime otpGeneratedTime) {
 		this.otpGeneratedTime = otpGeneratedTime;
+	}
+
+	public UserKycDocument getUserKycDocument() {
+		return userKycDocument;
+	}
+
+	public void setUserKycDocument(UserKycDocument userKycDocument) {
+		this.userKycDocument = userKycDocument;
 	}
 
 	public ProfileImageData getProfileImage() {
