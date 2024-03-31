@@ -62,8 +62,6 @@ public class UserController {
 		return new ResponseEntity<TblCustomer>(userService.addProfileImage(id, file), HttpStatus.ACCEPTED);
 	}
 	
-	
-
 	@GetMapping("/users/{id}")
 	public TblCustomer retrieveOneCustomer(@PathVariable int id) {
 		return userService.findCustomer(id);

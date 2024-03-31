@@ -104,8 +104,15 @@ public class UserService {
 		TblCustomer tblCustomer = customerRepo.findById(id).orElse(null);
 		if(file != null) {
 			ProfileImageData image = fileDataService.uploadToProfileImageStorage(file);
-			tblCustomer.setProfileImage(image);
-			image.setCustomer(tblCustomer);
+			if(tblCustomer.getProfileImage() == null) {
+				tblCustomer.setProfileImage(image);
+				image.setCustomer(tblCustomer);
+			}
+			else {
+				tblCustomer.setProfileImage(null);
+				tblCustomer.setProfileImage(image);
+			}
+
 			customerRepo.save(tblCustomer);
 		} else {
 			throw new NotFoundException("Sorry but user not exists");

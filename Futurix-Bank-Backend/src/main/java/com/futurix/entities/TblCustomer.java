@@ -79,7 +79,7 @@ public class TblCustomer {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private UserKycDocument userKycDocument;
-
+	
 	public TblCustomer() {
 	}
 

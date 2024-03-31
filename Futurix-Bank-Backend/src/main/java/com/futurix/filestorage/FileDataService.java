@@ -14,7 +14,7 @@ import com.futurix.repositories.CustomerRepo;
 @Service
 public class FileDataService {
 
-	private final String FOLDER_PATH = "C:\\Users\\Aakash Pavar\\Desktop\\TYProject\\Backend\\Futurix-Bank-Backend\\documents";
+	private final String FOLDER_PATH = "C:\\Users\\Aakash Pavar\\Desktop\\TYProject\\Futurix-Bank-Backend\\documents";
 
 	@Autowired
 	private FileDataRepo fIleDataRepo;
