@@ -1,62 +1,45 @@
-import React, { useEffect } from 'react'
-import WithdrawalForm from './Withdraw.jsx'
-import './index.css'
-import DepositForm from './deposit.jsx'
-import LoginForm from './login.jsx'
-import FeedbackForm from './feedback.jsx'
-import ProfileUpdateForm from './profileupdate.jsx'
-import InvestorLoginForm from './investorlogin.jsx'
-import InvestmentForm from './Investment.jsx'
-import AdminRegistrationForm from './Adminregistration.jsx'
-import AdminLogin from './admin.jsx'
-import AdminUpdateForm from './adminupdata.jsx'
-import BankingRegistrationForm from './AccRegistration.jsx'
-import Address from './Acc_adress.jsx'
-import Kyc from './Acc_kyc.jsx'
-import DebitCardApplicationForm from './debit.jsx'
-import CreditCardApplicationForm from './Credit.jsx'
-import PersonalLoanVerificationForm from './Personal_loan2.jsx'
-import LoanForm from './Personal_loan.jsx'
-import BusinessForm from './Business_loan.jsx'
-import BusinessForm1 from './Business_loan1.jsx'
-import { getUsersApi } from './api/helloWorldApiService.js'
-import Loan from './Loan.jsx'
-import Card from './Card.jsx'
+import React, { useEffect } from "react";
+import Home from "./Home-Components/Home";
+import {
+  Route,
+  Routes,
+} from "react-router-dom";
+import Login from "./Home-Components/Login";
+import CustomerRegister from "./Home-Components/CustomerRegister";
+import ErrorPage from "./Home-Components/ErrorPage";
+import { helloWorldApiService } from "./apis/HelloWorldApi";
+import UserHome from "./User-Components/UserHome";
+import { AuthProvider } from "./hooks/useAuth";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { UserProvider } from "./contexts/userContext";
 
-export function App() {
-
+const App = () => {
   useEffect(() => {
-    getUsersApi().then( (res) => console.log(res.data))
-      .catch( (err) => console.log(err))
+    helloWorldApiService()
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err))
   }, [])
-  
 
   return (
-    <>
-    <BankingRegistrationForm />
-    <Address />
-      <AdminRegistrationForm />
-      <Card />
-      <CreditCardApplicationForm />
-      <DebitCardApplicationForm />
-      <FeedbackForm />
-      <InvestorLoginForm />
-      <InvestmentForm />
-      <Loan />
-      <LoanForm />
-      <BusinessForm />
-      <DepositForm />
-      <WithdrawalForm />
-      {/* <AdminLogin /> */}
-      {/* <AdminUpdateForm /> */}
-      
-      
-      {/* <Kyc /> */}
-      {/* <LoginForm />
-      <ProfileUpdateForm /> */}
-      {/* <PersonalLoanVerificationForm /> */}
-      {/* <BusinessForm1 /> */}
-    </>
+    <AuthProvider>
+      <UserProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<CustomerRegister />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <UserHome />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </UserProvider>
+    </AuthProvider>
   )
-}
+};
 
+export default App;
