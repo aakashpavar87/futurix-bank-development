@@ -9,6 +9,7 @@ import UserHome from "./User-Components/UserHome";
 import { AuthProvider } from "./hooks/useAuth";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { UserProvider } from "./contexts/userContext";
+import { EmailProvider } from "./contexts/emailContext"
 import Address from "./User-Components/Acc_adress";
 import InvestorPage from "./InvestorComponents/InvestorePage";
 import { SecurityCard } from './InvestorComponents/SecurityCard'
@@ -35,50 +36,51 @@ const App = () => {
   return (
     <AuthProvider>
       <UserProvider>
-        <Routes>
+        <EmailProvider>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<CustomerRegister />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/verify-account" element={<VerifyAccount />} />
+            <Route path="/set-password" element={<SetPassword />} />
+            {/* User Routes */}
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <UserHome />
+                </ProtectedRoute>
+              }
+              // loader={async ()=>{
+              //   return await getOneUserByEmail(email)
+              // }}
+            />
+            <Route
+              path="/profile/post"
+              element={
+                <ProtectedRoute>
+                  <Address />
+                </ProtectedRoute>
+              }
+            />
+            {/* <Route path="/investorLogin" element={<InvestmentForm />} /> */}
 
-          {/* Public Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<CustomerRegister />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/verify-account" element={<VerifyAccount />} />
-          <Route path="/set-password" element={<SetPassword />} />
-          {/* User Routes */}
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <UserHome />
-              </ProtectedRoute>
-            }
-            // loader={async ()=>{
-            //   return await getOneUserByEmail(email)
-            // }}
-          />
-          <Route
-            path="/profile/post"
-            element={
-              <ProtectedRoute>
-                <Address />
-              </ProtectedRoute>
-            }
-          />
-          {/* <Route path="/investorLogin" element={<InvestmentForm />} /> */}
+            {/* Investor Routes */}
+            <Route path="/investorRegister" element={<Investor_Reg />} />
+            <Route path="/investor" element={<InvestorPage />}>
+              <Route index element={<ServiceSection />} />
+              <Route path="service" element={<SecurityCard />} />
+              <Route path="investment" element={<InvestmentSection />} />
+              <Route path="transactions" element={<TransactionTable />} />
+              <Route path="investmentServices" element={<InvestmentServices />} />
+              <Route path="*" element={<ErrorPage />} />
+            </Route>
 
-          {/* Investor Routes */}
-          <Route path="/investorRegister" element={<Investor_Reg />} />
-          <Route path="/investor" element={<InvestorPage />}>
-            <Route index element={<ServiceSection />} />
-            <Route path="service" element={<SecurityCard />} />
-            <Route path="investment" element={<InvestmentSection />} />
-            <Route path="transactions" element={<TransactionTable />} />
-            <Route path="investmentServices" element={<InvestmentServices />} />
             <Route path="*" element={<ErrorPage />} />
-          </Route>
-
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
+          </Routes>
+        </EmailProvider>
       </UserProvider>
     </AuthProvider>
   );

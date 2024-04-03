@@ -8,18 +8,16 @@ import "react-toastify/dist/ReactToastify.css";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { UserDispatchContext } from '../contexts/userContext';
+import { EmailContext } from "../contexts/emailContext"
 import { forgotPassword } from '../apis/PasswordApi';
 import Spinner from '../components/Spinner';
 
 const ForgotPassword = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [showPassword, setShowPassword] = useState(false);
     const [focusedInput, setFocusedInput] = useState(null);
-    const {login} = useAuth()
     const navigate = useNavigate()
-    const setmyUser = useContext(UserDispatchContext)
     const [loading, setLoading] = useState(false);
-    const saveUserToContext = (user) => setmyUser(user)
+    const {setEmail} = useContext(EmailContext)
 
     const showToastMessage = (msg, isError) => {
         if(!isError)
@@ -43,13 +41,21 @@ const ForgotPassword = () => {
         forgotPassword(data)
             .then(res => {
                 console.log(res.data)
-                saveUserToContext(res.data)
+                setEmail(data.email)
+                setTimeout(() => {
+                    navigate('/verify-account')
+                }, 500);
             })
-            .catch(err => console.log(err))
-            .finally(()=>setLoading(false))
-            setTimeout(() => {
-                navigate('/verify-account')
-            }, 1500);
+            .catch(err=>{
+                setTimeout(() => {
+                    showToastMessage(err.response.data.message, true)
+                }, 1500)
+            })
+            .finally(()=>{
+                setTimeout(() => {
+                    setLoading(false)
+                }, 500)
+            })
     };
 
     // const handlePasswordToggle = () => setShowPassword(!showPassword);
@@ -69,7 +75,7 @@ const ForgotPassword = () => {
         <div className="flex justify-center items-center min-h-screen" style={{ backgroundImage: 'linear-gradient(180deg, #050c1b, #2a4365)', padding: "25px" }}>
             <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto rounded-3xl shadow-md" style={{ backgroundColor: "#050c1b", padding: "25px", borderRadius: "20px" }}>
             <ArrowBackIcon className='text-white cursor-pointer text-2xl' onClick={()=>{navigate("/")}} />
-                <h1 className="text-3xl text-white font-bold text-center mb-4 hover:text-gray-400 transition-colors duration-300 cursor-pointer">Reset Your Password</h1>
+                <h1 className="text-3xl text-white font-bold text-center mb-4 hover:text-gray-400 transition-colors duration-300 cursor-pointer">Enter Registered Email</h1>
                 <div className="grid grid-cols-1 gap-4">
                     <div className="relative">
                         <input

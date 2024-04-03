@@ -2,8 +2,10 @@ import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useForm } from "react-hook-form";
 import { useContext, useEffect, useState } from "react";
-import { verifyAccount } from "../apis/PasswordApi";
+import { regenerateOTP, verifyOTP } from "../apis/PasswordApi";
 import { UserContext } from "../contexts/userContext";
+import { ToastContainer, toast } from "react-toastify";
+import { EmailContext } from "../contexts/emailContext";
 
 function VerifyAccount() {
   const {
@@ -15,9 +17,18 @@ function VerifyAccount() {
   const navigate = useNavigate();
   
 
-  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState(10); // 2 minutes in seconds
   const [timerRunning, setTimerRunning] = useState(true); // State to track if the timer is running
   const user = useContext(UserContext)
+  const {email} = useContext(EmailContext)
+
+  const showToastMessage = (msg, isError) => {
+    if(!isError)
+        toast.success(msg)
+    else
+        toast.error(msg)
+  }
+
   useEffect(() => {
     // Start the timer when the component mounts
     const timer = setInterval(() => {
@@ -31,20 +42,26 @@ function VerifyAccount() {
         }
       });
     }, 1000); // Update every second
-    console.log(user)
     // Clean up the interval on component unmount
     return () => clearInterval(timer);
-  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
+  }, [timeLeft, timerRunning]); // Empty dependency array ensures the effect runs only once when the component mounts
 
   const onSubmit = async (data) => {
     console.log(data);
     let { firstDigit, secondDigit, thirdDigit, fourthDigit , fifthDigit, lastDigit} = data;
     let otp = firstDigit + secondDigit + thirdDigit + fourthDigit + fifthDigit + lastDigit;
     console.log(otp);
-    verifyAccount(user.email, otp)
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err))
-    navigate("/set-password");
+    let dataDTO = {
+      email: email,
+      otp: otp
+    }
+    verifyOTP(dataDTO)
+      .then(res => {
+        console.log(res.data);
+        if(res) navigate("/set-password");
+      })
+      .catch(err => showToastMessage(err.response.data.message, true))
+    // navigate("/set-password");
   };
 
   const handleInputChange = (event) => {
@@ -139,6 +156,15 @@ function VerifyAccount() {
                   {!timerRunning && <button
                     disabled={timerRunning} // Disable the button when timer is running
                     className="flex items-center text-blue-700 hover:text-blue-900 cursor-pointer"
+                    onClick={async ()=>{
+                      const encodedEmail = encodeURIComponent(email);
+                      try {
+                        await regenerateOTP(encodedEmail)
+                        setTimeLeft(120)
+                      } catch (error) {
+                        showToastMessage(error.response.data.message)
+                      }
+                    }}
                   >
                     <span className="font-bold">Resend OTP</span>
                   </button>}
@@ -156,6 +182,7 @@ function VerifyAccount() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

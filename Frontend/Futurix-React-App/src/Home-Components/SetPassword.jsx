@@ -9,6 +9,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import { UserContext, UserDispatchContext } from "../contexts/userContext";
 import { setNewPassword } from "../apis/PasswordApi";
+import { EmailContext } from "../contexts/emailContext";
 
 const SetPassword = () => {
   const {
@@ -19,15 +20,11 @@ const SetPassword = () => {
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const [focusedInput, setFocusedInput] = useState(null);
-  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const user = useContext(UserContext);
-  const setmyUser = useContext(UserDispatchContext);
 
   const password = watch("password", "")
-
-  const saveUserToContext = (user) => setmyUser(user);
+  const {email} = useContext(EmailContext)
 
   const showToastMessage = (msg, isError) => {
     if (!isError) toast.success(msg);
@@ -38,16 +35,26 @@ const SetPassword = () => {
     setFocusedInput(inputName);
   };
 
+  useEffect(()=>{
+    showToastMessage("Now you Can change your Password 😎", false)
+  })
   const handleBlur = () => {
     setFocusedInput(null);
   };
 
   const onSubmit = async (data) => {
     console.log(data);
-    setNewPassword(user.email, data.password)
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err))
-    navigate("/profile");
+    let hashedPassword = bcrypt.hashSync(data.password, 10)
+    let dataDTO = {
+      email : email,
+      newPassword: hashedPassword
+    }
+    setNewPassword(dataDTO)
+      .then(res=>{
+        console.log(res.data);
+        navigate('/login')
+      })
+      .catch(err => showToastMessage(err.response.data.message, true))
   };
 
   const handlePasswordToggle = () => setShowPassword(!showPassword);
