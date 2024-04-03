@@ -30,8 +30,10 @@ const Business = () =>  (
         building credit, earning rewards and saving money. But with hundreds
         of credit cards on the market.
       </p>
-
-      <Button styles={`mt-10`} />
+      <div className="flex justify-center items-center gap-6">
+        <Button text="Get Started" linkText="register" styles={`mt-10`} />
+        <Button text="Invest Here !!" linkText="investorRegister" styles={`mt-10`} />
+      </div>
     </div>
 
     <div className={`${layout.sectionImg} flex-col`}>

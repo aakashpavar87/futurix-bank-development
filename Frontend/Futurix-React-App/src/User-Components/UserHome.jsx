@@ -110,6 +110,7 @@ import UserDetails from './UserDetails';
 import UserKyc from './UserKyc';
 import {logo} from "../assets"
 import { createOrder } from '../apis/InvestorApi';
+import { useLoaderData } from 'react-router-dom';
 
 const ImageSection = React.memo(({ userImage, showModal, setShowModal }) => {
     return (
@@ -135,6 +136,7 @@ const ImageSection = React.memo(({ userImage, showModal, setShowModal }) => {
 const UserHome = () => {
     const [showModal, setShowModal] = useState(false);
     const myUser = useContext(UserContext);
+    // const myUser = useLoaderData()
     const defaultAvatar = myUser && myUser.userData && myUser.userData.gender === 'male' ? manAvatar : ladyAvatar;
     const [userImage, setUserImage] = useState(defaultAvatar);
     const [sendAmount, setSendAmount] = useState();

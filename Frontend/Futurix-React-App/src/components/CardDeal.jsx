@@ -13,7 +13,7 @@ const CardDeal = () => (
       Apply for the card that best fits your criteria and manage it responsibly to maximize its benefits and maintain a healthy credit score.
       </p>
 
-      <Button styles={`mt-10`} />
+      <Button text="Get Your Card" linkText="profile" styles={`mt-10`}  />
     </div>
 
     <div className={layout.sectionImg}>

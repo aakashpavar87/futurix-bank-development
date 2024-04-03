@@ -4,7 +4,7 @@ import { navLinks } from "../constants";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
-const Navbar = ({ isUser }) => {
+const Navbar = ({ isUser,isInvestor }) => {
   const [toggle, setToggle] = useState(false);
   const { logout } = useAuth();
   const [user, setUser] = useState(window.localStorage.getItem("user")); // Initialize user state with null
@@ -23,7 +23,7 @@ const Navbar = ({ isUser }) => {
   };
 
   return (
-    <nav className="w-full flex justify-between items-center navbar mb-8 py-4 sm:mb-[20px] sm:px-[20px] px-[60px] fixed top-0 z-40 right-0 border-b border-slate-300/10 backdrop-blur bg-transparent">
+    <nav className={`w-full flex justify-between items-center navbar mb-8 py-4 sm:mb-[20px] sm:px-[20px] px-[60px] fixed top-0 z-40 right-0 border-b border-slate-300/10 ${isInvestor ? "" : "backdrop-blur"} bg-transparent`}>
       <Link to={'/'}>
         <img src={logo} alt="Futurix bank" className="w-[125px] h-[35px]" />
       </Link>
@@ -36,11 +36,16 @@ const Navbar = ({ isUser }) => {
               } hover:text-secondary`}
           >
             {
-              (nav.id==="register"||nav.id==="login"||nav.id==="home") ?
+              (nav.id==="register"||nav.id==="login"||nav.id==="home"||nav.id==="investor") ?
                 (
-                  !user  ? <Link to={`/${nav.id}`}>{nav.title}</Link> : (
-                      (nav.id!=="home") ? "" :  <Link to={`/`}>{nav.title}</Link>
-                    )
+                  !user  ? 
+                    (nav.id==="home"?<Link to={`/`}>{nav.title}</Link>
+                    :
+                    <Link to={`/${nav.id}`}>{nav.title}</Link>
+                    ) 
+                    : (
+                        (nav.id!=="home") ? "" :  <Link to={`/`}>{nav.title}</Link>
+                      )
                 )
                 : <a href={`#${nav.id}`}>{nav.title}</a>
             }

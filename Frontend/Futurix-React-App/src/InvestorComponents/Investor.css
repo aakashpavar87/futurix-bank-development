@@ -1,0 +1,7 @@
+.body {
+    background: linear-gradient(180deg, #020932, #000036, #210358);
+    /* This will create a linear gradient background from #01147C to #0000FD to #06B2FF */
+    margin: 0; /* Remove default body margin */
+    padding: 0; /* Remove default body padding */
+    min-height: 100vh; /* Make the body take up the full viewport height */
+}
