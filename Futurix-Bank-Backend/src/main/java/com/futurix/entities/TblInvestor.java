@@ -4,12 +4,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.futurix.filestorage.ProfileImageData;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class TblInvestor {
@@ -31,6 +35,9 @@ public class TblInvestor {
 	    private LocalDate investorDob;
 
 	    private String investorPassword;
+	    
+	    @OneToOne(cascade = CascadeType.ALL)
+		private ProfileImageData profileImage;
 			    
 	    @OneToMany(mappedBy = "investor", fetch = FetchType.LAZY)
 	    private List<TblInvestment> investmentList = new ArrayList<>();
@@ -124,5 +131,13 @@ public class TblInvestor {
 
 		public void setInvestmentList(List<TblInvestment> investmentList) {
 			this.investmentList = investmentList;
+		}
+
+		public ProfileImageData getProfileImage() {
+			return profileImage;
+		}
+
+		public void setProfileImage(ProfileImageData profileImage) {
+			this.profileImage = profileImage;
 		}
 }

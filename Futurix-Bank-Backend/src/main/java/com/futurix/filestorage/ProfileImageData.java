@@ -3,6 +3,7 @@ package com.futurix.filestorage;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.futurix.entities.TblCustomer;
+import com.futurix.entities.TblInvestor;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -26,6 +27,10 @@ public class ProfileImageData {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private TblCustomer customer;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+	private TblInvestor investor;
 	
 	public ProfileImageData() {
 	}
@@ -72,6 +77,14 @@ public class ProfileImageData {
 	@Override
 	public String toString() {
 		return "FileData [id=" + id + ", name=" + name + ", type=" + type + ", filePath=" + filePath + "]";
+	}
+
+	public TblInvestor getInvestor() {
+		return investor;
+	}
+
+	public void setInvestor(TblInvestor investor) {
+		this.investor = investor;
 	}
 	
 	

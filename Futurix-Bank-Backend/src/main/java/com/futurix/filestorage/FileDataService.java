@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.futurix.entities.TblCustomer;
+import com.futurix.entities.TblInvestor;
 import com.futurix.repositories.CustomerRepo;
+import com.futurix.repositories.InvestorRepo;
 
 @Service
 public class FileDataService {
@@ -21,6 +24,9 @@ public class FileDataService {
 
 	@Autowired
 	private CustomerRepo customerRepo;
+	
+	@Autowired
+	private InvestorRepo investorRepo;
 
 	@Autowired
 	private ProfileImageRepo profileImageRepo;
@@ -76,7 +82,17 @@ public class FileDataService {
 	}
 
 	public byte[] downloadImageFromFileSystemById(int id) throws IOException {
-		ProfileImageData fileData = customerRepo.findById(id).get().getProfileImage();
+		
+		TblCustomer tblCustomer = customerRepo.findById(id).orElseThrow(()-> new RuntimeException("Sorry This User Does not Have Profile Image."));
+		ProfileImageData fileData = tblCustomer.getProfileImage();
+		String filePath = fileData.getFilePath();
+		byte[] images = Files.readAllBytes(new File(filePath).toPath());
+		return images;
+	}
+	
+	public byte[] downloadInvestorImageFromFileSystemById(int id) throws IOException {
+		TblInvestor tblInvestor = investorRepo.findById(id).orElseThrow(()-> new RuntimeException("Sorry This Investor Does not Have Profile Image."));
+		ProfileImageData fileData = tblInvestor.getProfileImage();
 		String filePath = fileData.getFilePath();
 		byte[] images = Files.readAllBytes(new File(filePath).toPath());
 		return images;
