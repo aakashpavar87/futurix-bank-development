@@ -24,6 +24,8 @@ public class TblInvestment {
 	
 	@Column(nullable = false)
 	private String investmentType;
+	
+	private String transactionId;
 
 	private Long investorPhoneNumber;
 
@@ -76,11 +78,11 @@ public class TblInvestment {
 	}
 
 	public String getInvestmentType() {
-		return investmentDuration;
+		return investmentType;
 	}
 
 	public void setInvestmentType(String investmentType) {
-		this.investmentDuration = investmentType;
+		this.investmentType = investmentType;
 	}
 
 	public TblInvestor getInvestor() {
@@ -105,6 +107,14 @@ public class TblInvestment {
 
 	public void setInvestor(TblInvestor investor) {
 		this.investor = investor;
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
 	}
 
 }

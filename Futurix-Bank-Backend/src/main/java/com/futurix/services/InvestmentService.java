@@ -1,6 +1,7 @@
 package com.futurix.services;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,25 @@ public class InvestmentService {
 	private InvestorRepo investorRepo;
 	
 	// Add Investment
-	public void addInvestment(int investorId, TblInvestment investment) {
+	public TblInvestor addInvestment(int investorId, TblInvestment investment) {
+		
+		UUID uuid = UUID.randomUUID();
+		
+		String transactionId = uuid.toString().split("-")[0];
+		
+		investment.setTransactionId(transactionId);
 		
 		TblInvestor tblInvestor = investorRepo.findById(investorId).get();
+		
 		List<TblInvestment> foundInvestmentList = tblInvestor.getInvestmentList();
 		
 		investment.setInvestor(tblInvestor);
 		
 		foundInvestmentList.add(investment);
+		
 		tblInvestor.setInvestmentList(foundInvestmentList);
 		
-		investorRepo.save(tblInvestor);
-		investmentRepo.save(investment);
-		
+		return investorRepo.save(tblInvestor);		
 	}
 	
 	// Delete Investment

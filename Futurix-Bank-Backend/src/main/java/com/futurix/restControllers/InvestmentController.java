@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.futurix.entities.TblInvestment;
+import com.futurix.entities.TblInvestor;
 import com.futurix.services.InvestmentService;
 
 @RestController
@@ -37,13 +39,9 @@ public class InvestmentController {
 	
 	
 	@PostMapping("/investor/{investorId}/investments")
-	public ResponseEntity<TblInvestment> addInvestment(@PathVariable int investorId, @RequestBody TblInvestment investment) {
-		investmentService.addInvestment(investorId, investment);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{investmentId}")
-				.buildAndExpand(investment.getInvestmentId())
-				.toUri();
-		return ResponseEntity.created(location ).build();
+	public ResponseEntity<TblInvestor> addInvestment(@PathVariable int investorId, @RequestBody TblInvestment investment) {
+		return new ResponseEntity<TblInvestor>(investmentService.addInvestment(investorId, investment), HttpStatus.OK);
+		
 	}
 	
 	
