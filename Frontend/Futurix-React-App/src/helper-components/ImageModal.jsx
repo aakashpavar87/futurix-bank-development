@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { postProfileImage } from '../apis/UserApi';
 import { UserContext } from '../contexts/userContext';
 
-const ImageModal = ({ showModal, setShowModal }) => {
+const ImageModal = ({ showModal, setShowModal, setIsImageSet }) => {
 
   const [imageFile, setImageFile] = useState(null);
   const myUser = useContext(UserContext)
@@ -17,23 +17,18 @@ const ImageModal = ({ showModal, setShowModal }) => {
   };
 
   const handleSubmit = async (event) => {
-    
     event.preventDefault();
-
     try {
       const formData = new FormData();
       formData.append('image', imageFile);
-
+      console.log(myUser);
       const response = await postProfileImage(myUser.userData.id, formData);
-
       console.log('Profile image updated successfully:', response.data);
-
+      setIsImageSet(true)
       closeModal()
-      // Optionally, reset the form or perform any other actions after successful upload
     } catch (error) {
       console.error('Error updating profile image:', error);
       closeModal()
-      // Optionally, display an error message or handle the error in another way
     }
   };
 

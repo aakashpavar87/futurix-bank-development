@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { close, logo, menu } from "../assets";
 import { navLinks } from "../constants";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
+import { RoleContext } from '../contexts/RoleContext'
+
 const Navbar = ({ isUser,isInvestor }) => {
   const [toggle, setToggle] = useState(false);
   const { logout } = useAuth();
   const [user, setUser] = useState(window.localStorage.getItem("user")); // Initialize user state with null
-  
+  const {role} = useContext(RoleContext)
+
   useEffect(() => {
     // Fetch user data from local storage every time the component mounts
     const userData = window.localStorage.getItem("user");
@@ -64,8 +67,17 @@ const Navbar = ({ isUser,isInvestor }) => {
           user && <li
             className={`font-poppins font-normal cursor-pointer text-[16px] text-white mr-10 hover:text-secondary`}
           >
-            <Link to={'/profile'}>
+            <Link to={(role === 'investor') ? '/investor' : '/profile'}>
               Profile
+            </Link>
+          </li>
+        }
+        {
+          (role === 'investor') && <li
+            className={`font-poppins font-normal cursor-pointer text-[16px] text-white mr-10 hover:text-secondary`}
+          >
+            <Link to={'/investor'}>
+              Investor
             </Link>
           </li>
         }
@@ -110,10 +122,10 @@ const Navbar = ({ isUser,isInvestor }) => {
               </li>
             }
             {
-              (!user) ? <li
+              (!user && role === 'customer') ? <li
                 className={`font-poppins font-normal cursor-pointer text-[16px] text-white mb-0 hover:text-secondary`}
               >
-                <Link to={'/profile'}>
+                <Link to={(role === 'investor') ? '/investor/' : '/profile'}>
                   Profile
                 </Link>
               </li> : null

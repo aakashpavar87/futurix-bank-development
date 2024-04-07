@@ -12,6 +12,10 @@ export const getProfileImageById = (id) => client.get(`/users/${id}/profileImage
   responseType: 'blob'
 })
 
+export const createAddressapi = (address,userID) => client.post(`/users/${userID}/address`,address)
+
+export const getAddressapi =(userID) => client.get(`/users/${userID}/address`)
+
 export const postProfileImage = (id, formData) => client.put(`/users/${id}/profileImage`, formData, {
   headers: {
     'Content-Type': 'multipart/form-data'

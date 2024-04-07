@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { getUserByEmail } from "../apis/UserApi";
 import bcrypt from "bcryptjs";
 import { useAuth } from "../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,43 +8,49 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useNavigate } from "react-router-dom";
 import { UserDispatchContext } from "../contexts/userContext";
 
-
+import { getUserByEmail } from "../apis/UserApi";
+import { getInvestorByEmail } from "../apis/InvestorApi";
+import { RoleContext } from "../contexts/RoleContext";
 
 const Login = () => {
+
+  //Form States
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+
   const [showPassword, setShowPassword] = useState(false);
   const [focusedInput, setFocusedInput] = useState(null);
-  const { login } = useAuth();
   const navigate = useNavigate();
+  
+
+  // Context Functions
+  const { login } = useAuth();
   const setmyUser = useContext(UserDispatchContext);
-
   const saveUserToContext = (user) => setmyUser(user);
+  const {setRole} = useContext(RoleContext)
 
-  const loginUser = (userEnteredPassword, serverPassword ,res) => {
-    
+  const loginUser = (userEnteredPassword, serverPassword, res, role) => {
     bcrypt.compare(userEnteredPassword, serverPassword, async (err, result) => {
       if (err) {
         console.error("Error:", err);
-        showToastMessage(
-          "An error occurred while comparing passwords.",
-          true
-        );
+        showToastMessage("An error occurred while comparing passwords.", true);
       } else if (result) {
         let userData = res.data;
-        console.log();
+        console.log(userData);
         showToastMessage("Password matched. Login successful.", false);
         saveUserToContext(userData);
-        await login({ userData });
+        setRole(role)
+        await login( { userData },role );
       } else {
         console.log("Password does not match. Login failed.");
         showToastMessage("Incorrect username or password.", true);
       }
     });
-  }
+  };
 
   const showToastMessage = (msg, isError) => {
     if (!isError) toast.success(msg);
@@ -62,40 +67,23 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     const encodedEmail = encodeURIComponent(data.email);
+    console.log(data);
     try {
-        let res = await getUserByEmail(encodedEmail)
-        let serverPassword = res.data.password;
-        loginUser(data.password, serverPassword, res);
-        
+      let res,serverPassword;
+      if(data.role === 'customer') {
+        res = await getUserByEmail(encodedEmail);
+        serverPassword = res.data.password;
+      }
+      if(data.role === 'investor') {
+        res = await getInvestorByEmail(encodedEmail);
+        serverPassword = res.data.investorPassword;
+      }
+      // if(data.role === 'admin') res = await getInvestorByEmail(encodedEmail);
+      console.log(res.data);
+      loginUser(data.password, serverPassword, res, data.role);
     } catch (error) {
-        showToastMessage(error.response.data.message, true)
+      showToastMessage(error.response.data.message, true);
     }
-    // getUserByEmail(encodedEmail)
-    //   .then((res) => {
-    //     serverPassword = res.data.password;
-
-    //     bcrypt.compare(data.password, serverPassword, async (err, result) => {
-    //       if (err) {
-    //         console.error("Error:", err);
-    //         showToastMessage(
-    //           "An error occurred while comparing passwords.",
-    //           true
-    //         );
-    //       } else if (result) {
-    //         let userData = res.data;
-    //         console.log();
-    //         // Perform further actions for successful login
-    //         // For example, redirect to another page
-    //         showToastMessage("Password matched. Login successful.", false);
-    //         saveUserToContext(userData);
-    //         await login({ userData });
-    //       } else {
-    //         console.log("Password does not match. Login failed.");
-    //         showToastMessage("Incorrect username or password.", true);
-    //       }
-    //     });
-    //   })
-    //   .catch((err) => showToastMessage(err.response.data.message, true));
   };
 
   const handlePasswordToggle = () => setShowPassword(!showPassword);
@@ -280,7 +268,9 @@ const Login = () => {
             </label>
           </div>
         </div>
-        {errors.role && <p className="text-amber-400  text-xs">{errors.role.message}</p>}
+        {errors.role && (
+          <p className="text-amber-400  text-xs">{errors.role.message}</p>
+        )}
         <div className="text-right">
           <Link
             to="/forgot-password"

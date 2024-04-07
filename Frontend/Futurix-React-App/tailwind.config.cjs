@@ -7,10 +7,11 @@ module.exports = {
   },
   plugins: [],
 }*/
-
+const { mauve, violet } = require('@radix-ui/colors');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
+  
   mode: "jit",
   theme: {
     extend: {
@@ -19,6 +20,10 @@ module.exports = {
         secondary: "#00f6ff",
         dimWhite: "rgba(255, 255, 255, 0.7)",
         dimBlue: "rgba(9, 151, 124, 0.1)",
+        colors: {
+          ...mauve,
+          ...violet,
+        },
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
@@ -33,5 +38,5 @@ module.exports = {
       xl: "1700px",
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-radix")],
 };

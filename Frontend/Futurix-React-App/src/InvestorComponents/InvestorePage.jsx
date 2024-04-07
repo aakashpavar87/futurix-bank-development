@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 // import Navigation from './Navigation'
 import { SideMenu } from './SideMenu'
 import './Investor.css';
-import { Navbar } from "../components";
 
 const InvestorPage = () => {
   return (
@@ -10,7 +9,7 @@ const InvestorPage = () => {
       <div className="h-auto">
         <div className="h-full w-full">
           <div className="app-body-navigation">
-            <Navbar isInvestor />
+            {/* <Navbar isInvestor /> */}
             <div className="flex gap-4">
               <SideMenu />
               <div className="flex justify-center mt-4 h-full">

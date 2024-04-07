@@ -1,15 +1,9 @@
 import React,{useEffect} from 'react';
 import { useForm } from 'react-hook-form';
-import { createAddressapi ,getAddressapi} from '../api/helloWorldApiService';
+import { createAddressapi } from '../apis/UserApi'
 
 function Address() {
     const { register, handleSubmit, formState: { errors } } = useForm();
-
-    useEffect(() => {
-        getAddressapi(1).then(res => {console.log(res.data)})
-        .catch(err => {console.log(err)
-        })
-      }, [])
 
     const onSubmit = (data) => {
         console.log(data);

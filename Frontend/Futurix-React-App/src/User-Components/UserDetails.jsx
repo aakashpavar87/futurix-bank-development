@@ -10,10 +10,6 @@ const UserDetails = () => {
     setEditMode(false);
   };
 
-  useEffect(()=>{
-    console.log(editMode);
-  })
-
   return (
     <div className="user-details m-7 w-[70%] h-[90%] relative z-[5] bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <h2 className="text-lg text-gray-100 font-bold mb-4">User Details</h2>

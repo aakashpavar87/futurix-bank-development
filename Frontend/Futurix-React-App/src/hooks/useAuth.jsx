@@ -8,13 +8,15 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
   const navigate = useNavigate();
 
-  // call this function when you want to authenticate the user
-  const login = async (data) => {
+  const login = async (data, role) => {
     setUser(data);
-    navigate("/profile");
+    console.log('From useAuth role is ' + role);
+    if(role === 'customer') 
+      navigate("/profile");
+    else if(role === 'investor') 
+      navigate("/investor");
   };
 
-  // call this function to sign out logged in user
   const logout = () => {
     setUser(null);
     navigate("/");

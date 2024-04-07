@@ -1,24 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { registerimg } from '../assets';
 import { createUser, getAllUsers, getUserByEmail } from '../apis/UserApi';
 import Spinner from '../components/Spinner';
 import bcrypt from 'bcryptjs';
+
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import { RoleContext } from '../contexts/RoleContext';
 
 const CustomerRegister = () => {
+  // Form States
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
   const [showPassword, setShowPassword] = useState(false);
-  const [accountExist, setAccountExist] = useState("")
   const [focusedInput, setFocusedInput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+
+  //Context Functions
+  const {role, setRole} = useContext(RoleContext)
+  
   useEffect(() => {
-    getAllUsers()
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err))
+    setRole('customer')
   }, [])
+
+  // Toast Message Function
+  const showToastMessage = (msg, isError) => {
+    if (!isError) toast.success(msg);
+    else toast.error(msg);
+  };
 
   const password = watch("password", "")
   const handleFocus = (inputName) => {
@@ -41,31 +55,59 @@ const CustomerRegister = () => {
       gender: gender
     }
     try {
-      setIsLoading(true)
+      setIsLoading(true);
 
+      const foundCustomer = await getUserByEmail(Email);
 
-      const foundUser = await getUserByEmail(Email);
-
-      if (foundUser) {
-        console.log(foundUser);
-        setAccountExist("One account already exists with this email. Please use another email.");
-      } else {
-        const res = await createUser(user);
-        console.log(res.data);
-        setAccountExist("Registered Successfully...");
+      if (foundCustomer) {
+        showToastMessage(
+          "One account already exists with this email. Please login with that email",
+          true
+        );
       }
     } catch (error) {
-      // setAccountExist("An error occurred while processing your request.");
-      setAccountExist("");
-      createUser(user)
-          .then(res => console.log(res.data))
-          .catch(err => console.log(err))
-    } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-        navigate("/profile")
-      }, 3500);
+      console.log(error.response.data.message);
+      try {
+        const res = await createUser(user)
+        let userData = res.data
+        setmyUser(userData)
+        console.log(res.data);
+
+        // Direct login and redirect on profile
+        setTimeout(async ()=>{
+          setIsLoading(false)
+          await login({userData, role})
+        }, 1500)
+      } catch (err) {
+        showToastMessage(err.response.data.message, true)
+      }
     }
+    // try {
+    //   setIsLoading(true)
+
+
+    //   const foundUser = await getUserByEmail(Email);
+
+    //   if (foundUser) {
+    //     console.log(foundUser);
+    //     setAccountExist("One account already exists with this email. Please use another email.");
+    //   } else {
+    //     const res = await createUser(user);
+    //     console.log(res.data);
+    //     setAccountExist("Registered Successfully...");
+    //   }
+    // } catch (error) {
+    //   // setAccountExist("An error occurred while processing your request.");
+    //   setAccountExist("");
+    //   createUser(user)
+    //       .then(res => console.log(res.data))
+    //       .catch(err => console.log(err))
+    // } finally {
+    //   setTimeout(() => {
+    //     setIsLoading(false);
+    //     navigate("/profile")
+    //   }, 1500);
+    // }
   };
   const handlePasswordToggle = () => setShowPassword(!showPassword);
 
@@ -82,17 +124,6 @@ const CustomerRegister = () => {
 
   return (
     <>
-      {
-        accountExist &&
-        <div
-          className="text-amber-400  text-xs mt-1"
-          style={{ background: '#050c1b', padding: "25px" }}
-        >
-          {accountExist}
-
-        </div>
-      }
-
       <div className="flex justify-center items-center min-h-screen " style={{ backgroundImage: 'linear-gradient(180deg, #050c1b, #2a4365)', padding: "25px" }}>
 
         <img src={registerimg} className='mr-2 w-2/4 hidden md:block place-self-flex shadow-lg shadow-white rounded-md backdrop-blur-md' />
@@ -387,7 +418,7 @@ const CustomerRegister = () => {
             </div>
           </div>
         </form>
-
+        <ToastContainer />
       </div>
     </>
   );
