@@ -11,6 +11,7 @@ import { UserDispatchContext } from "../contexts/userContext";
 import { getUserByEmail } from "../apis/UserApi";
 import { getInvestorByEmail } from "../apis/InvestorApi";
 import { RoleContext } from "../contexts/RoleContext";
+import { EmailContext } from "../contexts/emailContext";
 
 const Login = () => {
 
@@ -32,6 +33,7 @@ const Login = () => {
   const setmyUser = useContext(UserDispatchContext);
   const saveUserToContext = (user) => setmyUser(user);
   const {setRole} = useContext(RoleContext)
+  const {setEmail} = useContext(EmailContext)
 
   const loginUser = (userEnteredPassword, serverPassword, res, role) => {
     bcrypt.compare(userEnteredPassword, serverPassword, async (err, result) => {
@@ -40,9 +42,9 @@ const Login = () => {
         showToastMessage("An error occurred while comparing passwords.", true);
       } else if (result) {
         let userData = res.data;
-        console.log(userData);
         showToastMessage("Password matched. Login successful.", false);
         saveUserToContext(userData);
+        console.log(role)
         setRole(role)
         await login( { userData },role );
       } else {
@@ -67,7 +69,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     const encodedEmail = encodeURIComponent(data.email);
-    console.log(data);
+    setEmail(encodedEmail)
     try {
       let res,serverPassword;
       if(data.role === 'customer') {

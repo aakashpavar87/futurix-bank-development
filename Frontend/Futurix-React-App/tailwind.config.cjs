@@ -38,5 +38,5 @@ module.exports = {
       xl: "1700px",
     },
   },
-  plugins: [require("tailwindcss-radix")],
+  plugins: [],
 };

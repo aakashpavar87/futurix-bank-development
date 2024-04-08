@@ -14,7 +14,6 @@ function InvestmentForm() {
   const onSubmit = data => {
     console.log(data); // You can handle form submission here
     createinvestmentApi(data,2).then(res =>  console.log(res.data)).catch(err => console.log(err))
-  
   };
 
   return (

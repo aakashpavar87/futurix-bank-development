@@ -10,13 +10,12 @@ const Navbar = ({ isUser,isInvestor }) => {
   const [toggle, setToggle] = useState(false);
   const { logout } = useAuth();
   const [user, setUser] = useState(window.localStorage.getItem("user")); // Initialize user state with null
-  const {role} = useContext(RoleContext)
+  const {role, setRole} = useContext(RoleContext)
 
   useEffect(() => {
-    // Fetch user data from local storage every time the component mounts
     const userData = window.localStorage.getItem("user");
     setUser(userData ? JSON.parse(userData) : null); // Parse the user data if exists
-    // console.log(foundUser);
+    console.log(JSON.parse(user))
   }, []);
 
   // Handle logout action

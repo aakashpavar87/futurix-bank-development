@@ -7,19 +7,19 @@ export const ServiceSection = () => {
   const [showModal, setShowModal] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  let [number, setNumber] = useState(1);
+  // let [myNumber, setMyNumber] = useState(1);
+  const [number, setNumber] = useState(1)
   const myUser = useContext(UserContext)
 
   useEffect(() => {
     console.log("In Service Section");
     (async ()=>{
-        const res = await client.get(`/investor/${myUser.userData.id}/profileImage`,{
+        const res = await client.get(`/investor/${myUser?.userData.id}/profileImage`,{
           responseType: 'blob'
-        })
-        console.log(res.data);
-        
+        })      
         setProfileImage(URL.createObjectURL(res.data))
       })()
+      console.log(number)
   }, [number]);
 
   const handleFileChange = (event) => {
@@ -49,7 +49,7 @@ export const ServiceSection = () => {
       const formData = new FormData();
       formData.append("image", imageFile);
       const response = await postInvestorProfileImage(
-        myUser.userData.id,
+        myUser?.userData.id,
         formData
       );
       console.log("Profile image updated successfully:", response.data);
@@ -85,23 +85,23 @@ export const ServiceSection = () => {
       <div className="flex flex-col text-left ml-10 p-4">
         <span className="text-lg align-start font-semibold p-2 text-gray-500 hover:text-cyan-300">
           {"Name : "}
-          {myUser.userData.investorName}
+          {myUser?.userData.investorName}
         </span>
         <span className="text-lg align-start font-semibold p-2 text-gray-500 hover:text-cyan-300">
           {"Email : "}
-          {myUser.userData.investorEmail}
+          {myUser?.userData.investorEmail}
         </span>
         <span className="text-lg align-start font-semibold p-2 text-gray-500 hover:text-cyan-300">
           {"Date of Birth : "}
-          {myUser.userData.investorDob}
+          {myUser?.userData.investorDob}
         </span>
         <span className="text-lg align-start font-semibold p-2 text-gray-500 text-wrap hover:text-cyan-300">
           {"Address : "}
-          {myUser.userData.investorAddress}
+          {myUser?.userData.investorAddress}
         </span>
         <span className="text-lg align-start font-semibold p-2 text-gray-500 hover:text-cyan-300">
           {"Phone Number : "}
-          {myUser.userData.investorPhoneNumber}
+          {myUser?.userData.investorPhoneNumber}
         </span>
       </div>
       {showModal && (

@@ -4,7 +4,7 @@ import { Billing, Business, CardDeal, Clients, CTA, Footer, Navbar, Stats, Testi
 
 const Home = () => {
   return (
-    <div className="bg-primary w-full overflow-hidden">
+    <div className="bg-primary w-[98.5vw] h-full overflow-hidden">
     <div className={`${styles.paddingX} ${styles.flexCenter}`}>
       <div className={`${styles.boxWidth}`}>
         <Navbar/>

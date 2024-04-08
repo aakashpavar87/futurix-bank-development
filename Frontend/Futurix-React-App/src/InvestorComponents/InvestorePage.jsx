@@ -2,8 +2,15 @@ import { Outlet } from "react-router-dom";
 // import Navigation from './Navigation'
 import { SideMenu } from './SideMenu'
 import './Investor.css';
+import { RoleContext } from "../contexts/RoleContext";
+import { useContext, useEffect, useState } from "react";
 
 const InvestorPage = () => {
+  const {role} = useContext(RoleContext)
+  const [number, setNumber] = useState(1)
+  useEffect(()=>{
+    console.log('In Investor Page')
+  },[role])
   return (
     <div className="min-h-screen body">
       <div className="h-auto">

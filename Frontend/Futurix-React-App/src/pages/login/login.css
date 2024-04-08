@@ -1,0 +1,17 @@
+.login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    color: white;
+}
+
+input[submit]{
+    padding: 5px;
+    border-radius: 10px;
+    color: white;
+    box-shadow: solid white 5px;
+}

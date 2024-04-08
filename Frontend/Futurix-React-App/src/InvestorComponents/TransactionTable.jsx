@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/userContext";
 import { getinvestmentApi } from "../apis/InvestorApi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { InvestmentContext } from "../contexts/InvestmentContext";
 import { helloWorldApiService } from "../apis/HelloWorldApi";
 
@@ -9,7 +9,17 @@ export const TransactionTable = () => {
   const myUser = useContext(UserContext);
   const {isInvested, setIsInvested} = useContext(InvestmentContext) || false
   const [investments, setInvestments] = useState([])
-  
+  const [number, setNumber] = useState(1)
+
+
+  // (function(){
+  //   setNumber(prev=>prev+1)
+  // })()
+  const myRefresher = function() {
+    setNumber(prev=>prev+1)
+  }
+
+
   useEffect(()=>{
     console.log("Heloo From Transaction Table");
     helloWorldApiService()
@@ -22,14 +32,9 @@ export const TransactionTable = () => {
       })
       .catch(err=>console.log(err.response.data.message)
       )
-    // getinvestmentApi(myUser.userData.id)
-    //   .then((res)=>{
-    //     setInvestments(res.data)
-    //     setIsInvested(prev=>!prev)
-    //   })
-    //   .catch(err=>console.log(err.response.data))   
-  },[isInvested])
+  },[isInvested, number])
   
+
   return (
     <div className="flex justify-center items-center w-[80vw]">
       {investments.length !== 0 ? (

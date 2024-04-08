@@ -1,28 +1,39 @@
-import React, { useState, useContext } from "react";
-import { createOrder } from "../apis/InvestorApi";
+import React, { useState, useContext, useEffect } from "react";
+import { createOrder, getInvestorByEmail } from "../apis/InvestorApi";
 import { UserContext, UserDispatchContext } from "../contexts/userContext";
 import { createinvestmentApi } from "../apis/InvestorApi";
+import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { logo } from "../assets";
-import { useNavigate } from 'react-router-dom'
 import { InvestmentContext } from "../contexts/InvestmentContext";
 
 const AddFundsModal = ({ showModal, setShowModal }) => {
+  
   const [sendAmount, setSendAmount] = useState("");
   const [investmentType, setInvestmentType] = useState("");
   const [investmentDuration, setinvestmentDuration] = useState("");
+  // const [myUser.userData, setmyUser.userData] = useState(null)
+  
+  
   const navigate = useNavigate();
   const {setIsInvested} = useContext(InvestmentContext);
-
+  const myUser = useContext(UserContext)
+  const setmyUser = useContext(UserDispatchContext)
+  const {
+    investorEmail,
+    investorName,
+    investorPhoneNumber,
+    id
+  } = myUser
+  useEffect(()=>{
+    console.log(myUser);  
+  }, [])
   const showToastMessage = (msg, isError) => {
     if (!isError) toast.success(msg);
     else toast.error(msg);
   };
 
-  const myUser = useContext(UserContext);
-
-  const setmyUser = useContext(UserDispatchContext)
   const closeModal = () => {
     setShowModal(false);
   };
@@ -52,9 +63,9 @@ const AddFundsModal = ({ showModal, setShowModal }) => {
     }
 
     let orderData = {
-      customerName: myUser.userData.InvestorName,
-      email: myUser.userData.InvestorEmail,
-      phoneNumber: myUser.userData.InvestorPhoneNumber,
+      customerName: investorName,
+      email: investorEmail,
+      phoneNumber: investorPhoneNumber,
       amount: Number.parseInt(sendAmount),
     };
     const result = await createOrder(orderData);
@@ -98,9 +109,9 @@ const AddFundsModal = ({ showModal, setShowModal }) => {
           investmentDate: dateString,
           investmentType: investmentType,
           investmentDuration: investmentDuration,
-          investorPhoneNumber: myUser.userData.investorPhoneNumber,
+          investorPhoneNumber: investorPhoneNumber
         };
-        const res = await createinvestmentApi(investment, myUser.userData.id);
+        const res = await createinvestmentApi(investment, id);
         setmyUser(res.data)
       },
       prefill: {
@@ -121,6 +132,10 @@ const AddFundsModal = ({ showModal, setShowModal }) => {
   };
 
   const handleSubmit = (e) => {
+    const id = myUser.userData.id
+    const investorPhoneNumber = myUser.userData.investorPhoneNumber
+    console.log(myUser)
+    
     e.preventDefault();
     if (
       investmentType === "" ||
@@ -141,11 +156,17 @@ const AddFundsModal = ({ showModal, setShowModal }) => {
         investmentDate: dateString,
         investmentType: investmentType,
         investmentDuration: investmentDuration,
-        investorPhoneNumber: myUser.userData.investorPhoneNumber,
+        investorPhoneNumber: investorPhoneNumber
       };
-      createinvestmentApi(investment, myUser.userData.id).then(res=>setmyUser(res.data));
+      createinvestmentApi(investment, id)
+        .then(res=>{
+          setmyUser(res.data)
+          console.log('investment has saved')
+          closeModal()
+          navigate('/investor/transactions', {state: {number: 1}})
+        })
+        .catch(err=>console.log(err.response));
       setIsInvested(true);
-      navigate('/investor')
     }
   };
 
