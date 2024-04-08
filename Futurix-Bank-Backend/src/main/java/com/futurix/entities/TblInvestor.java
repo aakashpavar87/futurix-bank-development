@@ -39,7 +39,7 @@ public class TblInvestor {
 	    @OneToOne(cascade = CascadeType.ALL)
 		private ProfileImageData profileImage;
 			    
-	    @OneToMany(mappedBy = "investor", fetch = FetchType.LAZY)
+	    @OneToMany(mappedBy = "investor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	    private List<TblInvestment> investmentList = new ArrayList<>();
 
 		public TblInvestor(String investorName, String investorAddress,

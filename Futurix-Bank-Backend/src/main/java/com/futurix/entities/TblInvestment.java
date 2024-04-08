@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,9 +32,19 @@ public class TblInvestment {
 
 	private String investmentDuration;
 
-	@ManyToOne
+	
+	
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private TblInvestor investor;
+
+	@Override
+	public String toString() {
+		return "TblInvestment [id=" + id + ", investmentAmount=" + investmentAmount + ", investmentDate="
+				+ investmentDate + ", investmentType=" + investmentType + ", transactionId=" + transactionId
+				+ ", investorPhoneNumber=" + investorPhoneNumber + ", investmentDuration=" + investmentDuration
+				+ ", investor=" + investor + "]";
+	}
 
 	public TblInvestment(Double investmentAmount, String investmentType) {
 		super();

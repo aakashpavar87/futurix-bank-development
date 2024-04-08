@@ -37,6 +37,8 @@ public class InvestmentService {
 		
 		foundInvestmentList.add(investment);
 		
+		System.out.println(investment);
+		
 		tblInvestor.setInvestmentList(foundInvestmentList);
 		
 		return investorRepo.save(tblInvestor);		

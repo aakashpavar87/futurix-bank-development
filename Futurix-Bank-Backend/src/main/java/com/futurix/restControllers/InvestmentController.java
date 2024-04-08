@@ -40,6 +40,7 @@ public class InvestmentController {
 	
 	@PostMapping("/investor/{investorId}/investments")
 	public ResponseEntity<TblInvestor> addInvestment(@PathVariable int investorId, @RequestBody TblInvestment investment) {
+		
 		return new ResponseEntity<TblInvestor>(investmentService.addInvestment(investorId, investment), HttpStatus.OK);
 		
 	}
