@@ -84,6 +84,18 @@ public class UserService {
 		}
 		return "Please regenerate otp and try again";
 	}
+	
+	public String verifyOTP(String email, String otp) {
+		TblCustomer user = customerRepo.findByEmail(email)
+				.orElseThrow(() -> new RuntimeException("User not found with this email: " + email));
+		if (user.getOtp().equals(otp)
+				&& Duration.between(user.getOtpGeneratedTime(), LocalDateTime.now()).getSeconds() < (2 * 60)) {
+			user.setActive(true);
+			customerRepo.save(user);
+			return "OTP verified you can reset password";
+		}
+		return "Please regenerate otp and try again";
+	}
 
 	public String regenerateOtp(String email) {
 		TblCustomer user = customerRepo.findByEmail(email)
@@ -126,5 +138,31 @@ public class UserService {
 		if(tblCustomer == null)
 			throw new NotFoundException("Customer is not found with this email "+email);
 		return tblCustomer;
+	}
+
+	public String forgotPassword(String email) {
+		// TODO Auto-generated method stub
+		TblCustomer customer = findCustomerByEmail(email);
+		String otp = emailSenderService.generateOtp();
+		try {
+			emailSenderService.sendOtpEmail(email, otp);
+		} catch (MessagingException e) {
+			throw new RuntimeException("Unable to send otp please try again");
+		}
+		customer.setOtp(otp);
+		customer.setOtpGeneratedTime(LocalDateTime.now());
+		customerRepo.save(customer);
+		return "Otp has been sent to your email verify to change password...";
+	}
+
+	public String resetPassword(String email, String password) {
+
+		TblCustomer customer = findCustomerByEmail(email);
+		
+		customer.setPassword(password);
+		
+		customerRepo.save(customer);
+		
+		return "Password has reset successfully";
 	}
 }

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.futurix.dto.EmailOtpDTO;
+import com.futurix.dto.EmailPasswordDTO;
 import com.futurix.entities.TblCustomer;
 import com.futurix.filestorage.FileDataService;
 import com.futurix.services.UserService;
@@ -86,12 +88,30 @@ public class UserController {
 	}
 
 	@PutMapping("/verify-account")
-	public ResponseEntity<String> verifyAccount(@RequestParam String email, @RequestParam String otp) {
-		return new ResponseEntity<>(userService.verifyAccount(email, otp), HttpStatus.OK);
+	public ResponseEntity<String> verifyAccount(@RequestBody EmailOtpDTO emailOtpDTO) {
+		return new ResponseEntity<>(userService.verifyAccount(emailOtpDTO.getEmail(), emailOtpDTO.getOtp()), HttpStatus.OK);
 	}
 
+	@PutMapping("/verify-otp")
+	public ResponseEntity<String> verifyOTP(@RequestBody EmailOtpDTO emailOtpDTO) {
+		return new ResponseEntity<>(userService.verifyOTP(emailOtpDTO.getEmail(), emailOtpDTO.getOtp()), HttpStatus.OK);
+	}
+	
+	@PutMapping("/forgot-password/{email}")
+	public ResponseEntity<String> forgotPassword(@PathVariable String email) {
+		return new ResponseEntity<>(userService.forgotPassword(email), HttpStatus.OK);
+	}
+	
+	@PutMapping("/set-password")
+	public ResponseEntity<String> resetNewPassword(@RequestBody EmailPasswordDTO emailPasswordDTO) {
+		return new ResponseEntity<>(userService.resetPassword(emailPasswordDTO.getEmail(), emailPasswordDTO.getPassword()), HttpStatus.OK);
+	}
+
+	
 	@PutMapping("/regenerate-otp")
 	public ResponseEntity<String> regenerateOtp(@RequestParam String email) {
 		return new ResponseEntity<>(userService.regenerateOtp(email), HttpStatus.OK);
 	}
+	
+	
 }
