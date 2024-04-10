@@ -11,6 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { RoleContext } from '../contexts/RoleContext';
+import { useAuth } from '../hooks/useAuth';
+import { UserDispatchContext } from '../contexts/userContext';
+import { EmailContext } from '../contexts/emailContext';
 
 const CustomerRegister = () => {
   // Form States
@@ -19,11 +22,44 @@ const CustomerRegister = () => {
   const [focusedInput, setFocusedInput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const {setEmail} = useContext(EmailContext)
 
+
+  /**Old Code for registration
+   * // try {
+    //   setIsLoading(true)
+
+
+    //   const foundUser = await getUserByEmail(Email);
+
+    //   if (foundUser) {
+    //     console.log(foundUser);
+    //     setAccountExist("One account already exists with this email. Please use another email.");
+    //   } else {
+    //     const res = await createUser(user);
+    //     console.log(res.data);
+    //     setAccountExist("Registered Successfully...");
+    //   }
+    // } catch (error) {
+    //   // setAccountExist("An error occurred while processing your request.");
+    //   setAccountExist("");
+    //   createUser(user)
+    //       .then(res => console.log(res.data))
+    //       .catch(err => console.log(err))
+    // } finally {
+    //   setTimeout(() => {
+    //     setIsLoading(false);
+    //     navigate("/profile")
+    //   }, 1500);
+    // }
+   */
 
   //Context Functions
   const {role, setRole} = useContext(RoleContext)
-  
+  const {login} = useAuth()
+  const setmyUser = useContext(UserDispatchContext)
+
+
   useEffect(() => {
     setRole('customer')
   }, [])
@@ -57,13 +93,15 @@ const CustomerRegister = () => {
     try {
       setIsLoading(true);
 
-      const foundCustomer = await getUserByEmail(Email);
+      const encodedEmail = encodeURIComponent(Email)
+      const foundCustomer = await getUserByEmail(encodedEmail);
 
       if (foundCustomer) {
         showToastMessage(
           "One account already exists with this email. Please login with that email",
           true
         );
+        setIsLoading(false)
       }
     } catch (error) {
       console.log(error.response.data.message);
@@ -72,43 +110,19 @@ const CustomerRegister = () => {
         let userData = res.data
         setmyUser(userData)
         console.log(res.data);
+        setEmail(Email)
 
         // Direct login and redirect on profile
         setTimeout(async ()=>{
           setIsLoading(false)
-          await login({userData, role})
+          navigate('/verify-account', {state: {level: "register", email: Email}})
         }, 1500)
       } catch (err) {
         showToastMessage(err.response.data.message, true)
       }
     }
-    // try {
-    //   setIsLoading(true)
-
-
-    //   const foundUser = await getUserByEmail(Email);
-
-    //   if (foundUser) {
-    //     console.log(foundUser);
-    //     setAccountExist("One account already exists with this email. Please use another email.");
-    //   } else {
-    //     const res = await createUser(user);
-    //     console.log(res.data);
-    //     setAccountExist("Registered Successfully...");
-    //   }
-    // } catch (error) {
-    //   // setAccountExist("An error occurred while processing your request.");
-    //   setAccountExist("");
-    //   createUser(user)
-    //       .then(res => console.log(res.data))
-    //       .catch(err => console.log(err))
-    // } finally {
-    //   setTimeout(() => {
-    //     setIsLoading(false);
-    //     navigate("/profile")
-    //   }, 1500);
-    // }
   };
+
   const handlePasswordToggle = () => setShowPassword(!showPassword);
 
   const eyeIconStyle = {

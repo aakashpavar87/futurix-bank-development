@@ -1,6 +1,6 @@
 import client from "./ApiClient";
 
-export const forgotPassword = (data) => client.put(`/forgot-password`, data)
+export const forgotPassword = (email) => client.put(`/forgot-password/${email}`)
 
 export const verifyOTP = (dataDTO) => client.put("/verify-otp", dataDTO)
 

@@ -59,8 +59,8 @@ const App = () => {
     <div className={`${darkMode ? "app dark" : "app"} p-0`}>
       <RefreshContextProvider>
         <UserProvider>
-          <AuthProvider>
-            <RoleProvider>
+          <RoleProvider>
+            <AuthProvider>
               <EmailProvider>
                 <InvestmentProvider>
                   <Routes>
@@ -159,8 +159,8 @@ const App = () => {
                   </Routes>
                 </InvestmentProvider>
               </EmailProvider>
-            </RoleProvider>
-          </AuthProvider>
+            </AuthProvider>
+          </RoleProvider>
         </UserProvider>
       </RefreshContextProvider>                    
     </div>

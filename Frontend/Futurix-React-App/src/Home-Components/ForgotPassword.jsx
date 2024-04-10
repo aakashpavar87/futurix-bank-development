@@ -38,12 +38,13 @@ const ForgotPassword = () => {
     const onSubmit = async (data) => {
         console.log(data);
         setLoading(true)
-        forgotPassword(data)
+        let encodedEmail = encodeURIComponent(data.email);
+        forgotPassword(encodedEmail)
             .then(res => {
                 console.log(res.data)
                 setEmail(data.email)
                 setTimeout(() => {
-                    navigate('/verify-account')
+                    navigate('/verify-account', { state: { email: data.email, level: 'forgotPassword'}})
                 }, 500);
             })
             .catch(err=>{

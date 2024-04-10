@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useForm } from "react-hook-form";
 import { useContext, useEffect, useState } from "react";
@@ -6,6 +6,14 @@ import { regenerateOTP, verifyOTP } from "../apis/PasswordApi";
 import { UserContext } from "../contexts/userContext";
 import { ToastContainer, toast } from "react-toastify";
 import { EmailContext } from "../contexts/emailContext";
+import { useAuth } from "../hooks/useAuth";
+
+
+function convertEmail(email) {
+  const [username, domain] = email.split("@");
+  const maskedUsername = username.substr(0, 3) + "*********";
+  return maskedUsername + "@" + domain;
+}
 
 function VerifyAccount() {
   const {
@@ -15,12 +23,20 @@ function VerifyAccount() {
   } = useForm();
 
   const navigate = useNavigate();
+
+  const location = useLocation()
+  const routeData = location?.state?.level
+  const routeEmail = location?.state?.email
   
+  const convertedEmail = convertEmail(routeEmail)
 
   const [timeLeft, setTimeLeft] = useState(10); // 2 minutes in seconds
   const [timerRunning, setTimerRunning] = useState(true); // State to track if the timer is running
   const user = useContext(UserContext)
+  const {login} = useAuth()
   const {email} = useContext(EmailContext)
+
+
 
   const showToastMessage = (msg, isError) => {
     if(!isError)
@@ -30,7 +46,7 @@ function VerifyAccount() {
   }
 
   useEffect(() => {
-    // Start the timer when the component mounts
+    // Start the timer when the component mounts   
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => {
         if (prevTime === 0) {
@@ -48,20 +64,25 @@ function VerifyAccount() {
 
   const onSubmit = async (data) => {
     console.log(data);
+    console.log(routeData)
+    
     let { firstDigit, secondDigit, thirdDigit, fourthDigit , fifthDigit, lastDigit} = data;
     let otp = firstDigit + secondDigit + thirdDigit + fourthDigit + fifthDigit + lastDigit;
     console.log(otp);
     let dataDTO = {
-      email: email,
+      email: routeEmail,
       otp: otp
     }
     verifyOTP(dataDTO)
-      .then(res => {
+      .then(async (res) => {
         console.log(res.data);
-        if(res) navigate("/set-password");
+        if(routeData === 'register') {
+          await login({user}, 'customer')
+        } else {
+          if(res) navigate("/set-password");
+        }
       })
       .catch(err => showToastMessage(err.response.data.message, true))
-    // navigate("/set-password");
   };
 
   const handleInputChange = (event) => {
@@ -75,7 +96,7 @@ function VerifyAccount() {
   };
 
   return (
-    <div className="h-screen bg-blue-500 py-20 px-3">
+    <div className="h-screen bg-blue-500 text-black py-20 px-3">
       <div className="container mx-auto">
         <div className="max-w-sm mx-auto md:max-w-lg">
           <div className="w-full">
@@ -88,7 +109,7 @@ function VerifyAccount() {
               <div className="flex flex-col mt-4">
               
                 <span>Enter the OTP you received at</span>
-                <span className="font-bold">aak**********@gmail.com</span>
+                <span className="font-bold">{convertedEmail}</span>
               </div>
               <div className="mt-4">
                 Time Left: {Math.floor(timeLeft / 60)}:

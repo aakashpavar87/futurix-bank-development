@@ -37,7 +37,7 @@ const SetPassword = () => {
 
   useEffect(()=>{
     showToastMessage("Now you Can change your Password 😎", false)
-  })
+  },[])
   const handleBlur = () => {
     setFocusedInput(null);
   };
@@ -47,12 +47,12 @@ const SetPassword = () => {
     let hashedPassword = bcrypt.hashSync(data.password, 10)
     let dataDTO = {
       email : email,
-      newPassword: hashedPassword
+      password: hashedPassword
     }
     setNewPassword(dataDTO)
       .then(res=>{
         console.log(res.data);
-        navigate('/login')
+        navigate('/login', {state: {msg: 'Password has been Reset successfully.'}})
       })
       .catch(err => showToastMessage(err.response.data.message, true))
   };

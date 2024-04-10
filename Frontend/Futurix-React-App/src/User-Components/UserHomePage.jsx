@@ -26,7 +26,7 @@ import { Outlet } from 'react-router-dom'
   
 const HomePage = () => (
     <div className="relative h-screen">
-      <Navbar />
+      <Navbar isUser />
       <div className="flex flex-1 ">
         {/* SideMenu */}
         <div className="w-1/6 sm:max-xl:sticky top-0 h-screen">
