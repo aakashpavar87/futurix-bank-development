@@ -3,6 +3,7 @@ package com.futurix.filestorage.kyc;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.futurix.entities.TblCustomer;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,7 +44,7 @@ public class UserKycDocument {
 	@Column(nullable = false)
 	private String panCardNumber;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private TblCustomer customer;
 	

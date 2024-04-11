@@ -13,12 +13,14 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.futurix.dto.UserKycDTO;
 import com.futurix.filestorage.kyc.UserKycDocument;
 import com.futurix.services.kyc.KycDocsService;
 
@@ -29,9 +31,15 @@ public class UserKycDocsController {
 	@Autowired
 	private KycDocsService kycDocsService;
 	
-	@PostMapping("/upload")
-	public ResponseEntity<?> uploadKycDocuments(@PathVariable int id, @RequestParam("aadharCard") MultipartFile aadharCardFile, @RequestParam("panCard") MultipartFile panCardFile, @RequestParam("aadharCardNumber") String aadharCardNumber, @RequestParam("panCardNumber") String panCardNumber) throws IllegalStateException, IOException {
-		String uploadedKycDocs = kycDocsService.uploadKycDocsToStorage(id, aadharCardFile, panCardFile, aadharCardNumber, panCardNumber);
+	@PutMapping("/upload")
+	public ResponseEntity<?> uploadKycDocuments(@PathVariable int id, 
+			@RequestParam String aadharCardNumber,
+			@RequestParam String panCardNumber,
+			@RequestParam MultipartFile aadharCard,
+			@RequestParam MultipartFile panCard) throws IllegalStateException, IOException {
+		String uploadedKycDocs = kycDocsService.uploadKycDocsToStorage(id, 
+				aadharCard, panCard, 
+				aadharCardNumber, panCardNumber);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(uploadedKycDocs);
 	}
@@ -51,10 +59,11 @@ public class UserKycDocsController {
 //				
 //		return null;
 //	}
-	@GetMapping("/download/{userId}")
-	public ResponseEntity<?> downloadFileFromDatabase(@PathVariable int userId) throws IOException {
-		UserKycDocument docs = kycDocsService.retrieveKycDocuments(userId);
-		Map<String, byte[]> kycDocsMap = kycDocsService.downloadKycDocsFromFileSystemById(userId);
+	
+	@GetMapping("/download")
+	public ResponseEntity<?> downloadFileFromDatabase(@PathVariable int id) throws IOException {
+		UserKycDocument docs = kycDocsService.retrieveKycDocuments(id);
+		Map<String, byte[]> kycDocsMap = kycDocsService.downloadKycDocsFromFileSystemById(id);
 
 		byte[] aadharCard = kycDocsMap.get("aadharCard");
 		byte[] panCard = kycDocsMap.get("panCard");
