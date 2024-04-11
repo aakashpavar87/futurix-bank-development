@@ -32,7 +32,6 @@ public class AccountController {
 	@GetMapping("/users/{id}/account")
 	public TblAccount reteriveOneAccount(@PathVariable int id) {
 		return accountService.findAccount(id);	
-		
 	}
 	
 	

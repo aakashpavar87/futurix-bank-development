@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.futurix.entities.TblInvestment;
 import com.futurix.entities.TblInvestor;
+import com.futurix.entities.TblTransaction;
 import com.futurix.repositories.InvestmentRepo;
 import com.futurix.repositories.InvestorRepo;
 
@@ -19,6 +20,12 @@ public class InvestmentService {
 	
 	@Autowired
 	private InvestorRepo investorRepo;
+	
+	@Autowired
+	private TransactionService transactionService;
+	
+	@Autowired
+	private BankBalanceService bankBalanceService;
 	
 	// Add Investment
 	public TblInvestor addInvestment(int investorId, TblInvestment investment) {
@@ -34,6 +41,12 @@ public class InvestmentService {
 		List<TblInvestment> foundInvestmentList = tblInvestor.getInvestmentList();
 		
 		investment.setInvestor(tblInvestor);
+		
+		TblTransaction invesmentTransaction = transactionService.addInvesmentTransaction(investment, "Investing in Futurix Bank", investment.getInvestmentAmount().intValue());
+		
+		bankBalanceService.addBankBalance(
+				investment.getInvestmentAmount().intValue(), 
+				invesmentTransaction);
 		
 		foundInvestmentList.add(investment);
 		

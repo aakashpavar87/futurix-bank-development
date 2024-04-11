@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class TblInvestment {
@@ -38,6 +39,9 @@ public class TblInvestment {
 	@JsonIgnore
 	private TblInvestor investor;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	private TblTransaction tblTransaction;
+	
 	@Override
 	public String toString() {
 		return "TblInvestment [id=" + id + ", investmentAmount=" + investmentAmount + ", investmentDate="
@@ -126,6 +130,14 @@ public class TblInvestment {
 
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
+	}
+
+	public TblTransaction getTblTransaction() {
+		return tblTransaction;
+	}
+
+	public void setTblTransaction(TblTransaction tblTransaction) {
+		this.tblTransaction = tblTransaction;
 	}
 
 }

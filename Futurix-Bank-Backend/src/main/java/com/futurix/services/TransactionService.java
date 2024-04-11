@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.futurix.entities.TblAccount;
+import com.futurix.entities.TblInvestment;
 import com.futurix.entities.TblTransaction;
 import com.futurix.repositories.AccountRepo;
 import com.futurix.repositories.TransactionRepo;
@@ -21,7 +22,7 @@ public class TransactionService {
 	@Autowired
 	private AccountRepo accountRepo;
 
-	public void addTransaction(TblAccount tblAccount, String transactionType, String desc, int amount) {
+	public TblTransaction addTransaction(TblAccount tblAccount, String transactionType, String desc, int amount) {
 		List<TblTransaction> transactionList = tblAccount.getTransactionList();
 
 		TblTransaction transaction = new TblTransaction();
@@ -42,10 +43,27 @@ public class TransactionService {
 		transactionList.add(transaction);
 		tblAccount.setTransactionList(transactionList);
 
-		transactionRepo.save(transaction);
 		accountRepo.save(tblAccount);
+		return transactionRepo.save(transaction);
 
 	}
+	
+	public TblTransaction addInvesmentTransaction(TblInvestment investment, String desc, int amount) {
+		TblTransaction transaction = new TblTransaction();
+		
+		transaction.setTransactionType("investment");
+		transaction.setInvestment(investment);
+		transaction.setDescription(desc);
+		transaction.setAmount((double) amount);
+		String transactionCode = UUID.randomUUID().toString().split("-")[0];
+		transaction.setTransactionCode(transactionCode);
+		transaction.setDate(LocalDate.now());
+		transaction.setStatus("Completed");
+		
+		return transactionRepo.save(transaction);
+
+	}
+	
 
 	public TblTransaction getOneTransaction(int accId, int id) {
 

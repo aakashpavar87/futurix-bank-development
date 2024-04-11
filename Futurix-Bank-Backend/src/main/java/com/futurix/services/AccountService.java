@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.futurix.entities.TblAccount;
 import com.futurix.entities.TblCustomer;
+import com.futurix.entities.TblTransaction;
 import com.futurix.exception.InsufficientAmountException;
 import com.futurix.exception.NotFoundException;
 import com.futurix.repositories.AccountRepo;
@@ -22,6 +23,9 @@ public class AccountService {
 	private AccountRepo accountRepo;
 	@Autowired
 	private CustomerRepo customerRepo;
+	
+	@Autowired
+	private BankBalanceService bankBalanceService;
 	
 //	@Autowired
 //	private EmailSenderService emailSender;
@@ -122,7 +126,10 @@ public class AccountService {
 		 Double balance = tblAccount.getBalance();	 
 		 tblAccount.setBalance(balance + amount);
 		 
-		 transactionService.addTransaction(tblAccount, "Deposit", desc, amount);
+		 TblTransaction transaction = transactionService.addTransaction(tblAccount, "Deposit", desc, amount);
+		 
+		 bankBalanceService.addBankBalance(amount, transaction);
+		 
 		 accountRepo.save(tblAccount);
 	}
 	
@@ -144,7 +151,8 @@ public class AccountService {
 			throw new InsufficientAmountException("Sorry not enough balance....!");
 		}else {
 			tblAccount.setBalance(balance - amount);
-			transactionService.addTransaction(tblAccount, "Withdraw", desc, amount);
+			TblTransaction transaction = transactionService.addTransaction(tblAccount, "Withdraw", desc, amount);
+			 bankBalanceService.substractBankBalance(amount, transaction);
 		}
 		
 	}
@@ -152,8 +160,11 @@ public class AccountService {
 	
 	// Transfer from one account to another account
 	public void transferFromOneAccountToAnother(int accId, int amount, int accountNumber, String desc) {
+		
 		TblAccount senderAccount = accountRepo.findById(accId).get();
+		
 		TblAccount recieverAccount = null;
+		
 		Double balance = senderAccount.getBalance();
 		
 		if(amount > balance) {

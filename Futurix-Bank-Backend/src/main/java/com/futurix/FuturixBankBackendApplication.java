@@ -20,7 +20,11 @@ public class FuturixBankBackendApplication {
 			public void addCorsMappings(CorsRegistry corsRegistry) {
 				corsRegistry.addMapping("/**")
 					.allowedMethods("*")
-					.allowedOrigins("http://localhost:5173");
+					.allowedOrigins(
+							"http://localhost:5173",
+							"http://localhost:5174",
+							"http://localhost:5175"
+							);
 			}
 		};
 	}

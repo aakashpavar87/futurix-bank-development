@@ -4,12 +4,14 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class TblTransaction {
@@ -20,7 +22,7 @@ public class TblTransaction {
 	@Column(nullable = false)
 	private String transactionCode;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private long accountNumber;
 
 	@Column(nullable = false)
@@ -42,6 +44,14 @@ public class TblTransaction {
 	@ManyToOne
 	@JsonIgnore
 	private TblAccount account;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+	private TblInvestment investment;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+	private TblBankBalance bankBalance;
 
 	public TblTransaction() {
 		super();
@@ -147,6 +157,22 @@ public class TblTransaction {
 
 	public void setTransactionCode(String transactionCode) {
 		this.transactionCode = transactionCode;
+	}
+
+	public TblBankBalance getBankBalance() {
+		return bankBalance;
+	}
+
+	public void setBankBalance(TblBankBalance bankBalance) {
+		this.bankBalance = bankBalance;
+	}
+
+	public TblInvestment getInvestment() {
+		return investment;
+	}
+
+	public void setInvestment(TblInvestment investment) {
+		this.investment = investment;
 	}
 
 }
