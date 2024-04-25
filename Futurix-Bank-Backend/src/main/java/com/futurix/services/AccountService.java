@@ -126,7 +126,7 @@ public class AccountService {
 		 Double balance = tblAccount.getBalance();	 
 		 tblAccount.setBalance(balance + amount);
 		 
-		 TblTransaction transaction = transactionService.addTransaction(tblAccount, "Deposit", desc, amount);
+		 TblTransaction transaction = transactionService.addTransaction(tblAccount, "Deposit", desc, amount, 0);
 		 
 		 bankBalanceService.addBankBalance(amount, transaction);
 		 
@@ -151,7 +151,7 @@ public class AccountService {
 			throw new InsufficientAmountException("Sorry not enough balance....!");
 		}else {
 			tblAccount.setBalance(balance - amount);
-			TblTransaction transaction = transactionService.addTransaction(tblAccount, "Withdraw", desc, amount);
+			TblTransaction transaction = transactionService.addTransaction(tblAccount, "Withdraw", desc, amount, 0);
 			 bankBalanceService.substractBankBalance(amount, transaction);
 		}
 		
@@ -159,25 +159,24 @@ public class AccountService {
 	
 	
 	// Transfer from one account to another account
-	public void transferFromOneAccountToAnother(int accId, int amount, int accountNumber, String desc) {
+	public void transferFromOneAccountToAnother(int accId, int amount, long accountNumber, String desc) {
 		
 		TblAccount senderAccount = accountRepo.findById(accId).get();
 		
-		TblAccount recieverAccount = null;
+		TblAccount recieverAccount;
 		
 		Double balance = senderAccount.getBalance();
 		
 		if(amount > balance) {
 			throw new InsufficientAmountException("Sorry not enough balance....!");
 		}else {
-			senderAccount.setBalance(balance - amount);
-			transactionService.addTransaction(senderAccount, "Money Send", desc, amount);
-			
+			senderAccount.setBalance(balance - amount);			
 			recieverAccount = accountRepo.findByAccountnumber(accountNumber);
+			transactionService.addTransaction(senderAccount, "Money Send", desc, amount, recieverAccount.getAccountnumber());
 			balance = recieverAccount.getBalance() + amount;
 			recieverAccount.setBalance(balance);
 			
-			transactionService.addTransaction(recieverAccount, "Money Recieve", desc, amount);
+			transactionService.addTransaction(recieverAccount, "Money Recieve", desc, amount, senderAccount.getAccountnumber());
 
 			accountRepo.save(recieverAccount);	
 		}

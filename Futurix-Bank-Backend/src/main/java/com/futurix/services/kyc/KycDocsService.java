@@ -18,9 +18,9 @@ import com.futurix.repositories.kyc.UserKycDocumentRepo;
 @Service
 public class KycDocsService {
 
-	private final String AADHAR_FOLDER_PATH = "C:\\Users\\Aakash Pavar\\Desktop\\TYProject\\Backend\\Futurix-Bank-Backend\\AadharCardDocs";
+	private final String AADHAR_FOLDER_PATH = "C:\\Users\\Aakash Pavar\\Desktop\\TYProject\\Backend\\Futurix-Bank-Backend\\AadharCardDocs\\";
 
-	private final String PANCARD_FOLDER_PATH = "C:\\Users\\Aakash Pavar\\Desktop\\TYProject\\Backend\\Futurix-Bank-Backend\\PanCardDocs";
+	private final String PANCARD_FOLDER_PATH = "C:\\Users\\Aakash Pavar\\Desktop\\TYProject\\Backend\\Futurix-Bank-Backend\\PanCardDocs\\";
 
 	@Autowired
 	private UserKycDocumentRepo userKycDocumentRepo;

@@ -1,5 +1,6 @@
 package com.futurix.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -19,20 +20,28 @@ public class CardService {
 	private CustomerRepo customerRepo;
 
 	// Create Card
-	public void createCard(TblCard card, int id) {
+	public TblCard createCard(String card_status, int id) {
+		TblCard newCard = new TblCard();
 		TblCustomer foundCustomer = customerRepo.findById(id).orElse(null);
 		List<TblCard> foundCardList = foundCustomer.getCardList();
-		card.setAccountnumber(foundCustomer.getAccount().getAccountnumber());
-		foundCardList.add(card);
 		
-		// loging
-		foundCardList.stream().forEach(newcard -> System.out.println(card.getCardType()));
+		newCard.setAccountnumber(foundCustomer.getAccount().getAccountnumber());
+		newCard.setCard_status(card_status);
+		newCard.setDate_of_issue(LocalDate.now());
+		newCard.setDate_of_exspiry(LocalDate.now().plusYears(4));
+		newCard.setCustomer(foundCustomer);
+		newCard.setEmail(foundCustomer.getEmail());
+		
+		foundCardList.add(newCard);
+		
+//		loging
+//		foundCardList.stream().forEach(newcard -> System.out.println(newCard.getCardType()));
 		
 		foundCustomer.setCardList(foundCardList);
-		card.setCustomer(foundCustomer);
+		newCard.setCustomer(foundCustomer);
 		
-		customerRepo.save(foundCustomer);
-		cardRepo.save(card);
+//		customerRepo.save(foundCustomer);
+		return cardRepo.save(newCard);
 	}
 
 	// Select all Card

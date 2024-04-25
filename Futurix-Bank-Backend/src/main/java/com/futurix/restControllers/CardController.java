@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -35,19 +37,14 @@ public class CardController {
 	}
 	
 	@PostMapping("/users/{id}/cards")
-	public ResponseEntity<TblCard> createCard(@RequestBody TblCard card , @PathVariable int id){
-		cardService.createCard(card, id);
-		URI locationUri =ServletUriComponentsBuilder.fromCurrentRequest()
-				.buildAndExpand(card.getCard_number()).toUri();
-		return ResponseEntity.created(locationUri).build();
-		
+	public ResponseEntity<TblCard> createCard(@RequestParam String cardStatus, @PathVariable int id){
+		return new ResponseEntity<TblCard>(cardService.createCard(cardStatus, id), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/users/{id}/cards/{cardId}")
 	public ResponseEntity<Void> deleteCard(@PathVariable int id, @PathVariable int cardId){
 		cardService.deleteCard(cardId, id);
 		return ResponseEntity.noContent().build();
-		
 	}
 	
 	@PutMapping("/users/{id}/cards")

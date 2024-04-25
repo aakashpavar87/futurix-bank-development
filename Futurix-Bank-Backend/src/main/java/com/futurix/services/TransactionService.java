@@ -22,7 +22,7 @@ public class TransactionService {
 	@Autowired
 	private AccountRepo accountRepo;
 
-	public TblTransaction addTransaction(TblAccount tblAccount, String transactionType, String desc, int amount) {
+	public TblTransaction addTransaction(TblAccount tblAccount, String transactionType, String desc, int amount, long receiverAccountNumber) {
 		List<TblTransaction> transactionList = tblAccount.getTransactionList();
 
 		TblTransaction transaction = new TblTransaction();
@@ -32,6 +32,9 @@ public class TransactionService {
 			transaction.setTransactionLimit(5);			
 		}else {
 			transaction.setTransactionLimit(50);	
+		}
+		if(transactionType.equalsIgnoreCase("money recieve") || transactionType.equalsIgnoreCase("money send")) {
+			transaction.setReceiverAccountNumber(receiverAccountNumber);
 		}
 		String transactionCode = UUID.randomUUID().toString().split("-")[0];
 		transaction.setTransactionCode(transactionCode);

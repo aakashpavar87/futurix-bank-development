@@ -3,6 +3,7 @@ package com.futurix.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class TblCreditCard {
     
     private String creditScore;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     private TblCard card;
 

@@ -1,9 +1,10 @@
 package com.futurix.entities;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,26 +21,24 @@ public class TblCard {
 	private String email;
 	private long accountnumber;
 	private String card_status;
-	private Date date_of_issue;
-	private Date expiryDate;
-	private String cardType;
+	private LocalDate date_of_issue;
+	private LocalDate expiryDate;
 		
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private TblCreditCard creditCard;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private TblDebitCard debitCard;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private TblCustomer customer;
 		
-	public TblCard(String card_status, String cardType , Date date_of_issue,
-			Date date_of_exspiry) {
+	public TblCard(String card_status, String cardType , LocalDate date_of_issue,
+			LocalDate date_of_exspiry) {
 	
 		super();
 		this.card_status = card_status;
-		this.cardType = cardType;
 		this.date_of_issue = date_of_issue;
 		this.expiryDate = date_of_exspiry;
 		
@@ -78,27 +77,27 @@ public class TblCard {
 		this.card_status = card_status;
 	}
 	
-	public Date getDate_of_issue() {
+	public LocalDate getDate_of_issue() {
 		return date_of_issue;
 	}
 	
-	public void setDate_of_issue(Date date_of_issue) {
+	public void setDate_of_issue(LocalDate date_of_issue) {
 		this.date_of_issue = date_of_issue;
 	}
 	
-	public Date getDate_of_exspiry() {
+	public LocalDate getDate_of_exspiry() {
 		return expiryDate;
 	}
 	
-	public void setDate_of_exspiry(Date date_of_exspiry) {
+	public void setDate_of_exspiry(LocalDate date_of_exspiry) {
 		this.expiryDate = date_of_exspiry;
 	}
 
-	public Date getExpiryDate() {
+	public LocalDate getExpiryDate() {
 		return expiryDate;
 	}
 
-	public void setExpiryDate(Date expiryDate) {
+	public void setExpiryDate(LocalDate expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 
@@ -124,14 +123,6 @@ public class TblCard {
 
 	public void setCustomer(TblCustomer customer) {
 		this.customer = customer;
-	}
-
-	public String getCardType() {
-		return cardType;
-	}
-
-	public void setCardType(String cardType) {
-		this.cardType = cardType;
 	}
 	
 	public String getEmail() {

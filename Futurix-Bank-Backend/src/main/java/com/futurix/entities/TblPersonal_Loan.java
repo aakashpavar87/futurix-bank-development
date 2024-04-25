@@ -30,6 +30,9 @@ public class TblPersonal_Loan {
     @Column(nullable = false)
     private String income;
     
+    @Column(nullable = false)
+    private double monthlyInstallment;
+    
     @OneToOne
     @JsonIgnore
     private TblLoan loan;
@@ -116,6 +119,30 @@ public class TblPersonal_Loan {
 
 	public void setIncome(String income) {
 		this.income = income;
+	}
+
+	public int getLoanId() {
+		return loanId;
+	}
+
+	public void setLoanId(int loanId) {
+		this.loanId = loanId;
+	}
+
+	public int getCreditScore() {
+		return creditScore;
+	}
+
+	public void setCreditScore(int creditScore) {
+		this.creditScore = creditScore;
+	}
+
+	public double getInstallment() {
+		return monthlyInstallment;
+	}
+
+	public void setInstallment(double installment) {
+		this.monthlyInstallment = installment;
 	}
 	
 	

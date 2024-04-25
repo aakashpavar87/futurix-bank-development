@@ -70,7 +70,6 @@ public class LoanService {
 	}
 
 	public List<TblLoan> getAllLoans() {
-		// TODO Auto-generated method stub
 		return loanRepo.findAll();
 	}
 }

@@ -67,7 +67,7 @@ public class TblCustomer {
 	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
 	private List<TblFeedback> feedbackList = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<TblCard> cardList = new ArrayList<>();
 	
 	@OneToOne(cascade = CascadeType.ALL)

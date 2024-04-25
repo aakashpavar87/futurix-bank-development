@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.futurix.dto.FundTransferDTO;
 import com.futurix.entities.TblAccount;
 import com.futurix.services.AccountService;
 
@@ -54,10 +56,17 @@ public class AccountController {
 		return new ResponseEntity<String>("Amount Deposited Successfully", HttpStatus.OK);
 	}
 	
+//	@PostMapping("/account/{accId}/transfer")
+//	public ResponseEntity<String> transferMoneyToAnotherAccount(@PathVariable int accId, @RequestParam int accountNumber, @RequestParam int amount, @RequestParam String desc) {
+//		accountService.transferFromOneAccountToAnother(accId, amount, accountNumber, desc != null ? desc : "");
+//		return new ResponseEntity<String>("Money transferred to Account Number : "+accountNumber, HttpStatus.OK);
+//	}
+	
+	
 	@PostMapping("/account/{accId}/transfer")
-	public ResponseEntity<String> transferMoneyToAnotherAccount(@PathVariable int accId, @RequestParam int accountNumber, @RequestParam int amount, @RequestParam String desc) {
-		accountService.transferFromOneAccountToAnother(accId, amount, accountNumber, desc != null ? desc : "");
-		return new ResponseEntity<String>("Money transferred to Account Number : "+accountNumber, HttpStatus.OK);
+	public ResponseEntity<String> transferMoneyToAnotherAccount(@PathVariable int accId, @RequestBody FundTransferDTO ftDTO) {
+		accountService.transferFromOneAccountToAnother(accId, ftDTO.getAmount(), ftDTO.getAccountNumber(), ftDTO.getDesc() != null ? ftDTO.getDesc() : "");
+		return new ResponseEntity<String>("Money transferred to Account Number : "+ftDTO.getAccountNumber(), HttpStatus.OK);
 	}
 	
 	@PostMapping("/account/{accId}/withdraw")

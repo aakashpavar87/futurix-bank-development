@@ -20,13 +20,18 @@ public class DebitCardService {
 	private DebitCardRepo debitCardRepo;
 
 	// Add Debit Card
-	public void addDebitCard(long cardId, TblDebitCard debitCard) {
+	public TblDebitCard addDebitCard(long cardId, String pin) {
 
+		TblDebitCard debitCard = new TblDebitCard();
 		TblCard foundCard = cardRepo.findById(cardId).get();
+		
+		debitCard.setPin(pin);
+		debitCard.setWithdrawLimit(30000);
+		
+		foundCard.setCard_status("active");
 		foundCard.setDebitCard(debitCard);
 		debitCard.setCard(foundCard);
-		debitCardRepo.save(debitCard);
-		cardRepo.save(foundCard);
+		return debitCardRepo.save(debitCard);
 
 	}
 	

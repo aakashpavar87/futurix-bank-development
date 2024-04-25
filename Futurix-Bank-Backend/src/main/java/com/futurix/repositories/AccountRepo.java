@@ -6,5 +6,5 @@ import com.futurix.entities.TblAccount;
 
 
 public interface AccountRepo extends JpaRepository<TblAccount, Integer> {
-	TblAccount findByAccountnumber(int accountnumber);
+	TblAccount findByAccountnumber(long accountnumber);
 }

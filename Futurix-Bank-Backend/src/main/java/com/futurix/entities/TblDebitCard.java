@@ -3,6 +3,7 @@ package com.futurix.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class TblDebitCard {
 	@Column(nullable = false)
 	private String pin;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private TblCard card;
 
@@ -67,5 +68,13 @@ public class TblDebitCard {
 
 	public void setWithdrawLimit(double withdrawLimit) {
 		WithdrawLimit = withdrawLimit;
+	}
+
+	public String getPin() {
+		return pin;
+	}
+
+	public void setPin(String pin) {
+		this.pin = pin;
 	}
 }

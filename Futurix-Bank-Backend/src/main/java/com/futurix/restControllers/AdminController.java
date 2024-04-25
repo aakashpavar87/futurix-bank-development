@@ -15,12 +15,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.futurix.entities.TblAdmin;
+import com.futurix.entities.TblBankBalance;
+import com.futurix.entities.TblTransaction;
+import com.futurix.repositories.BankBalanceRepo;
+import com.futurix.repositories.TransactionRepo;
 import com.futurix.services.AdminService;
 
 @RestController
 public class AdminController {
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private BankBalanceRepo bankBalanceRepo;
+	
+	@Autowired
+	private TransactionRepo transactionRepo;
 	
 	@GetMapping("/admin/{adminId}")
 	public TblAdmin getOneAdmin(@PathVariable int adminId) {
@@ -30,6 +40,17 @@ public class AdminController {
 	@GetMapping("/admin")
 	public List<TblAdmin> getAllAdmins() {
 		return adminService.getAllAdmins();
+	}
+	
+	@GetMapping("/admin/balance")
+	public TblBankBalance getBankBalance() {
+		List<TblBankBalance> bankBalances = bankBalanceRepo.findAll();
+		return bankBalances.get(bankBalances.size() - 1);
+	}
+	
+	@GetMapping("/admin/transactions")
+	public List<TblTransaction> getAllTrasactions() {
+		return transactionRepo.findAll();
 	}
 	
 	@PostMapping("/admin")

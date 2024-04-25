@@ -18,8 +18,15 @@ public class BankBalanceService {
 
 	public BigDecimal getLatestBankBalance() {
 		List<TblBankBalance> bankBalances = bankBalanceRepo.findAll();
-		TblBankBalance latestBalance = bankBalances.get(bankBalances.size() - 1);
+		TblBankBalance latestBalance;
+		if(bankBalances.size() > 0) {
+			latestBalance = bankBalances.get(bankBalances.size() - 1);			
+			return latestBalance.getTotalBalance();
+		}
+		latestBalance = bankBalances.get(0);
+//		bankBalances.forEach(t -> System.out.println(t));
 		return latestBalance.getTotalBalance();
+//		return new BigDecimal(1234);
 	}
 
 	public String addBankBalance(int balance, TblTransaction transaction) {
