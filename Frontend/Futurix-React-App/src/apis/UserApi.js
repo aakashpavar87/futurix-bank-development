@@ -21,3 +21,5 @@ export const postProfileImage = (id, formData) => client.put(`/users/${id}/profi
     'Content-Type': 'multipart/form-data'
   }
 })
+
+export const uploadKycDocs = (userId, kycData) => client.put(`/user/${userId}/kyc/upload`, kycData)

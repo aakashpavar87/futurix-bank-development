@@ -15,6 +15,7 @@ const AdminHome = () => {
         <div className="widgets">
           <Widget type="user" />
           {/* <Widget type="order" /> */}
+
           <Widget type="earning" />
           <Widget type="balance" />
         </div>

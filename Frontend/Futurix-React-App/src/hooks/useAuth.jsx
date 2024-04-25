@@ -8,20 +8,19 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
   const navigate = useNavigate();
-  const setmyUser = useContext(UserDispatchContext)
+  const setmyUser = useContext(UserDispatchContext);
 
   const login = async (data, role) => {
     setUser(data);
-    setmyUser(data)
-    console.log('From useAuth role is ' + role);
-    if(role === 'customer') 
-      navigate("/profile");
-    else if(role === 'investor') 
-      navigate("/investor");
+    setmyUser(data);
+    console.log("From useAuth role is " + role);
+    if (role === "customer") navigate("/profile");
+    else if (role === "investor") navigate("/investor");
   };
 
   const logout = () => {
     setUser(null);
+    window.localStorage.removeItem("user");
     navigate("/");
   };
 

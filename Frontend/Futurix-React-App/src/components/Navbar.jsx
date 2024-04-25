@@ -18,7 +18,8 @@ const Navbar = ({ isUser, isInvestor }) => {
   useEffect(() => {
     const userData = window.localStorage.getItem("user");
     setUser(userData ? JSON.parse(userData) : null); // Parse the user data if exists
-    console.log(JSON.parse(user));
+    // console.log(JSON.parse(user));
+    console.log(user);
   }, []);
 
   // Handle logout action
@@ -65,35 +66,28 @@ const Navbar = ({ isUser, isInvestor }) => {
             )}
           </li>
         ))}
-        {isUser && user && (
+        {user?.user && (
           <li
             className={`font-poppins font-normal cursor-pointer text-[16px] text-white mr-10 hover:text-secondary`}
           >
             <Link onClick={handleLogout}>Log Out</Link>
           </li>
         )}
-        {user?.userData 
-          ? 
-            (
-              investorName 
-              ? 
-              (
-                <li
-                  className={`font-poppins font-normal cursor-pointer text-[16px] text-white mr-10 hover:text-secondary`}
-                >
-                  <Link to={"/investor"}>Investor</Link>
-                </li>
-              ) : 
-              (
-                <li
-                  className={`font-poppins font-normal cursor-pointer text-[16px] text-white mr-10 hover:text-secondary`}
-                >
-                  <Link to={"/profile"}>Profile</Link>
-                </li>
-              )
-            )
-          : 
-            null}
+        {user?.userData ? (
+          investorName ? (
+            <li
+              className={`font-poppins font-normal cursor-pointer text-[16px] text-white mr-10 hover:text-secondary`}
+            >
+              <Link to={"/investor"}>Investor</Link>
+            </li>
+          ) : (
+            <li
+              className={`font-poppins font-normal cursor-pointer text-[16px] text-white mr-10 hover:text-secondary`}
+            >
+              <Link to={"/profile"}>Profile</Link>
+            </li>
+          )
+        ) : null}
       </ul>
 
       <div className="sm:hidden flex flex-1 justify-end items-center">
