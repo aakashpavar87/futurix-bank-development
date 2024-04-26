@@ -22,16 +22,21 @@ public class LoanService {
 	private CustomerRepo customerRepo;
 	
 	// Add Loan
-	public void createLoan(TblLoan loan, int userId) {
+	public TblLoan createLoan(double loanAmount, String loanType, int durationYears, int userId) {
+		
+		TblLoan loan = new TblLoan();
 		TblCustomer foundCustomer = customerRepo.findById(userId).get();
 		
+		loan.setLoan_amount(loanAmount);
+		loan.setLoanType(loanType);
 		loan.setAccount_number(foundCustomer.getAccount().getAccountnumber());
 		loan.setOriginDate(LocalDate.now());
-		loan.setMatureDate(LocalDate.now().plusYears(loan.getDurationInYears()));
+		loan.setMatureDate(LocalDate.now().plusYears(durationYears));
+		loan.setDurationInYears(durationYears);
 		loan.setStatus("Not Active");
 		foundCustomer.getLoanList().add(loan);
 		loan.setCustomer(foundCustomer);
-		loanRepo.save(loan);
+		return loanRepo.save(loan);
 	}
 	
 	// Select Loan

@@ -74,14 +74,18 @@ public class UserService {
 	}
 
 	public String verifyAccount(String email, String otp) {
+		
 		TblCustomer user = customerRepo.findByEmail(email)
 				.orElseThrow(() -> new RuntimeException("User not found with this email: " + email));
+		
 		if (user.getOtp().equals(otp)
 				&& Duration.between(user.getOtpGeneratedTime(), LocalDateTime.now()).getSeconds() < (2 * 60)) {
 			user.setActive(true);
 			customerRepo.save(user);
+			
 			return "OTP verified you can login";
 		}
+		
 		return "Please regenerate otp and try again";
 	}
 	

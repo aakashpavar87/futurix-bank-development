@@ -106,6 +106,14 @@ public class TblCreditCard {
 		this.creditScore = creditScore;
 	}
 
+	public String getPin() {
+		return pin;
+	}
+
+	public void setPin(String pin) {
+		this.pin = pin;
+	}
+
 
 
 }

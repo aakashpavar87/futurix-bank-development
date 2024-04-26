@@ -2,6 +2,7 @@ package com.futurix.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,10 +31,9 @@ public class TblPersonal_Loan {
     @Column(nullable = false)
     private String income;
     
-    @Column(nullable = false)
     private double monthlyInstallment;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     private TblLoan loan;
 	   
@@ -53,6 +53,14 @@ public class TblPersonal_Loan {
 
 
 
+
+	public double getMonthlyInstallment() {
+		return monthlyInstallment;
+	}
+
+	public void setMonthlyInstallment(double monthlyInstallment) {
+		this.monthlyInstallment = monthlyInstallment;
+	}
 
 	public int getLoan_id() {
 		return loanId;
@@ -135,15 +143,5 @@ public class TblPersonal_Loan {
 
 	public void setCreditScore(int creditScore) {
 		this.creditScore = creditScore;
-	}
-
-	public double getInstallment() {
-		return monthlyInstallment;
-	}
-
-	public void setInstallment(double installment) {
-		this.monthlyInstallment = installment;
-	}
-	
-	
+	}	
 }

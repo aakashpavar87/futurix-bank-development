@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -33,13 +35,8 @@ public class PersonalLoanController {
 	}
 	
 	@PostMapping("/loan/{loanId}/personal")
-	public ResponseEntity<TblPersonal_Loan> addBusinessLoantoDb(@PathVariable int loanId, @RequestBody TblPersonal_Loan personalLoan) {
-		personalLoanService.addPersonalLoan(loanId, personalLoan);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(personalLoan.getLoan_id())
-				.toUri();
-		return ResponseEntity.created(location ).build();
+	public ResponseEntity<TblPersonal_Loan> addBusinessLoantoDb(@PathVariable int loanId, @RequestParam int creditScore, @RequestParam String purpose, @RequestParam String employment, @RequestParam String income) {	
+		return new ResponseEntity<TblPersonal_Loan>(personalLoanService.addPersonalLoan(loanId, creditScore, purpose, employment, income), HttpStatus.OK);
 	}
 	
 	@PutMapping("/loan/{loanId}/personal")

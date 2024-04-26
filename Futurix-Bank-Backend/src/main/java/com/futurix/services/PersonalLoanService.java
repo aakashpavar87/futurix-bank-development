@@ -18,17 +18,20 @@ public class PersonalLoanService {
 	@Autowired
 	private LoanRepo loanRepo;
 	
-	public void addPersonalLoan(int loanId, TblPersonal_Loan personalLoan) {
-		
+	public TblPersonal_Loan addPersonalLoan(int loanId, int creditScore, String purpose, String employment,  String income) {
+		TblPersonal_Loan personalLoan = new TblPersonal_Loan();
 		TblLoan foundLoan = loanRepo.findById(loanId).get();
 		personalLoan.setInterese_rate(7.5);
+		personalLoan.setCredit_Score(creditScore);
+		personalLoan.setPurpose(purpose);
+		personalLoan.setEmployment(employment);
+		personalLoan.setIncome(income);
 		foundLoan.setPersonal_Loan(personalLoan);
+		foundLoan.setStatus("Active");
 		double monthlyInstallmentAmount = foundLoan.getLoan_amount() / (foundLoan.getDurationInYears() * 12);
-		personalLoan.setInstallment(monthlyInstallmentAmount);
-		loanRepo.save(foundLoan);
+		personalLoan.setMonthlyInstallment(monthlyInstallmentAmount);
 		personalLoan.setLoan(foundLoan);
-		personalLoanRepo.save(personalLoan);
-	
+		return personalLoanRepo.save(personalLoan);
 	}
 	
 	public List<TblPersonal_Loan> getAllPersonalLoans() {

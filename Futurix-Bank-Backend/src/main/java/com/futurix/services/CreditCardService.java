@@ -20,13 +20,22 @@ public class CreditCardService {
 	private CardRepo cardRepo;
 		
 	// Add Card
-	public void addCreditCard(long cardId, TblCreditCard creditCard) {
+	public TblCreditCard addCreditCard(long cardId, String pin,String income, String employment, String creditScore) {
 		
+		TblCreditCard creditCard = new TblCreditCard();
 		TblCard foundCard = cardRepo.findById(cardId).get();
+		
+		creditCard.setCharges(0d);
+		creditCard.setPin(pin);
+		creditCard.setCreditScore(creditScore);
+		creditCard.setEmployment(employment);
+		creditCard.setIncome(income);
+		creditCard.setCreditLimit(50000d);
+		
+		
 		foundCard.setCreditCard(creditCard);
 		creditCard.setCard(foundCard);
-		creditCardRepo.save(creditCard);
-		cardRepo.save(foundCard);
+		return creditCardRepo.save(creditCard);
 		
 	}
 	
