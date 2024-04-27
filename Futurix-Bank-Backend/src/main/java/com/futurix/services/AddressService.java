@@ -21,12 +21,12 @@ public class AddressService {
 	private CustomerRepo customerRepo;
 
 	// Adding Address in Database
-	public void createAddress(TblAddress address, int userId) {
+	public TblAddress createAddress(TblAddress address, int userId) {
 		TblCustomer foundCustomer = customerRepo.findById(userId).get();
 		foundCustomer.setAddress(address);
 		address.setCustomer(foundCustomer);
-		addressRepo.save(address);
-		customerRepo.save(foundCustomer);
+		return addressRepo.save(address);
+//		customerRepo.save(foundCustomer);
 	}
 
 	// Retrieving All Address

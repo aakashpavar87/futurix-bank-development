@@ -2,6 +2,7 @@ package com.futurix.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class TblAddress {
 	@Column(nullable = false)
 	private String Zipcode;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private TblCustomer customer;
 

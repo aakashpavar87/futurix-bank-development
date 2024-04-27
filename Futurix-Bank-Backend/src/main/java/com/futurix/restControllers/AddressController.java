@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +28,7 @@ public class AddressController {
 	// Create/Add Address
 	@PostMapping("/users/{userId}/address")
 	public ResponseEntity<TblAddress> addAddress(@RequestBody TblAddress address, @PathVariable int userId) {
-		addressService.createAddress(address, userId);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(address.getAddressId()).toUri();
-		return ResponseEntity.created(location).build();
+		return new ResponseEntity<TblAddress>(addressService.createAddress(address, userId), HttpStatus.OK);
 	}
 
 	// Get one 's Address
