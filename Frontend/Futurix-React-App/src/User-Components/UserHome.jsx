@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "../style";
 import { discount } from "../assets";
 import { Business, Footer, Navbar } from "../components";
@@ -7,7 +7,6 @@ import { UserContext } from "../contexts/userContext";
 import { ladyAvatar, manAvatar } from "../assets";
 import { getProfileImageById } from "../apis/UserApi";
 import UserDetails from "./UserDetails";
-
 
 const UserHome = () => {
   const [showModal, setShowModal] = useState(false);
@@ -44,7 +43,11 @@ const UserHome = () => {
             <Navbar isUser />
           </div>
         </div>
-        <ImageModal setIsImageSet={setIsImageSet} showModal={showModal} setShowModal={setShowModal} />
+        <ImageModal
+          setIsImageSet={setIsImageSet}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
         <div className={`bg-primary ${styles.flexStart}`}>
           <div className={`${styles.boxWidth}`}>
             <section

@@ -8,7 +8,6 @@ import { ToastContainer, toast } from "react-toastify";
 import { EmailContext } from "../contexts/emailContext";
 import { useAuth } from "../hooks/useAuth";
 
-
 function convertEmail(email) {
   const [username, domain] = email.split("@");
   const maskedUsername = username.substr(0, 3) + "*********";
@@ -24,29 +23,25 @@ function VerifyAccount() {
 
   const navigate = useNavigate();
 
-  const location = useLocation()
-  const routeData = location?.state?.level
-  const routeEmail = location?.state?.email
-  
-  const convertedEmail = convertEmail(routeEmail)
+  const location = useLocation();
+  const routeData = location?.state?.level;
+  const routeEmail = location?.state?.email;
+
+  const convertedEmail = convertEmail(routeEmail);
 
   const [timeLeft, setTimeLeft] = useState(10); // 2 minutes in seconds
   const [timerRunning, setTimerRunning] = useState(true); // State to track if the timer is running
-  const user = useContext(UserContext)
-  const {login} = useAuth()
-  const {email} = useContext(EmailContext)
-
-
+  const userData = useContext(UserContext);
+  const { login } = useAuth();
+  const { email } = useContext(EmailContext);
 
   const showToastMessage = (msg, isError) => {
-    if(!isError)
-        toast.success(msg)
-    else
-        toast.error(msg)
-  }
+    if (!isError) toast.success(msg);
+    else toast.error(msg);
+  };
 
   useEffect(() => {
-    // Start the timer when the component mounts   
+    // Start the timer when the component mounts
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => {
         if (prevTime === 0) {
@@ -64,25 +59,38 @@ function VerifyAccount() {
 
   const onSubmit = async (data) => {
     console.log(data);
-    console.log(routeData)
-    
-    let { firstDigit, secondDigit, thirdDigit, fourthDigit , fifthDigit, lastDigit} = data;
-    let otp = firstDigit + secondDigit + thirdDigit + fourthDigit + fifthDigit + lastDigit;
+    console.log(routeData);
+
+    let {
+      firstDigit,
+      secondDigit,
+      thirdDigit,
+      fourthDigit,
+      fifthDigit,
+      lastDigit,
+    } = data;
+    let otp =
+      firstDigit +
+      secondDigit +
+      thirdDigit +
+      fourthDigit +
+      fifthDigit +
+      lastDigit;
     console.log(otp);
     let dataDTO = {
       email: routeEmail,
-      otp: otp
-    }
+      otp: otp,
+    };
     verifyOTP(dataDTO)
       .then(async (res) => {
         console.log(res.data);
-        if(routeData === 'register') {
-          await login({user}, 'customer')
+        if (routeData === "register") {
+          await login({ userData }, "customer");
         } else {
-          if(res) navigate("/set-password");
+          if (res) navigate("/set-password");
         }
       })
-      .catch(err => showToastMessage(err.response.data.message, true))
+      .catch((err) => showToastMessage(err.response.data.message, true));
   };
 
   const handleInputChange = (event) => {
@@ -101,13 +109,16 @@ function VerifyAccount() {
         <div className="max-w-sm mx-auto md:max-w-lg">
           <div className="w-full">
             <div className="bg-white min-h-64 py-3 rounded text-center">
-              
               <h1 className="flex gap-4 justify-center items-center text-2xl font-bold">
-              <ArrowBackIcon className='text-black cursor-pointer text-2xl' onClick={()=>{navigate("/")}} />  
+                <ArrowBackIcon
+                  className="text-black cursor-pointer text-2xl"
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                />
                 OTP Verification
               </h1>
               <div className="flex flex-col mt-4">
-              
                 <span>Enter the OTP you received at</span>
                 <span className="font-bold">{convertedEmail}</span>
               </div>
@@ -174,21 +185,23 @@ function VerifyAccount() {
                   <p className="text-red-400 text-xs mt-0">Please Enter OTP</p>
                 )}
                 <div className="flex gap-10 justify-center items-center text-center mt-5">
-                  {!timerRunning && <button
-                    disabled={timerRunning} // Disable the button when timer is running
-                    className="flex items-center text-blue-700 hover:text-blue-900 cursor-pointer"
-                    onClick={async ()=>{
-                      const encodedEmail = encodeURIComponent(email);
-                      try {
-                        await regenerateOTP(encodedEmail)
-                        setTimeLeft(120)
-                      } catch (error) {
-                        showToastMessage(error.response.data.message)
-                      }
-                    }}
-                  >
-                    <span className="font-bold">Resend OTP</span>
-                  </button>}
+                  {!timerRunning && (
+                    <button
+                      disabled={timerRunning} // Disable the button when timer is running
+                      className="flex items-center text-blue-700 hover:text-blue-900 cursor-pointer"
+                      onClick={async () => {
+                        const encodedEmail = encodeURIComponent(email);
+                        try {
+                          await regenerateOTP(encodedEmail);
+                          setTimeLeft(120);
+                        } catch (error) {
+                          showToastMessage(error.response.data.message);
+                        }
+                      }}
+                    >
+                      <span className="font-bold">Resend OTP</span>
+                    </button>
+                  )}
                   <a className="flex items-center text-blue-700 hover:text-blue-900 cursor-pointer">
                     <button
                       type="submit"

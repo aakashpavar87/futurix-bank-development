@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { createAddressapi } from "../apis/UserApi";
 import { useContext } from "react";
-import { UserContext } from "../contexts/userContext";
+import { UserContext, UserDispatchContext } from "../contexts/userContext";
 import { useNavigate } from "react-router-dom";
 
 function Address() {
@@ -11,17 +11,19 @@ function Address() {
     formState: { errors },
   } = useForm();
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const { user } = useContext(UserContext);
+  const myUser = useContext(UserContext);
+
+  // const setUser = useContext(UserDispatchContext);
 
   const onSubmit = (data) => {
     console.log(data);
 
-    createAddressapi(data, user?.userData?.id)
+    createAddressapi(data, myUser?.userData?.id)
       .then((res) => {
         console.log(res.data);
-        navigate("/profile/kyc");
+        // navigate("/profile/kyc");
       })
       .catch((err) => console.log(err));
   };

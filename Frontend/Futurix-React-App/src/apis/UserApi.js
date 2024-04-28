@@ -23,3 +23,5 @@ export const postProfileImage = (id, formData) => client.put(`/users/${id}/profi
 })
 
 export const uploadKycDocs = (userId, kycData) => client.put(`/user/${userId}/kyc/upload`, kycData)
+
+export const getUserKyc = (userId) => client.get(`/user/${userId}/kyc/docs`)

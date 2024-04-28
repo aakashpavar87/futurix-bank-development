@@ -3,8 +3,18 @@ import Sidebar from "../../Admin-Components/sidebar/Sidebar";
 import Navbar from "../../Admin-Components/navbar/Navbar";
 import Chart from "../../Admin-Components/chart/Chart";
 import List from "../../Admin-Components/table/Table";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getOneUserById } from "../../apis/UserApi";
 
 const Single = () => {
+  const [singleUser, setSingleUser] = useState({});
+  const params = useParams();
+  useEffect(() => {
+    console.log(params);
+    getOneUserById(52).then((res) => setSingleUser(res.data));
+  });
+
   return (
     <div className="single">
       <Sidebar />
@@ -21,10 +31,10 @@ const Single = () => {
                 className="itemImg"
               />
               <div className="details">
-                <h1 className="itemTitle">Jane Doe</h1>
+                <h1 className="itemTitle">{singleUser.name}</h1>
                 <div className="detailItem">
                   <span className="itemKey">Email:</span>
-                  <span className="itemValue">janedoe@gmail.com</span>
+                  <span className="itemValue">{singleUser.email}</span>
                 </div>
                 <div className="detailItem">
                   <span className="itemKey">Phone:</span>
@@ -48,8 +58,8 @@ const Single = () => {
           </div>
         </div>
         <div className="bottom">
-        <h1 className="title">Last Transactions</h1>
-          <List/>
+          <h1 className="title">Last Transactions</h1>
+          <List />
         </div>
       </div>
     </div>

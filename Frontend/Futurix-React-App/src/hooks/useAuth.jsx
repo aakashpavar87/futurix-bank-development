@@ -1,7 +1,10 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
 import { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLocalStorage } from "./useLocalStorage";
 import { UserDispatchContext } from "../contexts/userContext";
+import { useLocalStorage } from "./useLocalStorage";
 
 const AuthContext = createContext();
 
@@ -13,6 +16,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (data, role) => {
     setUser(data);
     setmyUser(data);
+    console.log(data);
     console.log("From useAuth role is " + role);
     if (role === "customer") navigate("/profile");
     else if (role === "investor") navigate("/investor");

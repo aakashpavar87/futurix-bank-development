@@ -1,63 +1,152 @@
-import React from "react";
-import styles from "../style";
-import { discount } from "../assets";
-import { robot } from "../assets";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-unused-vars */
+import { useContext, useEffect, useState } from "react";
 
 import "./user.css";
-
-import { logo } from "../assets";
-import { footerLinks, socialMedia } from "../constants";
-
-import { close, menu } from "../assets";
-import { navLinks } from "../constants";
+import { UserContext } from "../contexts/userContext";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { getBalance } from "../apis/AccountApi";
+import { ToastContainer, toast } from "react-toastify";
+import { getUserKyc } from "../apis/UserApi";
 
 export const Stats = () => {
-  const navigate = useNavigate();
-  const onsubmit = () => {
-    navigate("/cardapply");
-  };
-  const onc = () => {
-    navigate("depositform");
-  };
-
   const [toggle, setToggle] = useState(false);
-  const [aboutDropdown, setAboutDropdown] = useState(false);
-  const [servicesDropdown, setServicesDropdown] = useState(false);
 
-  const toggleAboutDropdown = () => {
-    setAboutDropdown(!aboutDropdown);
-    setServicesDropdown(false);
+  const [number, setNumber] = useState(0);
+
+  const [balance, setBalance] = useState();
+
+  const myUser = useContext(UserContext);
+
+  const [userKyc, setUserKyc] = useState({});
+
+  const { state } = useLocation();
+
+  const navigate = useNavigate();
+
+  const showToastMessage = (msg, isError) => {
+    if (!isError) toast.success(msg);
+    else toast.error(msg);
   };
-  const toggleServicesDropdown = () => {
-    setServicesDropdown(!servicesDropdown);
-    setAboutDropdown(false);
-  };
+
+  useEffect(() => {
+    state && showToastMessage(state, false);
+    console.log(myUser);
+    getUserKyc(myUser?.userData?.id).then((res) => setUserKyc(res.data));
+    getBalance(myUser?.userData?.id)
+      .then((res) => setBalance(res.data.balance))
+      .catch((err) => showToastMessage(err.response, true));
+  }, [number]);
 
   window.onscroll = () => {
     setToggle(false);
   };
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
-    <>
-      <div className="app">
-        <header className="app-header">
-          <div className="app-header-mobile">
-            <button className="icon-button large">
-              <i className="ph-list"></i>
-            </button>
+    <div className="flex flex-col justify-center items-center">
+      <ToastContainer />
+      {!myUser?.userData?.account ? (
+        <div className="p-4 bg-emerald-400 text-red-500 rounded-md">
+          {" "}
+          <h3>Looks Like you don't have account !!</h3>
+        </div>
+      ) : (
+        <div className="container mx-auto flex justify-around items-center">
+          <button className="p-5 rounded-md font-semibold border-white bg-lime-300 text-slate-200 font-poppins">
+            <Link to={"/profile/deposit"}>Deposit</Link>
+          </button>
+          <button className="p-5 rounded-md font-semibold border-white bg-red-400 text-slate-200 font-poppins">
+            <Link to={"/profile/withdraw"} state={balance}>
+              Withdraw
+            </Link>
+          </button>
+          <button className="p-5 rounded-md font-semibold border-white bg-cyan-300 text-gray-700 font-poppins">
+            <Link to={"/profile/transfer"}>Transfer</Link>
+          </button>
+        </div>
+      )}
+
+      <div className="mt-20 w-[80vw] flex justify-around items-center gap-20">
+        <div className="flex w-full justify-around gap-8">
+          <div className="app-body-navigation">
+            <article className="p-5 transition-all duration-[0.25s] rounded-xl bg-cyan-500 w-[445px] h-[200px] flex flex-col items-start text-white ">
+              <div className="tile-header">
+                <h3 className="text-xl flex flex-col gap-5 font-semibold">
+                  <span>Account</span>
+                  <span>
+                    Balance : {myUser?.userData?.account ? balance : "N/A"}
+                  </span>
+                </h3>
+              </div>
+              {!myUser?.userData?.account ? (
+                <button
+                  onClick={() => navigate("/profile/account-apply")}
+                  className="p-4 bg-zinc-900 rounded-lg font-semibold"
+                >
+                  Create Account
+                </button>
+              ) : (
+                <span className="mt-6">
+                  <Link to={"/profile/services"} state={balance}>
+                    Go to service
+                  </Link>
+                </span>
+              )}
+            </article>
           </div>
-        </header>
-        <div className="app-body">
-          <div className="app-body-navigation"></div>
           <div className="app-body-main-content">
-            <section className="service-section">
+            <section className="payment-section">
+              <h2>New Payment</h2>
+              <div className="payment-section-header">
+                <p>Choose a card to transfer money</p>
+                <div></div>
+              </div>
+              <div className="payments">
+                {/* <div className="payment">
+                  <div className="card green">
+                    <span>01/22</span>
+                    <span>•••• 4012</span>
+                  </div>
+                  <div className="payment-details">
+                    <h3>Credit Card</h3>
+                    <div>
+                      <span>10550</span>
+                      <button className="icon-button">
+                        <i className="ph-caret-right-bold"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div> */}
+                <div className="payment">
+                  <div className="card olive">
+                    <span>12/23</span>
+                    <span>•••• 2228</span>
+                  </div>
+                  <div className="payment-details">
+                    <h3>Debit Card</h3>
+                    <div>
+                      <span>10000+</span>
+                      <button className="icon-button">
+                        <i className="ph-caret-right-bold"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="faq"></div>
+              <div className="payment-section-footer"></div>
+            </section>
+          </div>
+          <div className="app-body-sidebar"></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+{
+  /* <section className="service-section">
               <h2>Service</h2>
               <div className="service-section-header">
                 <div className="search-field">
@@ -123,8 +212,10 @@ export const Stats = () => {
                   currency and tariff.
                 </p>
               </div>
-            </section>
-            <section className="transfer-section">
+            </section> */
+}
+{
+  /* <section className="transfer-section">
               <div className="transfer-section-header">
                 <h2>Latest transfers</h2>
                 <div className="filter-options">
@@ -208,53 +299,5 @@ export const Stats = () => {
                   <div className="transfer-number">- 700</div>
                 </div>
               </div>
-            </section>
-          </div>
-          <div className="app-body-sidebar">
-            <section className="payment-section">
-              <h2>New Payment</h2>
-              <div className="payment-section-header">
-                <p>Choose a card to transfer money</p>
-                <div></div>
-              </div>
-              <div className="payments">
-                <div className="payment">
-                  <div className="card green">
-                    <span>01/22</span>
-                    <span>•••• 4012</span>
-                  </div>
-                  <div className="payment-details">
-                    <h3>Credit Card</h3>
-                    <div>
-                      <span>10550</span>
-                      <button className="icon-button">
-                        <i className="ph-caret-right-bold"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="payment">
-                  <div className="card olive">
-                    <span>12/23</span>
-                    <span>•••• 2228</span>
-                  </div>
-                  <div className="payment-details">
-                    <h3>Debit Card</h3>
-                    <div>
-                      <span>10000+</span>
-                      <button className="icon-button">
-                        <i className="ph-caret-right-bold"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="faq"></div>
-              <div className="payment-section-footer"></div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
+            </section> */
+}

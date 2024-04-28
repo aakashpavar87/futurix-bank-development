@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { uploadKycDocs } from "../apis/UserApi";
+import { getOneUserById, uploadKycDocs } from "../apis/UserApi";
+import { UserContext, UserDispatchContext } from "../contexts/userContext";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const KYCForm = () => {
   const {
@@ -12,9 +15,21 @@ const KYCForm = () => {
   const [focusedInput, setFocusedInput] = useState("");
   const [borderColor] = useState("#050c1b");
 
+  const navigate = useNavigate();
+
+  const myUser = useContext(UserContext);
+
+  const setUserDetails = useContext(UserDispatchContext);
+
   const handleFocus = (inputName) => {
     setFocusedInput(inputName);
   };
+
+  const showToastMessage = (msg, isError) => {
+    if (!isError) toast.success(msg);
+    else toast.error(msg);
+  };
+
   const validatePAN = (value) => {
     const panRegex = /^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$/;
     if (!panRegex.test(value)) {
@@ -30,18 +45,37 @@ const KYCForm = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      console.log(data);
 
-    const formData = new FormData();
+      const formData = new FormData();
 
-    formData.append("aadharCardNumber", data.aadhar);
-    formData.append("panCardNumber", data.panCard);
-    formData.append("aadharCard", data.aadharFile[0]);
-    formData.append("panCard", data.panFile[0]);
+      formData.append("aadharCardNumber", data.aadhar);
 
-    const res = await uploadKycDocs(152, formData);
+      formData.append("panCardNumber", data.panCard);
 
-    console.log(res.data);
+      formData.append("aadharCard", data.aadharFile[0]);
+
+      formData.append("panCard", data.panFile[0]);
+
+      const res = await uploadKycDocs(myUser?.userData?.id, formData);
+
+      const userResponse = await getOneUserById(myUser?.userData?.id);
+
+      const userData = userResponse.data;
+
+      setUserDetails(userData);
+
+      console.log(res.data);
+
+      showToastMessage("kyc docs uploaded successfully ...");
+
+      setTimeout(() => {
+        navigate("/profile");
+      }, 1500);
+    } catch (err) {
+      showToastMessage("Some error has occured", true);
+    }
   };
 
   return (

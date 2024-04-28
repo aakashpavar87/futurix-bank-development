@@ -1,4 +1,5 @@
-import React, { createContext, useState } from "react";
+/* eslint-disable react/prop-types */
+import { createContext, useState } from "react";
 
 // UserContext: to query the context state
 const UserContext = createContext(undefined);
@@ -6,8 +7,11 @@ const UserContext = createContext(undefined);
 const UserDispatchContext = createContext(undefined);
 
 function UserProvider({ children }) {
-  const userData = window.localStorage.getItem("user")
-  const [userDetails, setUserDetails] = useState(userData ? JSON.parse(userData) : null);
+  const userData = window.localStorage.getItem("user");
+
+  const [userDetails, setUserDetails] = useState(
+    userData ? JSON.parse(userData) : null
+  );
 
   return (
     <UserContext.Provider value={userDetails}>
@@ -18,4 +22,4 @@ function UserProvider({ children }) {
   );
 }
 
-export { UserProvider, UserContext, UserDispatchContext };
+export { UserContext, UserDispatchContext, UserProvider };

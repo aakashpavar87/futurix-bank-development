@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import bcrypt from "bcryptjs";
 import { useAuth } from "../hooks/useAuth";
@@ -13,10 +14,9 @@ import { getInvestorByEmail } from "../apis/InvestorApi";
 import { RoleContext } from "../contexts/RoleContext";
 import { EmailContext } from "../contexts/emailContext";
 
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 const Login = () => {
-
   //Form States
   const {
     register,
@@ -24,26 +24,23 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-
   const [showPassword, setShowPassword] = useState(false);
   const [focusedInput, setFocusedInput] = useState(null);
   const navigate = useNavigate();
-  
 
   // Context Functions
   const { login } = useAuth();
   const setmyUser = useContext(UserDispatchContext);
   const saveUserToContext = (user) => setmyUser(user);
-  const {setRole} = useContext(RoleContext)
-  const {setEmail} = useContext(EmailContext)
+  const { setRole } = useContext(RoleContext);
+  const { setEmail } = useContext(EmailContext);
 
-
-  const location = useLocation()
+  const location = useLocation();
   const message = location?.state?.msg;
 
-  useEffect(()=>{
-    showToastMessage(message, false)
-  },[])
+  useEffect(() => {
+    showToastMessage(message, false);
+  }, []);
 
   const loginUser = (userEnteredPassword, serverPassword, res, role) => {
     bcrypt.compare(userEnteredPassword, serverPassword, async (err, result) => {
@@ -54,9 +51,9 @@ const Login = () => {
         let userData = res.data;
         showToastMessage("Password matched. Login successful.", false);
         saveUserToContext(userData);
-        console.log(role)
-        setRole(role)
-        await login( { userData },role );
+        console.log(role);
+        setRole(role);
+        await login({ userData }, role);
       } else {
         console.log("Password does not match. Login failed.");
         showToastMessage("Incorrect username or password.", true);
@@ -79,14 +76,14 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     const encodedEmail = encodeURIComponent(data.email);
-    setEmail(encodedEmail)
+    setEmail(encodedEmail);
     try {
-      let res,serverPassword;
-      if(data.role === 'customer') {
+      let res, serverPassword;
+      if (data.role === "customer") {
         res = await getUserByEmail(encodedEmail);
         serverPassword = res.data.password;
       }
-      if(data.role === 'investor') {
+      if (data.role === "investor") {
         res = await getInvestorByEmail(encodedEmail);
         serverPassword = res.data.investorPassword;
       }
@@ -111,7 +108,7 @@ const Login = () => {
     top: "50%",
     marginTop: "-8px",
     cursor: "pointer",
-    color: "#fff"
+    color: "#fff",
   };
 
   return (

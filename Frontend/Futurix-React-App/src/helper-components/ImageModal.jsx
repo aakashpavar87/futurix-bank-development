@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
-import { postProfileImage } from '../apis/UserApi';
-import { UserContext } from '../contexts/userContext';
+/* eslint-disable react/prop-types */
+import { useContext, useState } from "react";
+import { postProfileImage } from "../apis/UserApi";
+import { UserContext } from "../contexts/userContext";
 
 const ImageModal = ({ showModal, setShowModal, setIsImageSet }) => {
-
   const [imageFile, setImageFile] = useState(null);
-  const myUser = useContext(UserContext)
+  const myUser = useContext(UserContext);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -20,24 +20,27 @@ const ImageModal = ({ showModal, setShowModal, setIsImageSet }) => {
     event.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('image', imageFile);
+      formData.append("image", imageFile);
       console.log(myUser);
       const response = await postProfileImage(myUser.userData.id, formData);
-      console.log('Profile image updated successfully:', response.data);
-      setIsImageSet(true)
-      closeModal()
+      console.log("Profile image updated successfully:", response.data);
+      setIsImageSet(true);
+      closeModal();
     } catch (error) {
-      console.error('Error updating profile image:', error);
-      closeModal()
+      console.error("Error updating profile image:", error);
+      closeModal();
     }
   };
-
 
   return (
     <>
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <form onSubmit={handleSubmit} method='GET' className="bg-white p-8 rounded-lg shadow-lg w-1/2">
+          <form
+            onSubmit={handleSubmit}
+            method="GET"
+            className="bg-white p-8 rounded-lg shadow-lg w-1/2"
+          >
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">Upload Profile Image</h2>
               <button
@@ -52,11 +55,11 @@ const ImageModal = ({ showModal, setShowModal, setIsImageSet }) => {
               accept="image/*"
               onChange={handleFileChange}
               className="mb-4"
-              name='image'
+              name="image"
             />
             <button
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              type='submit'
+              type="submit"
             >
               Save
             </button>

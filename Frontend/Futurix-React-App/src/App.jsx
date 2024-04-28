@@ -12,9 +12,6 @@ import New from "./pages/new/New";
 import Single from "./pages/single/Single";
 import "./style/dark.css";
 
-// User Components
-import Address from "./User-Components/Acc_adress";
-
 // Investor Components
 import { InvestmentSection } from "./InvestorComponents/InvestmentSection";
 import { InvestmentServices } from "./InvestorComponents/InvestmentServices";
@@ -44,6 +41,21 @@ import { RoleProvider } from "./contexts/RoleContext";
 import { EmailProvider } from "./contexts/emailContext";
 import { UserProvider } from "./contexts/userContext";
 import { AuthProvider } from "./hooks/useAuth";
+import Cardapply from "./User-Components/CardApply";
+import CreditCardForm from "./User-Components/CreditCardForm";
+import ProfileUpdate from "./User-Components/profileup";
+import DepositForm from "./User-Components/deposit";
+import WithdrawalForm from "./User-Components/Withdraw";
+import TransferForm from "./User-Components/Transfer";
+import UserService from "./User-Components/UserService";
+import UserTransactions from "./User-Components/UserTransactions";
+import LoanDashboard from "./User-Components/LoanDashboard";
+import LoanPayment from "./User-Components/Loanpayment";
+import LoanHome from "./User-Components/LoanHome";
+import LoanForm from "./User-Components/UserLoan";
+import AddressForm from "./User-Components/AddressForm";
+import PersonalContract from "./User-Components/PersonalContract";
+import AccountApply from "./User-Components/AccountApply";
 
 const App = () => {
   const { darkMode } = useContext(DarkModeContext);
@@ -86,9 +98,50 @@ const App = () => {
                       }
                     >
                       <Route index element={<Hero />} />
+
                       <Route path="account" element={<Stats />} />
-                      <Route path="address" element={<Address />} />
+
+                      <Route path="account-apply" element={<AccountApply />} />
+
+                      <Route path="deposit" element={<DepositForm />} />
+
+                      <Route path="withdraw" element={<WithdrawalForm />} />
+
+                      <Route path="address" element={<AddressForm />} />
+
                       <Route path="kyc" element={<KYCForm />} />
+
+                      <Route path="cardapply" element={<Cardapply />} />
+
+                      <Route path="services" element={<UserService />} />
+
+                      <Route
+                        path="transactions"
+                        element={<UserTransactions />}
+                      />
+
+                      <Route path="update" element={<ProfileUpdate />} />
+
+                      <Route path="transfer" element={<TransferForm />} />
+
+                      {/* loan routes */}
+
+                      <Route path="loan" element={<LoanHome />} />
+
+                      <Route path="loandashboard" element={<LoanDashboard />} />
+
+                      <Route path="loanpayment" element={<LoanPayment />} />
+
+                      <Route path="loanapply" element={<LoanForm />} />
+                      <Route
+                        path="loan-contract"
+                        element={<PersonalContract />}
+                      />
+
+                      <Route
+                        path="creditcardform"
+                        element={<CreditCardForm />}
+                      />
                     </Route>
 
                     {/* Investor Routes */}
