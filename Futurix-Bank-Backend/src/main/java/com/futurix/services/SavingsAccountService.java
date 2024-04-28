@@ -9,7 +9,6 @@ import com.futurix.entities.TblAccount;
 import com.futurix.entities.TblCustomer;
 import com.futurix.entities.TblSaving_account;
 import com.futurix.repositories.AccountRepo;
-import com.futurix.repositories.CustomerRepo;
 import com.futurix.repositories.SavingAccountRepo;
 
 @Service
@@ -20,9 +19,6 @@ public class SavingsAccountService {
 	
 	@Autowired
 	private AccountRepo accountRepo;
-	
-	@Autowired
-	private CustomerRepo customerRepo;
 	
 	// Get Account
 	public TblSaving_account retrieveSavingAccount(Integer accountId) {
@@ -40,7 +36,7 @@ public class SavingsAccountService {
 	}
 	
 	// Add Savings Account
-	public void addSavingAccount(int accountId, TblSaving_account saving_account) {
+	public TblSaving_account addSavingAccount(int accountId, TblSaving_account saving_account) {
 				
 		TblAccount tblAccount = accountRepo.findById(accountId).get();
 		TblCustomer foundCustomer = tblAccount.getCustomer();
@@ -49,9 +45,7 @@ public class SavingsAccountService {
 
 		foundCustomer.setAccount(tblAccount);
 		
-		savingAccountRepo.save(saving_account);
-		accountRepo.save(tblAccount);
-		customerRepo.save(foundCustomer);
+		return savingAccountRepo.save(saving_account);
 		
 	}
 	

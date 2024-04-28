@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,12 +31,7 @@ public class SavingsAccountController {
 	
 	@PostMapping("/account/{accountId}/savings")
 	public ResponseEntity<TblSaving_account> createSavingsAccount(@RequestBody TblSaving_account saving_account, @PathVariable int accountId) {
-		savingsAccountService.addSavingAccount(accountId, saving_account);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-					.path("/{id}")
-					.buildAndExpand(saving_account.getAccount_number())
-					.toUri();
-		return ResponseEntity.created(location).build();
+		return new ResponseEntity<TblSaving_account>(savingsAccountService.addSavingAccount(accountId, saving_account), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/account/{accountId}/savings")

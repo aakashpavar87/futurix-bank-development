@@ -2,6 +2,7 @@ package com.futurix.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,7 +31,7 @@ public class TblSaving_account {
 
 
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private TblAccount account;
 	

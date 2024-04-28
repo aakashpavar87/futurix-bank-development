@@ -58,26 +58,26 @@ public class TblCustomer {
 	
 	// Relation Ships between Entities
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private TblAddress address;
 	
-	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<TblLoan> loanList = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<TblFeedback> feedbackList = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<TblCard> cardList = new ArrayList<>();
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private TblAccount account;
 	
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private ProfileImageData profileImage;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private UserKycDocument userKycDocument;
 	
 	public TblCustomer() {

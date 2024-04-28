@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.futurix.entities.TblCustomer;
 import com.futurix.filestorage.kyc.UserKycDocument;
+import com.futurix.repositories.CustomerRepo;
 import com.futurix.services.kyc.KycDocsService;
 
 @RestController
@@ -28,6 +30,9 @@ public class UserKycDocsController {
 
 	@Autowired
 	private KycDocsService kycDocsService;
+	
+	@Autowired
+	private CustomerRepo customerRepo;
 	
 	@PutMapping("/upload")
 	public ResponseEntity<?> uploadKycDocuments(@PathVariable int id, 
@@ -40,6 +45,12 @@ public class UserKycDocsController {
 				aadharCardNumber, panCardNumber);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(uploadedKycDocs);
+	}
+	
+	@GetMapping("/docs")
+	public ResponseEntity<UserKycDocument> getKycDocuments(@PathVariable int id) {
+		TblCustomer customer = customerRepo.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
+		return new ResponseEntity<UserKycDocument>(customer.getUserKycDocument(), HttpStatus.OK); 
 	}
 	
 /*

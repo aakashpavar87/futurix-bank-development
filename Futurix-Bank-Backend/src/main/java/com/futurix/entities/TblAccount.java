@@ -42,17 +42,17 @@ public class TblAccount {
 	@Column(nullable = false)
 	private LocalDate lastactivitydate;
 	
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private TblCustomer customer;
 	
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@OneToOne(cascade = CascadeType.ALL)
 	private TblSaving_account saving_account;
 	
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@OneToOne(cascade = CascadeType.ALL)
 	private TblCurrent_Account current_Account;
 	
-	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<TblTransaction> transactionList = new ArrayList<>();
 
 	public List<TblTransaction> getTransactionList() {

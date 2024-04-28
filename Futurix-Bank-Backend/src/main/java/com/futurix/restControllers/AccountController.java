@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.futurix.dto.FundTransferDTO;
 import com.futurix.entities.TblAccount;
+import com.futurix.entities.TblTransaction;
+import com.futurix.repositories.TransactionRepo;
 import com.futurix.services.AccountService;
 
 import jakarta.mail.MessagingException;
@@ -25,6 +27,8 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 	
+	@Autowired
+	private TransactionRepo transactionRepo;
 	
 	@GetMapping("/accounts")
 	public List<TblAccount> retreiveAllAccount(){
@@ -36,6 +40,10 @@ public class AccountController {
 		return accountService.findAccount(id);	
 	}
 	
+	@GetMapping("/transactions")
+	public List<TblTransaction> getTransactions() {
+		return transactionRepo.findAll();
+	}
 	
 	@PostMapping("/users/{id}/accounts")
 	public ResponseEntity<TblAccount> createAccount(@RequestParam String account_type , @PathVariable int id) throws MessagingException{
@@ -43,10 +51,9 @@ public class AccountController {
 	}
 	
 	@DeleteMapping("/users/{id}/accounts")
-	public ResponseEntity<Void> deleteAccount(@PathVariable int id)
+	public ResponseEntity<String> deleteAccount(@PathVariable int id)
 	{
-		accountService.deleteAccount(id);
-		return ResponseEntity.noContent().build();
+		return new ResponseEntity<String>(accountService.deleteAccount(id), HttpStatus.OK);
 	}
 	
 	@PostMapping("/account/{accId}/deposit")
