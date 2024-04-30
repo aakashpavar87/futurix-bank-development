@@ -2,7 +2,7 @@ import "./user.css";
 
 function UserService() {
   return (
-    <section className="service-section">
+    <section className="service-section container mx-auto">
       <h2>Service</h2>
       <div className="service-section-header">
         <div className="search-field">

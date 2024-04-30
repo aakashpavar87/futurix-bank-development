@@ -6,7 +6,7 @@
   --c-gray-900: #050814;
   /* --c-gray-800: #1f1f1f;*/
   --c-gray-700: #2e2e2e;
-  --c-gray-600: #313131; 
+  --c-gray-600: #313131;
   --c-gray-500: #969593;
   --c-gray-400: #a6a6a6;
   --c-gray-300: #bdbbb7;
@@ -920,7 +920,7 @@ button:focus {
   position: absolute;
   /* position: calc(right); */
   background-color: transparent;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 

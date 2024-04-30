@@ -1,19 +1,32 @@
-import React ,{useEffect}from 'react';
-import { useForm } from 'react-hook-form';
-import { createinvestmentApi ,getinvestmentApi} from '../api/helloWorldApiService';
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import {
+  createinvestmentApi,
+  getinvestmentApi,
+} from "../api/helloWorldApiService";
 
 function InvestmentForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
-    getinvestmentApi(2).then(res => {console.log(res.data)})
-    .catch(err => {console.log(err)
-    })
-  }, [])
+    getinvestmentApi(2)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     console.log(data); // You can handle form submission here
-    createinvestmentApi(data,2).then(res =>  console.log(res.data)).catch(err => console.log(err))
+    createinvestmentApi(data, 2)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -22,19 +35,28 @@ function InvestmentForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="amount">Investment Amount ($)</label>
-          <input type="number" id="investmentAmount" name="investmentAmount"{...register("investmentAmount", { 
-            required: "Investment amount is required",
-            min: {
-              value: 1,
-              message: "Investment amount must be at least $1"
-            }
-          })} />
+          <input
+            type="number"
+            id="investmentAmount"
+            name="investmentAmount"
+            {...register("investmentAmount", {
+              required: "Investment amount is required",
+              min: {
+                value: 1,
+                message: "Investment amount must be at least $1",
+              },
+            })}
+          />
           {errors.amount && <span>{errors.amount.message}</span>}
         </div>
 
         <div className="form-group">
           <label htmlFor="cardType">Investment Type:</label>
-          <select id="investmentType" name="investmentType" {...register("investmentType", { required: true })}>
+          <select
+            id="investmentType"
+            name="investmentType"
+            {...register("investmentType", { required: true })}
+          >
             <option value="Short-term">Short-Term</option>
             <option value="Long-term">Long-Term</option>
             {/* <option value="credit">Credit</option> */}
@@ -43,13 +65,17 @@ function InvestmentForm() {
         </div>
         <div>
           <label htmlFor="duration">Investment Duration (months)</label>
-          <input type="number" id="duration" {...register("duration", { 
-            required: "Investment duration is required",
-            min: {
-              value: 1,
-              message: "Investment duration must be at least 1 month"
-            }
-          })} />
+          <input
+            type="number"
+            id="duration"
+            {...register("duration", {
+              required: "Investment duration is required",
+              min: {
+                value: 1,
+                message: "Investment duration must be at least 1 month",
+              },
+            })}
+          />
           {errors.duration && <span>{errors.duration.message}</span>}
         </div>
         <button type="submit">Invest Now</button>

@@ -7,7 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useNavigate } from "react-router-dom";
-import { UserDispatchContext } from "../contexts/userContext";
+import {
+  AdminDispatchContext,
+  UserDispatchContext,
+} from "../contexts/userContext";
 
 import { getUserByEmail } from "../apis/UserApi";
 import { getInvestorByEmail } from "../apis/InvestorApi";
@@ -15,6 +18,7 @@ import { RoleContext } from "../contexts/RoleContext";
 import { EmailContext } from "../contexts/emailContext";
 
 import { useLocation } from "react-router-dom";
+import { getAdminByEmail } from "../apis/AdminApi";
 
 const Login = () => {
   //Form States
@@ -29,9 +33,11 @@ const Login = () => {
   const navigate = useNavigate();
 
   // Context Functions
-  const { login } = useAuth();
+  const { login, adminLogin } = useAuth();
   const setmyUser = useContext(UserDispatchContext);
+  const setmyAdmin = useContext(AdminDispatchContext);
   const saveUserToContext = (user) => setmyUser(user);
+  const saveAdminToContext = (admin) => setmyAdmin(admin);
   const { setRole } = useContext(RoleContext);
   const { setEmail } = useContext(EmailContext);
 
@@ -61,6 +67,30 @@ const Login = () => {
     });
   };
 
+  const loginAdminToSystem = (
+    userEnteredPassword,
+    serverPassword,
+    res,
+    role
+  ) => {
+    bcrypt.compare(userEnteredPassword, serverPassword, async (err, result) => {
+      if (err) {
+        console.error("Error:", err);
+        showToastMessage("An error occurred while comparing passwords.", true);
+      } else if (result) {
+        let userData = res.data;
+        showToastMessage("Password matched. Login successful.", false);
+        saveAdminToContext(userData);
+        console.log(role);
+        setRole(role);
+        await adminLogin({ userData }, role);
+      } else {
+        console.log("Password does not match. Login failed.");
+        showToastMessage("Incorrect username or password.", true);
+      }
+    });
+  };
+
   const showToastMessage = (msg, isError) => {
     if (!isError) toast.success(msg);
     else toast.error(msg);
@@ -82,12 +112,18 @@ const Login = () => {
       if (data.role === "customer") {
         res = await getUserByEmail(encodedEmail);
         serverPassword = res.data.password;
+        loginUser(data.password, serverPassword, res, data.role);
       }
       if (data.role === "investor") {
         res = await getInvestorByEmail(encodedEmail);
         serverPassword = res.data.investorPassword;
+        loginUser(data.password, serverPassword, res, data.role);
       }
-      // if(data.role === 'admin') res = await getInvestorByEmail(encodedEmail);
+      if (data.role === "admin") {
+        res = await getAdminByEmail(encodedEmail);
+        serverPassword = res.data.adminPassword;
+        loginAdminToSystem(data.password, serverPassword, res, data.role);
+      }
       console.log(res.data);
       loginUser(data.password, serverPassword, res, data.role);
     } catch (error) {
@@ -113,7 +149,7 @@ const Login = () => {
 
   return (
     <div
-      className="flex justify-center items-center min-h-screen"
+      className="flex w-[98vw] h-[99vh] mx-auto  justify-center items-center overflow-hidden"
       style={{
         backgroundImage: "linear-gradient(180deg, #050c1b, #2a4365)",
         padding: "25px",

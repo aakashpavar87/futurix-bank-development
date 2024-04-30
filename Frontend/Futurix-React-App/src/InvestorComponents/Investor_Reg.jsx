@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
@@ -12,7 +14,11 @@ import Spinner from "../components/Spinner";
 import { UserDispatchContext } from "../contexts/userContext";
 import { useAuth } from "../hooks/useAuth";
 import { RoleContext } from "../contexts/RoleContext";
-
+import {
+  BiLeftArrowCircle,
+  BiRightArrow,
+  BiRightArrowCircle,
+} from "react-icons/bi";
 
 const Investor_Reg = () => {
   const {
@@ -28,11 +34,11 @@ const Investor_Reg = () => {
   //Context functions
   const setmyUser = useContext(UserDispatchContext);
   const { login } = useAuth();
-  const {role, setRole} = useContext(RoleContext)
-  
-  useEffect(()=>{
-    setRole('investor')
-  }, [])
+  const { role, setRole } = useContext(RoleContext);
+
+  useEffect(() => {
+    setRole("investor");
+  }, []);
 
   const showToastMessage = (msg, isError) => {
     if (!isError) toast.success(msg);
@@ -72,9 +78,7 @@ const Investor_Reg = () => {
       aadharCard: data.aadharCard,
     };
 
-
     try {
-
       setIsLoading(true);
 
       const foundInvestor = await getInvestorByEmail(data.Email);
@@ -84,28 +88,25 @@ const Investor_Reg = () => {
           "One account already exists with this email. Please login with that email",
           true
         );
-        setIsLoading(false)
+        setIsLoading(false);
       }
-
     } catch (error) {
-
       console.log(error.response.data.message);
-      
+
       try {
-        const res = await addInvestor(investor)
-        let userData = res.data
-        setmyUser(userData)
+        const res = await addInvestor(investor);
+        let userData = res.data;
+        setmyUser(userData);
         console.log(res.data);
 
         // Direct login and redirect on profile
-        setTimeout(async ()=>{
-          setIsLoading(false)
-          await login({userData}, role)
-        }, 1500)
+        setTimeout(async () => {
+          setIsLoading(false);
+          await login({ userData }, role);
+        }, 1500);
       } catch (err) {
-        showToastMessage(err.response.data.message, true)
+        showToastMessage(err.response.data.message, true);
       }
-
     }
   };
 
@@ -143,6 +144,9 @@ const Investor_Reg = () => {
           borderRadius: "20px",
         }}
       >
+        <Link to={"/"}>
+          <BiLeftArrowCircle className="text-3xl" />
+        </Link>
         <h1 className="text-3xl text-white font-bold text-center mb-4 hover:text-gray-400 transition-colors duration-300 cursor-pointer ">
           Become an Investor
         </h1>

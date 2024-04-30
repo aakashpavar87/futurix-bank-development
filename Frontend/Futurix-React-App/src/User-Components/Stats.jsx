@@ -53,15 +53,15 @@ export const Stats = () => {
         </div>
       ) : (
         <div className="container mx-auto flex justify-around items-center">
-          <button className="p-5 rounded-md font-semibold border-white bg-lime-300 text-slate-200 font-poppins">
+          <button className="p-5 rounded-md font-semibold border-white bg-transparent hover:bg-blue-400 transition-all text-slate-200 font-poppins">
             <Link to={"/profile/deposit"}>Deposit</Link>
           </button>
-          <button className="p-5 rounded-md font-semibold border-white bg-red-400 text-slate-200 font-poppins">
+          <button className="p-5 w-32 rounded-md font-semibold border-white hover:bg-cyan-600 text-slate-200 font-poppins">
             <Link to={"/profile/withdraw"} state={balance}>
               Withdraw
             </Link>
           </button>
-          <button className="p-5 rounded-md font-semibold border-white bg-cyan-300 text-gray-700 font-poppins">
+          <button className="p-5 rounded-md font-semibold border-white hover:bg-amber-200 hover:text-slate-800 text-slate-300 font-poppins">
             <Link to={"/profile/transfer"}>Transfer</Link>
           </button>
         </div>

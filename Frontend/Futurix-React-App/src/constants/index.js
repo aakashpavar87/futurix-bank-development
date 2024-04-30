@@ -1,6 +1,7 @@
-
+import { getAllUsers } from "../apis/UserApi";
 import { people01, people02, people03, facebook, instagram, linkedin, twitter, airbnb, binance, coinbase, dropbox, send, shield, star  } from "../assets";
-
+const {data} = await getAllUsers()
+console.log(data.length);
 export const navLinks = [
   {
     id: "home",
@@ -87,17 +88,17 @@ export const stats = [
   {
     id: "stats-1",
     title: "User On-Boarding",
-    value: "100+",
+    value: 100+data.length+"+",
   },
   {
     id: "stats-2",
     title: "Trusted by Company",
-    value: "230+",
+    value: "23+",
   },
   {
     id: "stats-3",
     title: "Transaction",
-    value: "$230M+",
+    value: "₹ 230M+",
   },
 ];
 
@@ -106,24 +107,20 @@ export const footerLinks = [
     title: "Useful Links",
     links: [
       {
-        name: "Content",
-        link: "https://www.hoobank.com/content/",
+        name: "Contact Us",
+        link: "/contact-us",
       },
       {
         name: "How it Works",
-        link: "https://www.hoobank.com/how-it-works/",
-      },
-      {
-        name: "Create",
-        link: "https://www.hoobank.com/create/",
+        link: "/how-to-use",
       },
       {
         name: "Explore",
-        link: "https://www.hoobank.com/explore/",
+        link: "/explore-us",
       },
       {
         name: "Terms & Services",
-        link: "https://www.hoobank.com/terms-and-services/",
+        link: "/terms-and-condition",
       },
     ],
   },
@@ -132,23 +129,15 @@ export const footerLinks = [
     links: [
       {
         name: "Help Center",
-        link: "https://www.hoobank.com/help-center/",
+        link: "/help-center/",
       },
       {
         name: "Partners",
-        link: "https://www.hoobank.com/partners/",
+        link: "/partners/",
       },
       {
         name: "Suggestions",
-        link: "https://www.hoobank.com/suggestions/",
-      },
-      {
-        name: "Blog",
-        link: "https://www.hoobank.com/blog/",
-      },
-      {
-        name: "Newsletters",
-        link: "https://www.hoobank.com/newsletters/",
+        link: "/suggestions/",
       },
     ],
   },
@@ -157,11 +146,11 @@ export const footerLinks = [
     links: [
       {
         name: "Our Partner",
-        link: "https://www.hoobank.com/our-partner/",
+        link: "/#clients",
       },
       {
         name: "Become a Partner",
-        link: "https://www.hoobank.com/become-a-partner/",
+        link: "/investorRegister",
       },
     ],
   },

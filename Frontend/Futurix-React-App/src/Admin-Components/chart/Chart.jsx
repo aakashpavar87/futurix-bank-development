@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import "./chart.css";
 import {
   AreaChart,
@@ -7,20 +10,51 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-
-const data = [
-  { name: "January", Total: 1200 },
-  { name: "February", Total: 2100 },
-  { name: "March", Total: 800 },
-  { name: "April", Total: 1600 },
-  { name: "May", Total: 900 },
-  { name: "June", Total: 1700 },
-];
+import { getPreviousFiveTransaction } from "../../apis/AdminApi";
 
 const Chart = ({ aspect, title }) => {
+  const [showChart, setShowChart] = useState(true);
+  const [data, setData] = useState([
+    { name: "26/04", Total: 0 },
+    { name: "27/04", Total: 0 },
+    { name: "28/04", Total: 0 },
+    { name: "29/04", Total: 0 },
+    { name: "30/04", Total: 0 },
+    { name: "01/05", Total: 0 },
+  ]);
+  const [number, setNumber] = useState(0);
+  const [lastFiveDays, setLastFiveDays] = useState([]);
+  const refreshComponent = () => {
+    setShowChart((prev) => !prev);
+    setNumber((prev) => prev + 1);
+  };
+  useEffect(() => {
+    async function getData() {
+      const lastFiveDaysRes = await getPreviousFiveTransaction();
+      setLastFiveDays(lastFiveDaysRes.data);
+
+      setData(
+        lastFiveDays.map((day) => {
+          return {
+            name: day.date,
+            Total: day.amount,
+          };
+        })
+      );
+    }
+    getData();
+  }, [number]);
+
   return (
     <div className="chart">
-      <div className="title">{title}</div>
+      <div className="title">
+        {title}
+        {showChart && (
+          <button className="mx-3 bg-white" onClick={refreshComponent}>
+            Show Chart
+          </button>
+        )}
+      </div>
       <ResponsiveContainer width="100%" aspect={aspect}>
         <AreaChart
           width={730}

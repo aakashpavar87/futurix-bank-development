@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { helloWorldApiService } from "./apis/HelloWorldApi";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { AdminProtectedRoute } from "./components/AdminProtectedRoute";
 
 import { DarkModeContext } from "./contexts/DarkModeContext";
 import { productInputs, userInputs } from "./formSource";
@@ -57,6 +58,18 @@ import AddressForm from "./User-Components/AddressForm";
 import PersonalContract from "./User-Components/PersonalContract";
 import AccountApply from "./User-Components/AccountApply";
 
+// list table
+import ListForInvestmentTable from "./pages/list/ListForInvestmentTable";
+import ListForInvestorTable from "./pages/list/ListForInvestor";
+import ListForAccounTable from "./pages/list/ListForAccountTable";
+import ListForCardTable from "./pages/list/ListForCardTable";
+import ListForLoanTable from "./pages/list/ListForLoanTable";
+import ListForTransactionTable from "./pages/list/ListForTransactionTable";
+import HowToUse from "./Home-Components/HowToUse";
+import ContactUs from "./components/ContactUs";
+import Exploreus from "./components/Exploreus";
+import TermsAndConditions from "./components/TermsAndConditions";
+
 const App = () => {
   const { darkMode } = useContext(DarkModeContext);
 
@@ -86,6 +99,13 @@ const App = () => {
                     />
                     <Route path="/verify-account" element={<VerifyAccount />} />
                     <Route path="/set-password" element={<SetPassword />} />
+                    <Route path="/how-to-use" element={<HowToUse />} />
+                    <Route path="/contact-us" element={<ContactUs />} />
+                    <Route path="/explore-us" element={<Exploreus />} />
+                    <Route
+                      path="/terms-and-condition"
+                      element={<TermsAndConditions />}
+                    />
 
                     {/* User Routes */}
 
@@ -176,7 +196,14 @@ const App = () => {
                     {/* Admin Routes */}
 
                     <Route path="/admin">
-                      <Route index element={<AdminHome />} />
+                      <Route
+                        index
+                        element={
+                          <AdminProtectedRoute>
+                            <AdminHome />
+                          </AdminProtectedRoute>
+                        }
+                      />
                       <Route path="login" element={<AdminLogin />} />
                       <Route path="users">
                         <Route index element={<List />} />
@@ -201,6 +228,28 @@ const App = () => {
                           }
                         />
                       </Route>
+                      <Route path="accounts">
+                        <Route index element={<ListForAccounTable />} />
+                        <Route path=":accountId" element={<Single />} />
+                      </Route>
+                      <Route path="cards">
+                        <Route index element={<ListForCardTable />} />
+                      </Route>
+                      <Route path="loans">
+                        <Route index element={<ListForLoanTable />} />
+                      </Route>
+                      <Route
+                        path="investmentadd"
+                        element={<ListForInvestmentTable />}
+                      />
+                      <Route
+                        path="admintransaction"
+                        element={<ListForTransactionTable />}
+                      />
+                      <Route
+                        path="investoradd"
+                        element={<ListForInvestorTable />}
+                      />
                     </Route>
 
                     <Route path="*" element={<ErrorPage />} />

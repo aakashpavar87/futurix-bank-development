@@ -1,15 +1,16 @@
+/* eslint-disable react/prop-types */
 import "./widget.css";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import { Link } from "react-router-dom";
 
-const Widget = ({ type }) => {
+const Widget = ({ type, numericData }) => {
   let data;
 
   //temporary
-  const amount = 100;
   const diff = 20;
 
   switch (type) {
@@ -18,6 +19,7 @@ const Widget = ({ type }) => {
         title: "USERS",
         isMoney: false,
         link: "See all users",
+        linkTo: "/admin/users",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -47,9 +49,10 @@ const Widget = ({ type }) => {
       break;
     case "earning":
       data = {
-        title: "EARNINGS",
+        title: "INVESTMENTS",
         isMoney: true,
         link: "View net earnings",
+        linkTo: "/admin/investmentadd",
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -63,6 +66,7 @@ const Widget = ({ type }) => {
         title: "BALANCE",
         isMoney: true,
         link: "See details",
+        linkTo: "/admin/transactions",
         icon: (
           <AccountBalanceWalletOutlinedIcon
             className="icon"
@@ -83,9 +87,11 @@ const Widget = ({ type }) => {
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {data.isMoney && "$"} {amount}
+          {data.isMoney && "₹"} {numericData}
         </span>
-        <span className="link">{data.link}</span>
+        <Link to={data.linkTo}>
+          <span className="link">{data.link}</span>
+        </Link>
       </div>
       <div className="right">
         <div className="percentage positive">

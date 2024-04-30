@@ -9,6 +9,10 @@
   height: 100px;
 }
 
+/* * {
+  color: black;
+} */
+
 .widget .left,
 .widget .right {
   display: flex;
@@ -20,6 +24,7 @@
   font-weight: bold;
   font-size: 14px;
   color: rgb(160, 160, 160);
+  /* color: #0000; */
 }
 
 .widget .left .counter {
@@ -52,4 +57,13 @@
   padding: 5px;
   border-radius: 5px;
   align-self: flex-end;
+}
+
+.counter {
+  color: black;
+}
+
+.link {
+  color: black;
+
 }

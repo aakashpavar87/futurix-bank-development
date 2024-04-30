@@ -11,3 +11,5 @@ export const createinvestmentApi = (investment,investorId) => client.post(`/inve
 export const getinvestmentApi = (investorId) => client.get(`/investor/${investorId}/investments`)
 
 export const postInvestorProfileImage = (id, image) => client.put(`/investor/${id}/profileImage`, image)
+
+export const getAllInvestor = async () => await client.get('/investors')

@@ -1,5 +1,6 @@
 .home {
   display: flex;
+  background-color: #ffff;
 }
 
 .home .homeContainer {
@@ -26,6 +27,6 @@
 
 .home .homeContainer .listContainer .listTitle {
   font-weight: 500;
-  color: gray;
+  color: black;
   margin-bottom: 15px;
 }

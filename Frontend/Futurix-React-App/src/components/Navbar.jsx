@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from "react";
 import { close, logo, menu } from "../assets";
 import { navLinks } from "../constants";
@@ -19,7 +21,6 @@ const Navbar = ({ isUser, isInvestor }) => {
     const userData = window.localStorage.getItem("user");
     setUser(userData ? JSON.parse(userData) : null); // Parse the user data if exists
     // console.log(JSON.parse(user));
-    console.log(user);
   }, []);
 
   // Handle logout action

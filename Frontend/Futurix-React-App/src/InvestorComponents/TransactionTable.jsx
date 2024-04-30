@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/userContext";
 import { getinvestmentApi } from "../apis/InvestorApi";
@@ -7,33 +10,26 @@ import { helloWorldApiService } from "../apis/HelloWorldApi";
 
 export const TransactionTable = () => {
   const myUser = useContext(UserContext);
-  const {isInvested, setIsInvested} = useContext(InvestmentContext) || false
-  const [investments, setInvestments] = useState([])
-  const [number, setNumber] = useState(1)
+  const { isInvested, setIsInvested } = useContext(InvestmentContext) || false;
+  const [investments, setInvestments] = useState([]);
+  const [number, setNumber] = useState(1);
 
+  const myRefresher = function () {
+    setNumber((prev) => prev + 1);
+  };
 
-  // (function(){
-  //   setNumber(prev=>prev+1)
-  // })()
-  const myRefresher = function() {
-    setNumber(prev=>prev+1)
-  }
-
-
-  useEffect(()=>{
+  useEffect(() => {
     console.log("Heloo From Transaction Table");
     helloWorldApiService()
-      .then(res=>console.log(res.data))
-      .catch(err=>console.log(err.response.data.message))
-    getinvestmentApi(myUser.userData.id)
-      .then(res=>{
-        console.log(res.data)
-        setInvestments(res.data)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err.response.data.message));
+    getinvestmentApi(myUser?.userData?.id)
+      .then((res) => {
+        console.log(res.data);
+        setInvestments(res.data);
       })
-      .catch(err=>console.log(err.response.data.message)
-      )
-  },[isInvested, number])
-  
+      .catch((err) => console.log(err.response.data.message));
+  }, [isInvested, number]);
 
   return (
     <div className="flex justify-center items-center w-[80vw]">
@@ -57,35 +53,44 @@ export const TransactionTable = () => {
               </tr>
             </thead>
             <tbody>
-              {
-                investments && 
-                investments.map((investment, idx)=>(
+              {investments &&
+                investments.map((investment, idx) => (
                   <tr key={idx}>
-                    <td className=" px-4 py-2 text-center text-cyan-50">{idx+1}</td>
-                    <td className=" px-4 py-2 text-center text-lg font-semibold text-white">{investment.investmentDuration} Year</td>
-                    <td className="text-center px-4 py-2 text-cyan-50">&#8377;{investment.investmentAmount}</td>
+                    <td className=" px-4 py-2 text-center text-cyan-50">
+                      {idx + 1}
+                    </td>
+                    <td className=" px-4 py-2 text-center text-lg font-semibold text-white">
+                      {investment.investmentDuration} Year
+                    </td>
+                    <td className="text-center px-4 py-2 text-cyan-50">
+                      &#8377;{investment.investmentAmount}
+                    </td>
                     <td className="text-center px-4 py-2">
-                        <span className="px-2 py-1 text-lg  text-white rounded-full bg-green-500">Completed</span>
+                      <span className="px-2 py-1 text-lg  text-white rounded-full bg-green-500">
+                        Completed
+                      </span>
                     </td>
                   </tr>
-                ))
-              }
+                ))}
             </tbody>
           </table>
         </div>
       ) : (
         <>
-          <section className={`w-[30vw] h-[50vh] flex justify-center p-5 items-center bg-gray-100 rounded-lg my-4`}  data-aos="fade-up">
-                <div className="flex flex-col w-full justify-center items-center gap-4">
-                  <h1 className="text-4xl text-gray-700 text-center">
-                    You don't have any Investments !!!
-                  </h1>
-                  <Link to="/investor/investment">
-                    <button className="p-5 rounded-md text-gray-800 border border-gray-900">
-                      Invest Now
-                    </button>
-                  </Link>
-                </div>
+          <section
+            className={`w-[30vw] h-[50vh] flex justify-center p-5 items-center bg-gray-100 rounded-lg my-4`}
+            data-aos="fade-up"
+          >
+            <div className="flex flex-col w-full justify-center items-center gap-4">
+              <h1 className="text-4xl text-gray-700 text-center">
+                You don't have any Investments !!!
+              </h1>
+              <Link to="/investor/investment">
+                <button className="p-5 rounded-md text-gray-800 border border-gray-900">
+                  Invest Now
+                </button>
+              </Link>
+            </div>
           </section>
         </>
       )}

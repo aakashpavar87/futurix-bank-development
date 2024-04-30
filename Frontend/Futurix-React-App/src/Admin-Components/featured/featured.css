@@ -77,3 +77,7 @@
 .featured .bottom .summary .item .itemResult.negative {
   color: red;
 }
+
+.amount {
+  color: gray;
+}

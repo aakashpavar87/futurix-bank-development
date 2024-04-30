@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { transferMoney } from "../apis/AccountApi";
 import { UserContext } from "../contexts/userContext";
+import { ToastContainer, toast } from "react-toastify";
 
 function TransferForm() {
   const {
@@ -16,6 +17,11 @@ function TransferForm() {
 
   const myUser = useContext(UserContext);
 
+  const showToastMessage = (msg, isError) => {
+    if (!isError) toast.success(msg);
+    else toast.error(msg);
+  };
+
   const onSubmit = ({ accountNumber, amount, desc }) => {
     const transferData = {
       accountNumber,
@@ -27,10 +33,8 @@ function TransferForm() {
         navigate("/profile/account", { state: res.data });
       })
       .catch((err) => {
-        console.log(err?.response?.data);
+        showToastMessage(err?.response?.data?.message, true);
       });
-    // navigate("/profile");
-    // Submit logic here, e.g., send data to server
   };
 
   const [focusedInput, setFocusedInput] = useState(null);
@@ -68,6 +72,7 @@ function TransferForm() {
         borderRadius: "20px",
       }}
     >
+      <ToastContainer />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-md mx-auto rounded-3xl shadow-md"
