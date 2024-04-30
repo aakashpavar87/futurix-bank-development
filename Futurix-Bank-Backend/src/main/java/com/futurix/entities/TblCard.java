@@ -22,6 +22,7 @@ public class TblCard {
 	private long accountnumber;
 	private String card_status;
 	private LocalDate date_of_issue;
+	private String newCardNumber;
 	private LocalDate expiryDate;
 		
 	@OneToOne(cascade = CascadeType.ALL)
@@ -131,6 +132,18 @@ public class TblCard {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+
+
+	public String getNewCardNumber() {
+		return newCardNumber;
+	}
+
+
+
+	public void setNewCardNumber(String newCardNumber) {
+		this.newCardNumber = newCardNumber;
 	}
 
 }

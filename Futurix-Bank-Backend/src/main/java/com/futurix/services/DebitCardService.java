@@ -40,6 +40,20 @@ public class DebitCardService {
 		return debitCardRepo.findAll();
 	}
 	
+	public String validateDebitPin(String pin, Long cardId) {
+		TblCard foundCard = cardRepo.findById(cardId).orElse(null);
+		
+		if(foundCard == null) {
+			throw new RuntimeException("Sorry but card not found !!!");
+		}
+		if(foundCard.getDebitCard().getPin().equals(pin)) {
+			return "success";
+			
+		}else {
+			throw new RuntimeException("This PIN is Invalid Please check your PIN !!!");
+		}
+	}
+	
 	// Get One Debit Card
 	public TblDebitCard	getOneDebtCard(long cardId) {
 		TblCard foundCard = cardRepo.findById(cardId).get();

@@ -39,6 +39,11 @@ public class DebitCardController {
 		return new ResponseEntity<TblDebitCard>(debitCardService.addDebitCard(cardId, pin), HttpStatus.OK);
 	}
 	
+	@GetMapping("/cards/{cardId}/debitCard/pin/{pin}")
+	public ResponseEntity<String> validatePin(@PathVariable String pin, @PathVariable Long cardId) {
+		return new ResponseEntity<String>(debitCardService.validateDebitPin(pin, cardId), HttpStatus.OK);
+	}
+	
 	@PutMapping("/cards/{cardId}/debitCard")
 	public ResponseEntity<TblDebitCard> updateOneDebitCard(@PathVariable int cardId, @RequestBody TblDebitCard debitCard) {
 		debitCardService.updateDebitCard(cardId, debitCard);

@@ -11,6 +11,7 @@ import com.futurix.entities.TblCard;
 import com.futurix.entities.TblCustomer;
 import com.futurix.repositories.CardRepo;
 import com.futurix.repositories.CustomerRepo;
+import com.futurix.services.debitCard.DebitCardGenerator;
 
 @Service
 public class CardService {
@@ -27,6 +28,7 @@ public class CardService {
 		
 		newCard.setAccountnumber(foundCustomer.getAccount().getAccountnumber());
 		newCard.setCard_status(card_status);
+		newCard.setNewCardNumber(DebitCardGenerator.generateDebitCardNumber());
 		newCard.setDate_of_issue(LocalDate.now());
 		newCard.setDate_of_exspiry(LocalDate.now().plusYears(4));
 		newCard.setCustomer(foundCustomer);
