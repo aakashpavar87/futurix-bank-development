@@ -1,12 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../contexts/userContext";
 
 function LoanHome() {
   // Sample loan data
 
   const [showContent1, setShowContent1] = useState(true);
   const [showContent2, setShowContent2] = useState(false);
+
+  const myUser = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const toggleContent1 = () => {
     setShowContent1(true);
@@ -91,11 +96,19 @@ function LoanHome() {
       )}
       <br />
       <br />
-      <Link to={"/profile/loan-contract"}>
-        <button className="mr-auto bg-transparent  hover:bg-blue-700 border-blue-700 text-red-600 text-xl font-bold py-2 px-4 roundedo">
-          Apply Now
-        </button>
-      </Link>
+      <button
+        className="mr-auto bg-transparent  hover:bg-blue-700 border-blue-700 text-red-600 text-xl font-bold py-2 px-4 roundedo"
+        onClick={() => {
+          if (!myUser?.userData?.account) {
+            navigate("/profile", {
+              state: "Please open account first than try to get loan ...",
+              error: true,
+            });
+          }
+        }}
+      >
+        <Link to={"/profile/loan-contract"}>Apply Now</Link>
+      </button>
     </div>
   );
 }

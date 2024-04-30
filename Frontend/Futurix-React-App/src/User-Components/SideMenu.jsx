@@ -11,6 +11,7 @@ export const SideMenu = () => {
 
   const handleLogout = () => {
     logout();
+    window.localStorage.removeItem("isAlertShown");
     setUserData(null); // Clear user state after logout
   };
 

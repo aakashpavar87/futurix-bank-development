@@ -71,7 +71,9 @@ const KYCForm = () => {
       showToastMessage("kyc docs uploaded successfully ...");
 
       setTimeout(() => {
-        navigate("/profile");
+        navigate("/profile", {
+          state: "Please re-login to view changes in your profile...",
+        });
       }, 1500);
     } catch (err) {
       showToastMessage("Some error has occured", true);

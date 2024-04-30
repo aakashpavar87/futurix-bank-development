@@ -1,11 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../contexts/userContext";
 
 function Cardapply() {
   const [showDetails, setShowDetails] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const [showDetai, setShowDetai] = useState(false);
+
+  const myUser = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const toggleDetails = () => {
     setShowDetails(!showDetails);
@@ -101,12 +107,21 @@ function Cardapply() {
       )}
       <br></br>
       <br></br>
-      <Link to={"/profile/creditcardform"}>
-        <button className="mr-auto  hover:bg-blue-700 text-red font-bold py-2 px-4 rounded">
-          {" "}
-          Apply Now
-        </button>
-      </Link>
+
+      <button
+        className="mr-auto  hover:bg-blue-700 text-red font-bold py-2 px-4 rounded"
+        onClick={() => {
+          if (!myUser?.userData?.account) {
+            navigate("/profile", {
+              state:
+                "Please open account first than try to get credit card ...",
+              error: true,
+            });
+          }
+        }}
+      >
+        <Link to={"/profile/creditcardform"}> Apply Now</Link>
+      </button>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/userContext";
 import { toast, ToastContainer } from "react-toastify";
 import { withdrawMoney } from "../apis/AccountApi";
+import { validateDebitCard } from "../apis/CardApi";
 
 function WithdrawalForm() {
   const {
@@ -27,6 +28,11 @@ function WithdrawalForm() {
   const onSubmit = async (data) => {
     try {
       console.log(data);
+      const validateRes = await validateDebitCard(
+        myUser?.userData?.cardList[0]["card_number"],
+        data.pin
+      );
+      console.log(validateRes.data);
       const formData = new FormData();
       formData.append("amount", data.amount);
       formData.append("desc", data.desc);

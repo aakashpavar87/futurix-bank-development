@@ -9,6 +9,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getBalance } from "../apis/AccountApi";
 import { ToastContainer, toast } from "react-toastify";
 import { getUserKyc } from "../apis/UserApi";
+import ThreeDCard from "./ThreeDCard";
 
 export const Stats = () => {
   const [toggle, setToggle] = useState(false);
@@ -43,6 +44,19 @@ export const Stats = () => {
     setToggle(false);
   };
 
+  const formattedExpiryYear =
+    myUser?.userData?.cardList[0]["date_of_exspiry"].split("-")[0];
+  const formattedExpiryMonth =
+    myUser?.userData?.cardList[0]["date_of_exspiry"].split("-")[1];
+
+  const formattedDate =
+    formattedExpiryMonth + "/" + formattedExpiryYear.substring(2);
+
+  let lastFourDigitOfCard = myUser?.userData?.cardList[0]["newCardNumber"];
+  // lastFourDigitOfCard = lastFourDigitOfCard.substring(
+  //   lastFourDigitOfCard.length() - 5
+  // );
+
   return (
     <div className="flex flex-col justify-center items-center">
       <ToastContainer />
@@ -70,75 +84,56 @@ export const Stats = () => {
       <div className="mt-20 w-[80vw] flex justify-around items-center gap-20">
         <div className="flex w-full justify-around gap-8">
           <div className="app-body-navigation">
-            <article className="p-5 transition-all duration-[0.25s] rounded-xl bg-cyan-500 w-[445px] h-[200px] flex flex-col items-start text-white ">
-              <div className="tile-header">
-                <h3 className="text-xl flex flex-col gap-5 font-semibold">
-                  <span>Account</span>
-                  <span>
-                    Balance : {myUser?.userData?.account ? balance : "N/A"}
+            {myUser?.userData?.account && (
+              <article className="p-5 transition-all duration-[0.25s] rounded-xl bg-cyan-500 w-[445px] h-[200px] flex flex-col items-start text-white ">
+                <div className="tile-header">
+                  <h3 className="text-xl flex flex-col gap-5 font-semibold">
+                    <span>Account</span>
+                    <span>
+                      Balance : {myUser?.userData?.account ? balance : "N/A"}
+                    </span>
+                  </h3>
+                </div>
+                {!myUser?.userData?.account ? (
+                  <button
+                    onClick={() => navigate("/profile/account-apply")}
+                    className="p-4 bg-zinc-900 rounded-lg font-semibold"
+                  >
+                    Create Account
+                  </button>
+                ) : (
+                  <span className="mt-6">
+                    <Link to={"/profile/services"} state={balance}>
+                      Go to service
+                    </Link>
                   </span>
-                </h3>
-              </div>
-              {!myUser?.userData?.account ? (
-                <button
-                  onClick={() => navigate("/profile/account-apply")}
-                  className="p-4 bg-zinc-900 rounded-lg font-semibold"
-                >
-                  Create Account
-                </button>
-              ) : (
-                <span className="mt-6">
-                  <Link to={"/profile/services"} state={balance}>
-                    Go to service
-                  </Link>
-                </span>
-              )}
-            </article>
+                )}
+              </article>
+            )}
           </div>
           <div className="app-body-main-content">
-            <section className="payment-section">
-              <h2>New Payment</h2>
-              <div className="payment-section-header">
-                <p>Choose a card to transfer money</p>
-                <div></div>
-              </div>
-              <div className="payments">
-                {/* <div className="payment">
-                  <div className="card green">
-                    <span>01/22</span>
-                    <span>•••• 4012</span>
-                  </div>
-                  <div className="payment-details">
-                    <h3>Credit Card</h3>
-                    <div>
-                      <span>10550</span>
-                      <button className="icon-button">
-                        <i className="ph-caret-right-bold"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div> */}
-                <div className="payment">
-                  <div className="card olive">
-                    <span>12/23</span>
-                    <span>•••• 2228</span>
-                  </div>
-                  <div className="payment-details">
-                    <h3>Debit Card</h3>
-                    <div>
-                      <span>10000+</span>
-                      <button className="icon-button">
-                        <i className="ph-caret-right-bold"></i>
-                      </button>
+            {myUser?.userData?.account ? (
+              <section className="payment-section">
+                <h2>New Payment</h2>
+                <div className="payments">
+                  <div className="payment">
+                    <div className="card olive w-48 text-gray-800">
+                      <span>{formattedDate || "MM/YY"}</span>
+                      <span>{myUser?.userData?.name || "Customer Name"}</span>
+                      <span>
+                        •••• {lastFourDigitOfCard.substring(14) || "3456"}
+                      </span>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="faq"></div>
-              <div className="payment-section-footer"></div>
-            </section>
+              </section>
+            ) : (
+              <ThreeDCard />
+            )}
           </div>
-          <div className="app-body-sidebar"></div>
+          {/* <div className="app-body-sidebar">
+            <h1 className="text-white text-3xl">Console</h1>
+          </div> */}
         </div>
       </div>
     </div>
@@ -300,4 +295,21 @@ export const Stats = () => {
                 </div>
               </div>
             </section> */
+}
+{
+  /* <div className="payment">
+                  <div className="card green">
+                    <span>01/22</span>
+                    <span>•••• 4012</span>
+                  </div>
+                  <div className="payment-details">
+                    <h3>Credit Card</h3>
+                    <div>
+                      <span>10550</span>
+                      <button className="icon-button">
+                        <i className="ph-caret-right-bold"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div> */
 }

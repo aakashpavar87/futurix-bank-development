@@ -2,19 +2,8 @@ import "./user.css";
 
 function UserService() {
   return (
-    <section className="service-section container mx-auto">
-      <h2>Service</h2>
-      <div className="service-section-header">
-        <div className="search-field">
-          <i className="ph-magnifying-glass"></i>
-          <input type="text" placeholder="Loan Id" />
-        </div>
-
-        <button className="flat-button">Search</button>
-      </div>
-      <div className="mobile-only">
-        <button className="flat-button">Toggle search</button>
-      </div>
+    <section className="service-section container mx-auto h-[70vh]">
+      <h2>Service Coming Soon...</h2>
       <div className="tiles">
         <article className="tile">
           <div className="tile-header">
