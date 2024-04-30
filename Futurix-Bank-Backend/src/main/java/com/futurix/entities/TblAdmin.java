@@ -1,6 +1,7 @@
 package com.futurix.entities;
 
-import java.util.Date;
+
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,14 +31,14 @@ public class TblAdmin {
 	private String adminEmail;
 
 	@Column(nullable = false)
-	private Date adminDob;
+	private LocalDate adminDob;
 
 	@Column(nullable = false)
 	private String adminPassword;
 
 	
 	public TblAdmin(String adminName, String adminAddress, String adminGender, Long adminPhoneNumber,
-			String adminEmail, Date adminDob, String adminPassword) {
+			String adminEmail, LocalDate adminDob, String adminPassword) {
 		super();
 		this.adminName = adminName;
 		this.adminAddress = adminAddress;
@@ -101,11 +102,11 @@ public class TblAdmin {
 		this.adminEmail = adminEmail;
 	}
 
-	public Date getAdminDob() {
+	public LocalDate getAdminDob() {
 		return adminDob;
 	}
 
-	public void setAdminDob(Date adminDob) {
+	public void setAdminDob(LocalDate adminDob) {
 		this.adminDob = adminDob;
 	}
 

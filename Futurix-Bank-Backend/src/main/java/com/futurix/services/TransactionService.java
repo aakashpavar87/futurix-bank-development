@@ -46,7 +46,7 @@ public class TransactionService {
 		transactionList.add(transaction);
 		tblAccount.setTransactionList(transactionList);
 
-		accountRepo.save(tblAccount);
+//		accountRepo.save(tblAccount);
 		return transactionRepo.save(transaction);
 
 	}
