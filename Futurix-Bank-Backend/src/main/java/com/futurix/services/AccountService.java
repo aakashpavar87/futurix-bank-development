@@ -7,6 +7,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.futurix.emailSender.EmailSenderService;
 import com.futurix.entities.TblAccount;
 import com.futurix.entities.TblCustomer;
 import com.futurix.entities.TblTransaction;
@@ -27,8 +28,8 @@ public class AccountService {
 	@Autowired
 	private BankBalanceService bankBalanceService;
 
-//	@Autowired
-//	private EmailSenderService emailSender;
+	@Autowired
+	private EmailSenderService emailSender;
 
 	@Autowired
 	private TransactionService transactionService;
@@ -63,10 +64,10 @@ public class AccountService {
 		}
 		// Sending Mail to Customer that they are registered successfully ...
 		System.out.println("Email Start");
-//		String imagePathString = "C:\\Users\\DELL\\OneDrive\\Desktop\\TYProject\\futurix-bank-development\\Futurix-Bank-Backend\\documents\\goku.webp";
-//		emailSender.sendMailWithAttachment(foundCustomer.getEmail(), 
-//				"Account open process is completed", "Welcome", imagePathString
-//				);
+		String imagePathString = "C:\\Users\\DELL\\OneDrive\\Desktop\\TYProject\\futurix-bank-development\\Futurix-Bank-Backend\\documents\\goku.webp";
+		emailSender.sendMailWithAttachment(foundCustomer.getEmail(), 
+				"Account open process is completed", "Welcome", imagePathString
+				);
 		System.out.println("Email End");
 		foundCustomer.setAccount(account);
 //		customerRepo.save(foundCustomer);
@@ -123,13 +124,13 @@ public class AccountService {
 	// Deposit in Account
 	public void depositInAccount(int accId, int amount, String desc) {
 		TblAccount tblAccount = accountRepo.findById(accId).get();
-//		 TblCustomer foundCustomer = tblAccount.getCustomer();
+		 TblCustomer foundCustomer = tblAccount.getCustomer();
 
-//		 String mailMessage = """
-//		 		<h1>Rs. %s Depositted To Your Account Successfully</h1>
-//		 		""".formatted(tblAccount.getAccountnumber());
-		// emailSender.sendSimpleEmail(foundCustomer.getEmail(), "Money Deposit",
-		// mailMessage);
+		 String mailMessage = """
+		 		<h1>Rs. %s Depositted To Your Account Successfully</h1>
+		 		""".formatted(tblAccount.getAccountnumber());
+		 emailSender.sendSimpleEmail(foundCustomer.getEmail(), "Money Deposit",
+		 mailMessage);
 
 		Double balance = tblAccount.getBalance();
 		tblAccount.setBalance(balance + amount);
@@ -146,11 +147,11 @@ public class AccountService {
 		
 		TblAccount tblAccount = accountRepo.findById(accId).get();
 
-//		TblCustomer foundCustomer = tblAccount.getCustomer();
-//		 String mailMessage = """
-//		 		<h1>Rs. %s Withdrawn From Your Account Successfully</h1>
-//		 		""".formatted(tblAccount.getAccountnumber());
-//		 emailSender.sendSimpleEmail(foundCustomer.getEmail(), "Money Withdrawl", mailMessage);
+		TblCustomer foundCustomer = tblAccount.getCustomer();
+		 String mailMessage = """
+		 		<h1>Rs. %s Withdrawn From Your Account Successfully</h1>
+		 		""".formatted(tblAccount.getAccountnumber());
+		 emailSender.sendSimpleEmail(foundCustomer.getEmail(), "Money Withdrawl", mailMessage);
 
 		Double balance = tblAccount.getBalance();
 
