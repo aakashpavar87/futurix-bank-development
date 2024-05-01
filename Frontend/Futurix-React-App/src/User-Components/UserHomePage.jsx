@@ -18,7 +18,7 @@ const HomePage = () => (
       </div>
     </div>
     <div className="w-[98.5vw] bg-[#0b0d19] flex justify-center items-center">
-      <Footer />
+      <Footer isFade={false} />
     </div>
   </div>
 );

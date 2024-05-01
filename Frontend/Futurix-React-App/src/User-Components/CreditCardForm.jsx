@@ -33,7 +33,7 @@ const CreditCardForm = () => {
   const onSubmit = (data) => {
     data["Employestatus"] = selectedOption;
     console.log(data); // You can handle the form submission here
-    navigate("/profile");
+    // navigate("/profile");
   };
 
   const borderColor = focusedInput
@@ -42,7 +42,7 @@ const CreditCardForm = () => {
 
   return (
     <div
-      className="flex justify-center items-center min-h-screen text-black"
+      className="flex justify-center items-center min-h-screen text-white"
       style={{
         backgroundImage: "linear-gradient(180deg, #050c1b, #2a4365)",
         padding: "25px",
@@ -80,7 +80,6 @@ const CreditCardForm = () => {
               <option value="">Choose Your Employment Status</option>
               <option value="employee">Employee</option>
               <option value="business">Businessman</option>
-              <option value="student">Student</option>
             </select>
             {!employmentStatusSelected && errors.employmentStatus && (
               <p className="text-amber-400 text-xs mt-1">
@@ -170,6 +169,40 @@ const CreditCardForm = () => {
               )}
 
               <div className="relative">
+                <input
+                  type="text"
+                  id="pin"
+                  name="pin"
+                  className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white focus:border-blue-500 focus:ring-blue-500 ${
+                    focusedInput === "pin" ? "animate-pulse" : ""
+                  }`}
+                  {...register("pin", {
+                    required: {
+                      value: true,
+                      messsage: "PIN is required ...",
+                    },
+                    minLength: {
+                      value: 4,
+                      message: "PIN must be at least 4 characters long",
+                    },
+                  })}
+                  autoComplete="off"
+                  placeholder="Enter Credit Card PIN"
+                  style={{
+                    transition: "background-color 0.3s",
+                    background: borderColor,
+                  }}
+                  onFocus={() => handleFocus("pin")}
+                  onBlur={handleBlur}
+                />
+                {errors.pin && (
+                  <p className="text-amber-400 text-xs mt-1">
+                    {errors.pin.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="relative">
                 <select
                   id="incomeRange"
                   name="incomeRange"
@@ -184,8 +217,8 @@ const CreditCardForm = () => {
                   onBlur={handleBlur}
                 >
                   <option value="">Choose Income Range</option>
-                  <option value="0-500000">0 - 200000</option>
-                  <option value="500001-1000000">200001 - 400000</option>
+                  <option value="0-200000">0 - 200000</option>
+                  <option value="200001-400000">200001 - 400000</option>
                   <option value="1000001 - 1500000">1000001 - 1500000</option>
                   <option value="15000001 - 2000000">15000001 - 2000000</option>
                   {/* Add more income ranges here */}
@@ -240,8 +273,8 @@ const CreditCardForm = () => {
                   onBlur={handleBlur}
                 >
                   <option value="">Choose Income Range</option>
-                  <option value="0-500000">0 - 200000</option>
-                  <option value="500001-1000000">200001 - 400000</option>
+                  <option value="0-200000">0 - 200000</option>
+                  <option value="200001-400000">200001 - 400000</option>
                   <option value="1000001 - 1500000">1000001 - 1500000</option>
                   <option value="15000001 - 2000000">15000001 - 2000000</option>
                   {/* Add more income ranges here */}
@@ -324,6 +357,41 @@ const CreditCardForm = () => {
                 {errors.businessType && (
                   <p className="text-amber-400 text-xs mt-1">
                     Please Select type of business
+                  </p>
+                )}
+              </div>
+
+              <div className="relative">
+                <input
+                  type="text"
+                  id="pin"
+                  name="pin"
+                  className={`border rounded-md px-3 py-2 w-full shadow-sm shadow-white focus:border-blue-500 focus:ring-blue-500 ${
+                    focusedInput === "pin" ? "animate-pulse" : ""
+                  }`}
+                  {...register("pin", {
+                    required: { value: true },
+                    minLength: {
+                      value: 4,
+                      message: "PIN must be at least 4 characters long",
+                    },
+                    pattern: {
+                      value: /^\d{10}$/,
+                      message: "Phone number must contain exactly 10 digits",
+                    },
+                  })}
+                  autoComplete="off"
+                  placeholder="Enter Credit Card PIN"
+                  style={{
+                    transition: "background-color 0.3s",
+                    background: borderColor,
+                  }}
+                  onFocus={() => handleFocus("pin")}
+                  onBlur={handleBlur}
+                />
+                {errors.pin && (
+                  <p className="text-amber-400 text-xs mt-1">
+                    {errors.pin.message || "PIN is required ..."}
                   </p>
                 )}
               </div>

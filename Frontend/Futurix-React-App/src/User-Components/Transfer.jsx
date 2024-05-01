@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { transferMoney } from "../apis/AccountApi";
 import { UserContext } from "../contexts/userContext";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,6 +16,10 @@ function TransferForm() {
   const navigate = useNavigate();
 
   const myUser = useContext(UserContext);
+
+  const location = useLocation();
+
+  const accountBalance = location.state;
 
   const showToastMessage = (msg, isError) => {
     if (!isError) toast.success(msg);
@@ -162,7 +166,9 @@ function TransferForm() {
 
         <div className="form-group">
           <label className="text-green-300">Available Balance : </label>
-          <span className="text-yellow-300">1000.00</span>{" "}
+          <span className="text-yellow-300">
+            {accountBalance || "N/A"}
+          </span>{" "}
           {/* Example: Display actual available balance here */}
         </div>
         <br></br>

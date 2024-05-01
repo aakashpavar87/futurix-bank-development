@@ -76,7 +76,9 @@ export const Stats = () => {
             </Link>
           </button>
           <button className="p-5 rounded-md font-semibold border-white hover:bg-amber-200 hover:text-slate-800 text-slate-300 font-poppins">
-            <Link to={"/profile/transfer"}>Transfer</Link>
+            <Link to={"/profile/transfer"} state={balance}>
+              Transfer
+            </Link>
           </button>
         </div>
       )}
@@ -114,7 +116,7 @@ export const Stats = () => {
           <div className="app-body-main-content">
             {myUser?.userData?.account ? (
               <section className="payment-section">
-                <h2>New Payment</h2>
+                <h2>Your Virtual Card</h2>
                 <div className="payments">
                   <div className="payment">
                     <div className="card olive w-48 text-gray-800">

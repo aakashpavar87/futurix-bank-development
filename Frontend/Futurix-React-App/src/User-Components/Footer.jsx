@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styles from "../style";
 import "./user.css";
 
@@ -5,10 +6,10 @@ import { logo } from "../assets";
 import { footerLinks, socialMedia } from "../constants";
 import { Link } from "react-router-dom";
 
-export const Footer = () => (
+export const Footer = ({ isFade }) => (
   <section
     className={`w-[80%] ${styles.flexCenter} ${styles.paddingY} p-6 flex-col`}
-    data-aos="fade-up"
+    data-aos={isFade ? "fade-up" : "none"}
   >
     <div className={`${styles.flexStart} md:flex-row flex-col mb-8 w-full`}>
       <div className="flex-[1] flex flex-col justify-start mr-10">

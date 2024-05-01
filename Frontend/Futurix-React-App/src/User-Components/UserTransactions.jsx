@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { getAllTransactions } from "../apis/AccountApi";
+import { getOneUserById } from "../apis/UserApi";
 import { UserContext } from "../contexts/userContext";
 import "./user.css";
 import { useContext, useEffect, useState } from "react";
@@ -8,40 +9,70 @@ function UserTransactions() {
   const myUser = useContext(UserContext);
   const [transactions, setTransactions] = useState([]);
   useEffect(() => {
-    getAllTransactions(myUser?.userData?.id).then((res) => {
-      setTransactions(res);
-      console.log(transactions);
-    });
-  }, [setTransactions]);
+    console.log(myUser);
+
+    getOneUserById(myUser?.userData?.id)
+      .then((res) => {
+        console.log(res);
+        setTransactions(res?.data?.account["transactionList"]);
+        console.log(transactions);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <section className="transfer-section container mx-auto w-[80%] h-full">
       <div className="transfer-section-header">
         <h2>Latest transfers</h2>
       </div>
       <div className="transfers">
+        {/* heading row */}
+
         <div className="transfer">
           <div className="transfer-logo">
-            <img
-              src="https://assets.codepen.io/285131/apple.svg"
-              alt="Apple Logo"
-            />
+            <h3 className="text-gray-800 text-base font-poppins font-semibold">
+              Sr.
+            </h3>
           </div>
           <dl className="transfer-details">
             <div>
-              <dt>Apple Inc.</dt>
-              <dd>Apple ID Payment</dd>
+              <dt>Customer Details</dt>
             </div>
             <div>
-              <dt>4012</dt>
-              <dd>Last four digits</dd>
+              <dd>Transaction ID</dd>
             </div>
             <div>
-              <dt>28 Oct. 21</dt>
-              <dd>Date payment</dd>
+              <dd>Date of payment</dd>
             </div>
           </dl>
-          <div className="transfer-number">- 5500</div>
+          <div className="transfer-number">Amount</div>
         </div>
+        {transactions?.map((transaction, index) => (
+          <div className="transfer" key={index}>
+            <div className="transfer-logo">
+              <h3 className="text-gray-800 text-base font-poppins font-semibold">
+                {index + 1}
+              </h3>
+            </div>
+            <dl className="transfer-details">
+              <div>
+                <dt>{transaction?.accountNumber}</dt>
+                <dd>{transaction?.description}</dd>
+              </div>
+              <div>
+                <dt>{transaction.transactionCode}</dt>
+                <dd>{transaction.transactionLimit}</dd>
+              </div>
+              <div>
+                <dt>{transaction.date}</dt>
+              </div>
+            </dl>
+            <div className="transfer-number">
+              {transaction.transactionType === "Deposit"
+                ? "+ " + transaction.amount
+                : "- " + transaction.amount}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
