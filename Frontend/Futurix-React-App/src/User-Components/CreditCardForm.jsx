@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { createCard, createCreditCard } from "../apis/CardApi";
+import { UserContext } from "../contexts/userContext";
 
 const CreditCardForm = () => {
   const {
@@ -18,6 +20,8 @@ const CreditCardForm = () => {
     setFocusedInput(inputName);
   };
 
+  const myUser = useContext(UserContext);
+
   const handleBlur = () => {
     setFocusedInput(null);
   };
@@ -30,10 +34,34 @@ const CreditCardForm = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     data["Employestatus"] = selectedOption;
-    console.log(data); // You can handle the form submission here
-    // navigate("/profile");
+    let creditScore = "";
+    if (data.incomeRange === "100000") {
+      creditScore = 500;
+    } else if (data.incomeRange === "300000") {
+      creditScore = 600;
+    } else if (data.incomeRange === "500000") {
+      creditScore = 700;
+    } else {
+      creditScore = 800;
+    }
+
+    const createCardRes = await createCard(myUser?.userData?.id);
+
+    const creditCardRes = await createCreditCard(
+      createCardRes?.data?.card_number,
+      data.pin,
+      data.incomeRange,
+      data.Employestatus,
+      creditScore
+    );
+
+    console.log(creditCardRes?.data); // You can handle the form submission here
+    navigate("/profile", {
+      state:
+        "Congratulations you got your credit card please re-login to view changes.",
+    });
   };
 
   const borderColor = focusedInput
@@ -217,10 +245,10 @@ const CreditCardForm = () => {
                   onBlur={handleBlur}
                 >
                   <option value="">Choose Income Range</option>
-                  <option value="0-200000">0 - 200000</option>
-                  <option value="200001-400000">200001 - 400000</option>
-                  <option value="1000001 - 1500000">1000001 - 1500000</option>
-                  <option value="15000001 - 2000000">15000001 - 2000000</option>
+                  <option value="100000">0 - 200000</option>
+                  <option value="300000">200001 - 400000</option>
+                  <option value="500000">400001 - 600000</option>
+                  <option value="700000">6000001 - 800000</option>
                   {/* Add more income ranges here */}
                 </select>
                 {errors.incomeRange && (
@@ -273,10 +301,10 @@ const CreditCardForm = () => {
                   onBlur={handleBlur}
                 >
                   <option value="">Choose Income Range</option>
-                  <option value="0-200000">0 - 200000</option>
-                  <option value="200001-400000">200001 - 400000</option>
-                  <option value="1000001 - 1500000">1000001 - 1500000</option>
-                  <option value="15000001 - 2000000">15000001 - 2000000</option>
+                  <option value="100000">0 - 200000</option>
+                  <option value="300000">200001 - 400000</option>
+                  <option value="500000">400001 - 600000</option>
+                  <option value="700000">6000001 - 800000</option>
                   {/* Add more income ranges here */}
                 </select>
                 {errors.incomeRange && (
@@ -374,10 +402,6 @@ const CreditCardForm = () => {
                     minLength: {
                       value: 4,
                       message: "PIN must be at least 4 characters long",
-                    },
-                    pattern: {
-                      value: /^\d{10}$/,
-                      message: "Phone number must contain exactly 10 digits",
                     },
                   })}
                   autoComplete="off"

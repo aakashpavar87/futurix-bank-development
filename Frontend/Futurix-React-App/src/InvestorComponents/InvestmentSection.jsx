@@ -5,7 +5,6 @@ export const InvestmentSection = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-
   return (
     <div className=" mt-6 mb-6 w-full flex justify-end">
       <div className="w-500 border border-red rounded-xl p-10 shadow-lg shadow-white">
@@ -60,7 +59,7 @@ export const InvestmentSection = () => {
               setTimeout(() => {
                 e.target.classList.remove("animate-bounce"); // Removes bounce animation after a short delay
               }, 500);
-              setShowModal(true)
+              setShowModal(true);
             }}
           >
             {" "}

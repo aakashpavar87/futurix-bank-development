@@ -5,6 +5,7 @@ import { UserContext } from "../contexts/userContext";
 import { toast, ToastContainer } from "react-toastify";
 import { withdrawMoney } from "../apis/AccountApi";
 import { validateDebitCard } from "../apis/CardApi";
+import { Spinner } from "../components";
 
 function WithdrawalForm() {
   const {
@@ -15,6 +16,8 @@ function WithdrawalForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const { state } = useLocation();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -27,6 +30,7 @@ function WithdrawalForm() {
 
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       console.log(data);
       const validateRes = await validateDebitCard(
         myUser?.userData?.cardList[0]["card_number"],
@@ -38,9 +42,14 @@ function WithdrawalForm() {
       formData.append("desc", data.desc);
 
       const res = await withdrawMoney(myUser?.userData?.account?.id, formData);
-      navigate("/profile/account", { state: res.data });
+      setTimeout(async () => {
+        setIsLoading(false);
+        navigate("/profile/account", { state: res.data });
+      }, 500);
     } catch (error) {
       showToastMessage("Sorry not enough balance", true);
+    } finally {
+      setIsLoading(false);
     }
 
     // navigate("/profile");
@@ -236,12 +245,16 @@ function WithdrawalForm() {
         <br></br>
 
         <div className="flex justify-center">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-          >
-            Withdraw
-          </button>
+          {isLoading ? (
+            <Spinner color={"#9155fd"} />
+          ) : (
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+            >
+              Withdraw
+            </button>
+          )}
         </div>
       </form>
     </div>

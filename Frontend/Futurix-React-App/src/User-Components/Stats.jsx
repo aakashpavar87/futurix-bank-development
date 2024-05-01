@@ -45,17 +45,35 @@ export const Stats = () => {
   };
 
   const formattedExpiryYear =
-    myUser?.userData?.cardList[0]["date_of_exspiry"].split("-")[0];
+    myUser?.userData?.cardList[0]?.date_of_exspiry.split("-")[0];
   const formattedExpiryMonth =
-    myUser?.userData?.cardList[0]["date_of_exspiry"].split("-")[1];
+    myUser?.userData?.cardList[0]?.date_of_exspiry.split("-")[1];
 
   const formattedDate =
-    formattedExpiryMonth + "/" + formattedExpiryYear.substring(2);
+    formattedExpiryMonth + "/" + formattedExpiryYear?.substring(2);
 
-  let lastFourDigitOfCard = myUser?.userData?.cardList[0]["newCardNumber"];
-  // lastFourDigitOfCard = lastFourDigitOfCard.substring(
+  let lastFourDigitOfCard = myUser?.userData?.cardList[0]?.newCardNumber;
+
+  let cardList = myUser?.userData?.cardList;
+
+  let creditCard = cardList.filter((card) => card.creditCard);
+  // lastFourDigitOfCard = lastFourDigitOfCard?.substring(
   //   lastFourDigitOfCard.length() - 5
   // );
+
+  console.log(creditCard[0]);
+
+  let lastFourDigitOfCreditCard = creditCard[0]?.newCardNumber;
+
+  const formattedCreditCardExpiryYear =
+    creditCard[0]?.date_of_exspiry.split("-")[0];
+  const formattedCreditCardExpiryMonth =
+    creditCard[0]?.date_of_exspiry.split("-")[1];
+
+  const formattedCreditCardDate =
+    formattedCreditCardExpiryMonth +
+    "/" +
+    formattedCreditCardExpiryYear?.substring(2);
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -120,13 +138,30 @@ export const Stats = () => {
                 <div className="payments">
                   <div className="payment">
                     <div className="card olive w-48 text-gray-800">
-                      <span>{formattedDate || "MM/YY"}</span>
+                      <span>{formattedCreditCardDate || "MM/YY"}</span>
                       <span>{myUser?.userData?.name || "Customer Name"}</span>
                       <span>
-                        •••• {lastFourDigitOfCard.substring(14) || "3456"}
+                        •••• {lastFourDigitOfCard?.substring(14) || "3456"}
                       </span>
                     </div>
+                    <div className="payment-details">
+                      <h3>Debit Card</h3>
+                    </div>
                   </div>
+                  {myUser?.userData?.account && (
+                    <div className="payment">
+                      <div className="card green w-48 text-gray-800">
+                        <span>01/22</span>
+                        <span>
+                          ••••{" "}
+                          {lastFourDigitOfCreditCard?.substring(14) || "3456"}
+                        </span>
+                      </div>
+                      <div className="payment-details">
+                        <h3>Credit Card</h3>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </section>
             ) : (

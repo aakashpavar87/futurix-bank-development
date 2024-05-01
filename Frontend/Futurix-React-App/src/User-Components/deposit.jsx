@@ -6,6 +6,7 @@ import { depositMoney } from "../apis/AccountApi";
 import { UserContext } from "../contexts/userContext";
 import { validateDebitCard } from "../apis/CardApi";
 import { ToastContainer, toast } from "react-toastify";
+import { Spinner } from "../components";
 
 function DepositForm() {
   const {
@@ -15,6 +16,7 @@ function DepositForm() {
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const [number, setNumber] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const myUser = useContext(UserContext);
 
@@ -42,6 +44,7 @@ function DepositForm() {
   const navigate = useNavigate();
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       const validateRes = await validateDebitCard(
         myUser?.userData?.cardList[0]["card_number"],
         data.pin
@@ -52,11 +55,16 @@ function DepositForm() {
       formData.append("desc", data.desc);
 
       const res = await depositMoney(myUser?.userData?.account?.id, formData);
-      navigate("/profile/account", {
-        state: res.data,
-      });
+      setTimeout(async () => {
+        setIsLoading(false);
+        navigate("/profile/account", {
+          state: res.data,
+        });
+      }, 500);
     } catch (error) {
       showToastMessage(error.response.data.message, true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -236,12 +244,16 @@ function DepositForm() {
         </div>
         <br></br>
         <div className="flex justify-center">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-          >
-            Deposit
-          </button>
+          {isLoading ? (
+            <Spinner color={"#9155fd"} />
+          ) : (
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+            >
+              Deposit
+            </button>
+          )}
         </div>
       </form>
       <ToastContainer />

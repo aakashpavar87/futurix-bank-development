@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { transferMoney } from "../apis/AccountApi";
 import { UserContext } from "../contexts/userContext";
 import { ToastContainer, toast } from "react-toastify";
+import { Spinner } from "../components";
 
 function TransferForm() {
   const {
@@ -17,6 +18,8 @@ function TransferForm() {
 
   const myUser = useContext(UserContext);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const location = useLocation();
 
   const accountBalance = location.state;
@@ -27,6 +30,7 @@ function TransferForm() {
   };
 
   const onSubmit = ({ accountNumber, amount, desc }) => {
+    setIsLoading(true);
     const transferData = {
       accountNumber,
       amount,
@@ -35,10 +39,15 @@ function TransferForm() {
     transferMoney(myUser?.userData?.account?.id, transferData)
       .then((res) => {
         navigate("/profile/account", { state: res.data });
+        setTimeout(async () => {
+          setIsLoading(false);
+          navigate("/profile/account", { state: res.data });
+        }, 500);
       })
       .catch((err) => {
         showToastMessage(err?.response?.data?.message, true);
       });
+    setIsLoading(false);
   };
 
   const [focusedInput, setFocusedInput] = useState(null);
@@ -316,12 +325,16 @@ function TransferForm() {
         <br></br>
 
         <div className="flex justify-center">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-          >
-            Transfer
-          </button>
+          {isLoading ? (
+            <Spinner color={"#9155fd"} />
+          ) : (
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+            >
+              Transfer
+            </button>
+          )}
         </div>
       </form>
     </div>

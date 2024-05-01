@@ -108,20 +108,22 @@ function Cardapply() {
       <br></br>
       <br></br>
 
-      <button
-        className="mr-auto  hover:bg-blue-700 text-red font-bold py-2 px-4 rounded"
-        onClick={() => {
-          if (!myUser?.userData?.account) {
-            navigate("/profile", {
-              state:
-                "Please open account first than try to get credit card ...",
-              error: true,
-            });
-          }
-        }}
-      >
-        <Link to={"/profile/creditcardform"}> Apply Now</Link>
-      </button>
+      {myUser?.userData?.account?.creditCard && (
+        <button
+          className="mr-auto  hover:bg-blue-700 text-red font-bold py-2 px-4 rounded"
+          onClick={() => {
+            if (!myUser?.userData?.account) {
+              navigate("/profile", {
+                state:
+                  "Please open account first than try to get credit card ...",
+                error: true,
+              });
+            }
+          }}
+        >
+          <Link to={"/profile/creditcardform"}> Apply Now</Link>
+        </button>
+      )}
     </div>
   );
 }

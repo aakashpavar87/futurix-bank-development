@@ -140,7 +140,7 @@ const AddFundsModal = ({ showModal, setShowModal }) => {
     ) {
       showToastMessage("Please Enter All Investment Details", true);
     } else {
-      // displayRazorpay();
+      displayRazorpay();
       const date = new Date();
       const isoString = date.toISOString();
       const year = isoString.substring(0, 4);
@@ -159,7 +159,7 @@ const AddFundsModal = ({ showModal, setShowModal }) => {
           setmyUser(res.data);
           console.log("investment has saved");
           closeModal();
-          navigate("/investor/transactions", { state: { number: 1 } });
+          // navigate("/investor/transactions", { state: { number: 1 } });
         })
         .catch((err) => console.log(err.response));
       setIsInvested(true);
@@ -169,7 +169,7 @@ const AddFundsModal = ({ showModal, setShowModal }) => {
   return (
     <>
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center text-black justify-center z-50">
           <form
             method="post"
             onSubmit={handleSubmit}

@@ -125,7 +125,6 @@ const Login = () => {
         loginAdminToSystem(data.password, serverPassword, res, data.role);
       }
       console.log(res.data);
-      loginUser(data.password, serverPassword, res, data.role);
     } catch (error) {
       showToastMessage(error.response.data.message, true);
     }

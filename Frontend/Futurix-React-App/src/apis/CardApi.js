@@ -10,3 +10,5 @@ export const createCard = async (userId) => await client.post(`/users/${userId}/
 export const createDebitCard = async (cardId, pin) => await client.post(`/cards/${cardId}/debitCard?pin=${pin}`)
 
 export const validateDebitCard = async (cardId, pin) => await client.get(`/cards/${cardId}/debitCard/pin/${pin}`)
+
+export const createCreditCard = async (cardId, pin, income, employment, creditScore) => await client.post(`/cards/${cardId}/creditCard?pin=${pin}&income=${income}&employment=${employment}&creditScore=${creditScore}`)

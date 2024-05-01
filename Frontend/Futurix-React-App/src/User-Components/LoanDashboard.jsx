@@ -1,8 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { getOneLoan } from "../apis/LoanApi";
+import { UserContext } from "../contexts/userContext";
 function LoanDashboard() {
+  const location = useLocation();
+
+  const state = location.state;
+
+  const showToastMessage = (msg, isError) => {
+    if (!isError) toast.success(msg);
+    else toast.error(msg);
+  };
+
+  const myUser = useContext(UserContext);
+  useEffect(() => {
+    showToastMessage(state, false);
+    getOneLoan(myUser?.userData?.id);
+  }, []);
   // Sample loan data
   const [loanData, setLoanData] = useState({
     loanAmount: 10000,
@@ -146,6 +163,7 @@ function LoanDashboard() {
           </button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
