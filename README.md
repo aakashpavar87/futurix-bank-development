@@ -1,7 +1,7 @@
--## Futurix-bank-development
+- ## Futurix-bank-development
 -
--## A banking system developed in React.js and Java Spring Boot as Third Year Project
+- ## A banking system developed in React.js and Java Spring Boot as Third Year Project
 -
--## Backend Complete ...
+- ## Backend Complete ...
 -
 - ## Front End Complete ...
